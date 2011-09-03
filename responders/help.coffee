@@ -1,9 +1,7 @@
 exports.receiveMessage = (message, room, client) ->
   if message.body and message.body.match(/what up bot?/)
-    helpMsg = 'yo dawg. need some help? i can: \n\n'
+    room.speak "yo dawg. need some help? here's what i can do."
     for responder in client.responders
       do(responder) ->
         if responder.helpMessage
-          helpMsg += responder.helpMessage + '\n'
-
-    room.speak(helpMsg)
+          room.speak(responder.helpMessage)

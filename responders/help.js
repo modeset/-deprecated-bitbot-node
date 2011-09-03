@@ -1,19 +1,19 @@
 (function() {
   exports.receiveMessage = function(message, room, client) {
-    var helpMsg, responder, _fn, _i, _len, _ref;
+    var responder, _i, _len, _ref, _results;
     if (message.body && message.body.match(/what up bot?/)) {
-      helpMsg = 'yo dawg. need some help? i can: \n\n';
+      room.speak("yo dawg. need some help? here's what i can do.");
       _ref = client.responders;
-      _fn = function(responder) {
-        if (responder.helpMessage) {
-          return helpMsg += responder.helpMessage + '\n';
-        }
-      };
+      _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         responder = _ref[_i];
-        _fn(responder);
+        _results.push((function(responder) {
+          if (responder.helpMessage) {
+            return room.speak(responder.helpMessage);
+          }
+        })(responder));
       }
-      return room.speak(helpMsg);
+      return _results;
     }
   };
 }).call(this);
