@@ -16,6 +16,8 @@ A Campfire bot for Bit Theory
 * Animated GIFs
 * Mustachified pictures
 * Posts to/from Lazy Standup
+* Snow report
+* Weather
 
 ## How it works
 * Written in [Node](nodejs.org) and [Coffeescript](http://jashkenas.github.com/coffee-script/).
