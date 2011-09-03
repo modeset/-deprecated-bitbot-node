@@ -22,7 +22,8 @@ app.listen(port, ->
 client.responders = [
   require('./responders/js_sandbox'),
   require('./responders/meme')
-  require('./responders/help')
+  require('./responders/help'),
+  require('./responders/password')
 ]
 
 client.rooms((rooms) ->

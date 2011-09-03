@@ -1,0 +1,10 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    haddock (0.2.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  haddock
