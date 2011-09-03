@@ -1,19 +1,17 @@
+# Load libraries
 ranger = require("ranger")
 express = require("express")
 wwwdude = require("wwwdude")
 sys = require("sys")
 
-creds =
-  account: "bittheory"
-  api_key: "7d0bcc5744c0794e0fdaa47bb209151060039982"
-
-client = ranger.createClient(creds.account, creds.api_key)
+client = ranger.createClient(process.env.CAMPFIRE_ACCOUNT, process.env.CAMPFIRE_TOKEN)
 app = express.createServer(express.logger())
 
 json_client = wwwdude.createClient({
     contentParser: wwwdude.parsers.json
 })
 
+# Set up the express listener
 app.get('/', (request, response) ->
   response.send('bleep bloop')
 )
@@ -24,6 +22,7 @@ app.listen(port, ->
   console.log("Listening on " + port)
 )
 
+# Set up the Campfire room listeners
 client.rooms((rooms) ->
   for room in rooms
     do (room) ->
@@ -38,5 +37,4 @@ client.rooms((rooms) ->
           )
       )
       console.log('Listening to ' + room.name)
-#      room.speak('hello world!') if room.name == 'Bits'
 )
