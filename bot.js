@@ -35,7 +35,17 @@
           }
           if (message.body && /^eval (.+)/.test(message.body)) {
             return sandbox.run(/^eval (.+)/.exec(message.body)[1], function(output) {
-              return room.speak(output.result.replace(/\n/g, ' '));
+              var console_msg, _j, _len2, _ref, _results2;
+              room.paste(output.result.replace(/\n/g, ' '));
+              if (output.console && output.console.length > 0) {
+                _ref = output.console;
+                _results2 = [];
+                for (_j = 0, _len2 = _ref.length; _j < _len2; _j++) {
+                  console_msg = _ref[_j];
+                  _results2.push(room.paste(console_msg));
+                }
+                return _results2;
+              }
             });
           }
         });
