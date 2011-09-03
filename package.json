@@ -5,6 +5,7 @@
     "coffee-script":  "1.1.2",
     "express":        "2.4.6",
     "ranger":         "0.2.4",
-    "wwwdude":        "0.1.0"
+    "wwwdude":        "0.1.0",
+    "sandbox":        "0.8.1"
   }
 }
