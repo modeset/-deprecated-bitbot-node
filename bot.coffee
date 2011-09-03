@@ -42,7 +42,7 @@ client.rooms((rooms) ->
 
         if message.body and /^eval (.+)/.test( message.body )
           sandbox.run /^eval (.+)/.exec(message.body)[1], ( output ) ->
-            room.speak output.result.replace( /\n/g, ' ' )
+            room.speak(output.result.replace( /\n/g, ' ' ))
       )
       console.log('Listening to ' + room.name)
 )

@@ -1,18 +1,16 @@
 (function() {
-  var app, client, creds, express, json_client, port, ranger, sys, wwwdude;
+  var Sandbox, app, client, express, json_client, port, ranger, sandbox, sys, wwwdude;
   ranger = require("ranger");
   express = require("express");
   wwwdude = require("wwwdude");
   sys = require("sys");
-  creds = {
-    account: "bittheory",
-    api_key: "7d0bcc5744c0794e0fdaa47bb209151060039982"
-  };
-  client = ranger.createClient(creds.account, creds.api_key);
+  Sandbox = require('sandbox');
+  client = ranger.createClient(process.env.CAMPFIRE_ACCOUNT, process.env.CAMPFIRE_TOKEN);
   app = express.createServer(express.logger());
   json_client = wwwdude.createClient({
     contentParser: wwwdude.parsers.json
   });
+  sandbox = new Sandbox();
   app.get('/', function(request, response) {
     return response.send('bleep bloop');
   });
@@ -31,8 +29,13 @@
         room.listen(function(message) {
           console.log('Heard ' + message.body + ' from ' + message.userId);
           if (message.body && message.body.match(/meme|what's up/)) {
-            return json_client.get('http://api.automeme.net/text.json?lines=1').on('success', function(data, response) {
+            json_client.get('http://api.automeme.net/text.json?lines=1').on('success', function(data, response) {
               return room.speak(data[0]);
+            });
+          }
+          if (message.body && /^eval (.+)/.test(message.body)) {
+            return sandbox.run(/^eval (.+)/.exec(message.body)[1], function(output) {
+              return room.speak(output.result.replace(/\n/g, ' '));
             });
           }
         });
