@@ -21,11 +21,12 @@
         room.join();
         console.log('Joined ' + room.name);
         room.listen(function(message) {
-          var responder, _j, _len2, _results2;
+          var responder, _j, _len2, _ref, _results2;
           console.log('Heard ' + message.body + ' from ' + message.userId);
+          _ref = client.responders;
           _results2 = [];
-          for (_j = 0, _len2 = responders.length; _j < _len2; _j++) {
-            responder = responders[_j];
+          for (_j = 0, _len2 = _ref.length; _j < _len2; _j++) {
+            responder = _ref[_j];
             _results2.push((function(responder) {
               return responder.receiveMessage(message, room, client);
             })(responder));

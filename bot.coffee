@@ -32,7 +32,7 @@ client.rooms((rooms) ->
       console.log('Joined ' + room.name)
       room.listen((message) ->
         console.log('Heard ' + message.body + ' from ' + message.userId)
-        for responder in responders
+        for responder in client.responders
           do (responder) ->
             responder.receiveMessage(message, room, client)
       )
