@@ -6,6 +6,7 @@ A Campfire bot for Bit Theory
 * Hit you back with a random meme anytime you mention the word "meme"
 * Evaluate javascript code in a sandbox
 * Tell you what it can do
+* TWSS
 
 ## What it should do
 * Wave hi
@@ -20,6 +21,9 @@ A Campfire bot for Bit Theory
 * Posts to/from Lazy Standup
 * Snow report
 * Weather
+* Daily project status updates (analytics, traffic, etc..)
+* Lunch suggestions
+* Music suggestions
 
 ## How it works
 * Written in [Node](nodejs.org) and [Coffeescript](http://jashkenas.github.com/coffee-script/).
