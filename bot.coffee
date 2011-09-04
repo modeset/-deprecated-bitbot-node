@@ -24,6 +24,7 @@ client.responders = [
   require('./responders/meme')
   require('./responders/help'),
   require('./responders/password')
+  require('./responders/twss')
 ]
 
 client.rooms((rooms) ->
