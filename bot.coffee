@@ -25,6 +25,7 @@ client.responders = [
   require('./responders/help'),
   require('./responders/password')
   require('./responders/twss')
+  require('./responders/weather')
 ]
 
 client.rooms((rooms) ->
