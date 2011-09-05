@@ -20,13 +20,14 @@ exports.receiveMessage = (message, room, client) ->
       if address
         opts =
           section:  thing
-          limit:    1
+          limit:    30
 
         console.log(address, latitude, longitude, opts)
         foursquare.Venues.explore(latitude, longitude, opts, null, (error, data) ->
           console.log(data)
           if (data.groups[0].items.length > 0)
-            venue = data.groups[0].items[0].venue
+            randomIndex = data.groups[0].items[Math.floor(Math.random()*data.groups[0].items.length)];
+            venue = data.groups[0].items[randomIndex].venue
             room.speak "Try #{venue.name} at #{venue.location.address}"
           else
             room.speak "Sorry, couldn't find any #{thing} near #{address}"
