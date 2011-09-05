@@ -12,7 +12,7 @@
       today = new Date();
       weatherCallback = function(current, forecast) {
         if (current) {
-          room.speak("Currently it's " + (current.condition.toLowerCase()) + " - " + (celsiusToFahrenheit(current.temperature)) + " degrees, " + current.humidity + "% humidity, wind " + current.wind.speed + current.wind.direction);
+          room.speak("Currently " + placename + " is " + (current.condition.toLowerCase()) + " - " + (celsiusToFahrenheit(current.temperature)) + " degrees, " + current.humidity + "% humidity, wind " + current.wind.speed + current.wind.direction);
         }
         if (forecast) {
           return room.speak("Forecast is a low of " + (celsiusToFahrenheit(forecast.temperature.low)) + ", high of " + (celsiusToFahrenheit(forecast.temperature.high)) + ", and " + (forecast.condition.toLowerCase()) + " conditions");

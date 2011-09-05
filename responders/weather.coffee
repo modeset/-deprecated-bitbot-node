@@ -11,7 +11,7 @@ exports.receiveMessage = (message, room, client) ->
     today = new Date()
     weatherCallback = (current, forecast) ->
       if current
-        room.speak("Currently it's #{current.condition.toLowerCase()} - #{celsiusToFahrenheit(current.temperature)} degrees, #{current.humidity}% humidity, wind #{current.wind.speed}#{current.wind.direction}")
+        room.speak("Currently #{placename} is #{current.condition.toLowerCase()} - #{celsiusToFahrenheit(current.temperature)} degrees, #{current.humidity}% humidity, wind #{current.wind.speed}#{current.wind.direction}")
       if forecast
         room.speak("Forecast is a low of #{celsiusToFahrenheit(forecast.temperature.low)}, high of #{celsiusToFahrenheit(forecast.temperature.high)}, and #{forecast.condition.toLowerCase()} conditions")
     googleweather.get(weatherCallback, placename, today.toISODate())
