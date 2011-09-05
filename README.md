@@ -7,9 +7,12 @@ A Campfire bot for Bit Theory
 * Evaluate javascript code in a sandbox
 * Tell you what it can do
 * TWSS
+* Weather
+* Find nearby stuff (based on Foursquare venues)
 
 ## What it should do
-* Wave hi
+* Respond to its name
+* Greet people in the morning
 * Meeting reminders
 * Highrise reminders
 * Deployments
@@ -20,9 +23,7 @@ A Campfire bot for Bit Theory
 * Mustachified pictures
 * Posts to/from Lazy Standup
 * Snow report
-* Weather
 * Daily project status updates (analytics, traffic, etc..)
-* Lunch suggestions
 * Music suggestions
 
 ## How it works
