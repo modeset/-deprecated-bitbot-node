@@ -14,7 +14,7 @@
           room.speak("Currently it's " + (current.condition.toLowerCase()) + " - " + (celsiusToFahrenheit(current.temperature)) + " degrees, " + current.humidity + "% humidity, wind " + current.wind.speed + current.wind.direction);
         }
         if (forecast) {
-          return room.speak("Forecast is a low of " + (celsiusToFahrenheit(forecast.temperature.low)) + ", high of " + (celsiusToFahrenheit(forecast.temperature)) + ", and " + (forecast.conditions.toLowerCase()) + " conditions");
+          return room.speak("Forecast is a low of " + (celsiusToFahrenheit(forecast.temperature.low)) + ", high of " + (celsiusToFahrenheit(forecast.temperature)) + ", and " + (forecast.condition.toLowerCase()) + " conditions");
         }
       };
       return googleweather.get(weatherCallback, placename, today.toISODate());
