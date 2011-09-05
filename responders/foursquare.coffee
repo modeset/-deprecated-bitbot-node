@@ -19,8 +19,8 @@ exports.receiveMessage = (message, room, client) ->
     geo.geocoder(geo.google, location, false, (address, latitude, longitude) ->
       if address
         opts =
-          section:  thing
-          limit:    30
+          query:  hing
+          limit:  30
 
         console.log(address, latitude, longitude, opts)
         foursquare.Venues.explore(latitude, longitude, opts, null, (error, data) ->
