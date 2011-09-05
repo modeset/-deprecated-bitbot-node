@@ -2,7 +2,8 @@ geo = require("geo")
 foursquare = require("node-foursquare")({
   "secrets" : {
     "clientId":     "VHSYCVBSFG20NNSAMIHOAF2AXC5HXXK0EFLRTZS0RTFT21FB",
-    "clientSecret": "SJZMIGADBMRAIEIMHV1I2TKZORDJLANSM5M2ILPHTBYMQGWV"
+    "clientSecret": "SJZMIGADBMRAIEIMHV1I2TKZORDJLANSM5M2ILPHTBYMQGWV",
+    "redirectUrl":  "http://bitbot.heroku.com/callback"
   }
 })
 
