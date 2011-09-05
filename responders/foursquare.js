@@ -20,8 +20,8 @@
         var opts;
         if (address) {
           opts = {
-            query: thing,
-            limit: 30
+            section: thing,
+            limit: 50
           };
           console.log(address, latitude, longitude, opts);
           return foursquare.Venues.explore(latitude, longitude, opts, null, function(error, data) {
