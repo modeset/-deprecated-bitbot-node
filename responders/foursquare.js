@@ -20,7 +20,7 @@
         var opts;
         if (address) {
           opts = {
-            query: hing,
+            query: thing,
             limit: 30
           };
           console.log(address, latitude, longitude, opts);
