@@ -18,21 +18,25 @@
       location = regex_results[2];
       return geo.geocoder(geo.google, location, false, function(address, latitude, longitude) {
         var opts;
-        opts = {
-          section: thing,
-          limit: 1
-        };
-        console.log(address, latitude, longitude, opts);
-        return foursquare.Venues.explore(latitude, longitude, opts, null, function(error, data) {
-          var venue;
-          console.log(data);
-          if (data.groups[0].items.length > 0) {
-            venue = data.groups[0].items[0].venue;
-            return room.speak("Try " + venue.name + " at " + venue.location.address);
-          } else {
-            return room.speak("Sorry, couldn't find any " + thing + " near " + address);
-          }
-        });
+        if (address) {
+          opts = {
+            section: thing,
+            limit: 1
+          };
+          console.log(address, latitude, longitude, opts);
+          return foursquare.Venues.explore(latitude, longitude, opts, null, function(error, data) {
+            var venue;
+            console.log(data);
+            if (data.groups[0].items.length > 0) {
+              venue = data.groups[0].items[0].venue;
+              return room.speak("Try " + venue.name + " at " + venue.location.address);
+            } else {
+              return room.speak("Sorry, couldn't find any " + thing + " near " + address);
+            }
+          });
+        } else {
+          return room.speak("Sorry, couldn't find any " + thing + " near " + location);
+        }
       });
     }
   };
