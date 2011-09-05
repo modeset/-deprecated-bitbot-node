@@ -28,7 +28,8 @@
             var randomIndex, venue;
             console.log(data);
             if (data.groups[0].items.length > 0) {
-              randomIndex = data.groups[0].items[Math.floor(Math.random() * data.groups[0].items.length)];
+              randomIndex = Math.floor(Math.random() * data.groups[0].items.length);
+              console.log(randomIndex);
               venue = data.groups[0].items[randomIndex].venue;
               return room.speak("Try " + venue.name + " at " + venue.location.address);
             } else {
