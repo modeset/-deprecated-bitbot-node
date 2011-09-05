@@ -26,8 +26,12 @@
         return foursquare.Venues.explore(latitude, longitude, opts, null, function(error, data) {
           var venue;
           console.log(data);
-          venue = data.groups[0].items[0].venue;
-          return room.speak("Try " + venue.name + " at " + venue.address);
+          if (data.groups[0].items.length > 0) {
+            venue = data.groups[0].items[0].venue;
+            return room.speak("Try " + venue.name + " at " + venue.location.address);
+          } else {
+            return room.speak("Sorry, couldn't find any " + thing + " near " + address);
+          }
         });
       });
     }

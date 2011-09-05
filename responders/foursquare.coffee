@@ -23,7 +23,10 @@ exports.receiveMessage = (message, room, client) ->
       console.log(address, latitude, longitude, opts)
       foursquare.Venues.explore(latitude, longitude, opts, null, (error, data) ->
         console.log(data)
-        venue = data.groups[0].items[0].venue
-        room.speak "Try #{venue.name} at #{venue.address}"
+        if (data.groups[0].items.length > 0)
+          venue = data.groups[0].items[0].venue
+          room.speak "Try #{venue.name} at #{venue.location.address}"
+        else
+          room.speak "Sorry, couldn't find any #{thing} near #{address}"
       )
     )
