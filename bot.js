@@ -11,7 +11,7 @@
   app.listen(port, function() {
     return console.log("Listening on " + port);
   });
-  client.responders = [require('./responders/js_sandbox'), require('./responders/meme'), require('./responders/help'), require('./responders/password'), require('./responders/twss'), require('./responders/weather')];
+  client.responders = [require('./responders/js_sandbox'), require('./responders/meme'), require('./responders/help'), require('./responders/password'), require('./responders/twss'), require('./responders/weather'), require('./responders/foursquare')];
   client.rooms(function(rooms) {
     var room, _i, _len, _results;
     _results = [];
