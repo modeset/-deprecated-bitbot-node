@@ -1,6 +1,7 @@
 (function() {
   var celsiusToFahrenheit, googleweather;
   googleweather = require('googleweather');
+  exports.helpMessage = "tell you the weather when you say 'weather for <location>'";
   celsiusToFahrenheit = function(celsius) {
     return Math.round((celsius * (9 / 5)) + 32);
   };
