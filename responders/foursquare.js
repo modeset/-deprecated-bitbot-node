@@ -25,13 +25,15 @@
           };
           console.log(address, latitude, longitude, opts);
           return foursquare.Venues.explore(latitude, longitude, opts, null, function(error, data) {
-            var randomIndex, venue;
-            console.log(data);
+            var randomIndex, speakText, venue;
             if (data.groups[0].items.length > 0) {
               randomIndex = Math.floor(Math.random() * data.groups[0].items.length);
-              console.log(randomIndex);
               venue = data.groups[0].items[randomIndex].venue;
-              return room.speak("Try " + venue.name + " at " + venue.location.address);
+              speakText = "Try " + venue.name;
+              if (venue.location.address) {
+                speakText += " at " + venue.location.address;
+              }
+              return room.speak(speakText);
             } else {
               return room.speak("Sorry, couldn't find any " + thing + " near " + address);
             }
