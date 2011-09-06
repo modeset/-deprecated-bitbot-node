@@ -5,7 +5,6 @@ ranger  = require("ranger")
 client = ranger.createClient(process.env.CAMPFIRE_ACCOUNT, process.env.CAMPFIRE_TOKEN)
 
 # Set up the Campfire room listeners
-
 client.responders = [
   require('./responders/js_sandbox'),
   require('./responders/meme')
