@@ -18,14 +18,13 @@ client.responders = [
 client.rooms((rooms) ->
   for room in rooms
     do (room) ->
-      room.join()
-      console.log('Joined ' + room.name)
-      room.listen((message) ->
-        console.log('Heard ' + message.body + ' from ' + message.userId)
-        for responder in client.responders
-          do (responder) ->
-            responder.receiveMessage(message, room, client)
-      )
+      room.join ->
+        console.log('Joined ' + room.name)
+        room.listen((message) ->
+          console.log(room.name + ': heard ' + message.body + ' from ' + message.userId)
+          for responder in client.responders
+            do (responder) ->
+              responder.receiveMessage(message, room, client)
+        )
       console.log('Listening to ' + room.name)
-      room.speak "Have no fear, Bitbot is here"
 )
