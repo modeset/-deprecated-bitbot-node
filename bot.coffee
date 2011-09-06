@@ -41,4 +41,5 @@ client.rooms((rooms) ->
             responder.receiveMessage(message, room, client)
       )
       console.log('Listening to ' + room.name)
+      room.speak "Have no fear, Bitbot is here"
 )

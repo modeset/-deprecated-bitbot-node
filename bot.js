@@ -33,7 +33,8 @@
           }
           return _results2;
         });
-        return console.log('Listening to ' + room.name);
+        console.log('Listening to ' + room.name);
+        return room.speak("Have no fear, Bitbot is here");
       })(room));
     }
     return _results;
