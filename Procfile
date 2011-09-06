@@ -1,1 +1,1 @@
-web: node bot.js
+campfire: node bot.js

@@ -1,21 +1,8 @@
 # Load libraries
 ranger  = require("ranger")
-express = require("express")
 
 # Reusable objects
 client = ranger.createClient(process.env.CAMPFIRE_ACCOUNT, process.env.CAMPFIRE_TOKEN)
-app = express.createServer(express.logger())
-
-# Set up the express listener
-app.get('/', (request, response) ->
-  response.send('bleep bloop')
-)
-
-port = process.env.PORT || 3000
-
-app.listen(port, ->
-  console.log("Listening on " + port)
-)
 
 # Set up the Campfire room listeners
 

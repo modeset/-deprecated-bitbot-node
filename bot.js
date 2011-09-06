@@ -1,16 +1,7 @@
 (function() {
-  var app, client, express, port, ranger;
+  var client, ranger;
   ranger = require("ranger");
-  express = require("express");
   client = ranger.createClient(process.env.CAMPFIRE_ACCOUNT, process.env.CAMPFIRE_TOKEN);
-  app = express.createServer(express.logger());
-  app.get('/', function(request, response) {
-    return response.send('bleep bloop');
-  });
-  port = process.env.PORT || 3000;
-  app.listen(port, function() {
-    return console.log("Listening on " + port);
-  });
   client.responders = [require('./responders/js_sandbox'), require('./responders/meme'), require('./responders/help'), require('./responders/password'), require('./responders/twss'), require('./responders/weather'), require('./responders/foursquare')];
   client.rooms(function(rooms) {
     var room, _i, _len, _results;
