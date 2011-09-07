@@ -5,7 +5,7 @@
     results = ['yo dawg', '0110100001101001', 'well hello there'];
     random = results[Math.floor(Math.random() * results.length)];
     if (message.userId !== client.bitBotId && message.body && message.body.match(hello_regex)) {
-      return room.speak("yo dawg");
+      return room.speak(random);
     }
   };
 }).call(this);
