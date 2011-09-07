@@ -1,2 +1,2 @@
 web:  node -h
-campfire: node bot.js
+campfire: node botstrap.js

@@ -1,11 +1,12 @@
 geo = require("geo")
-foursquare = require("node-foursquare")({
-  "secrets" : {
-    "clientId":     process.env.FOURSQUARE_CLIENTID,
-    "clientSecret": process.env.FOURSQUARE_CLIENTSECRET,
-    "redirectUrl":  process.env.FOURSQUARE_REDIRECTURL
-  }
-})
+foursquareConfig =
+  secrets:
+    clientId:     process.env.FOURSQUARE_CLIENTID
+    clientSecret: process.env.FOURSQUARE_CLIENTSECRET
+    redirectUrl:  process.env.FOURSQUARE_REDIRECTURL
+
+console.log foursquareConfig
+foursquare = require("node-foursquare")(foursquareConfig)
 
 exports.helpMessage = "find you nearby coffee/food/booze when you say 'find me <thing> near <location>'"
 
