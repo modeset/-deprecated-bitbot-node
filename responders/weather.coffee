@@ -8,6 +8,9 @@ celsiusToFahrenheit = (celsius) ->
 exports.receiveMessage = (message, room, client) ->
   if message.body and /^weather for (.+)/.test( message.body )
     placename = /^weather for (.+)/.exec(message.body)[1]
+  if message.body and /how's the weather|is it nice outside|what's the weather/.test( message.body )
+    placename = "Denver, CO"
+  if placename
     today = new Date()
     weatherCallback = (current, forecast) ->
       if current

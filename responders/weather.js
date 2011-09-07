@@ -9,6 +9,11 @@
     var placename, today, weatherCallback;
     if (message.body && /^weather for (.+)/.test(message.body)) {
       placename = /^weather for (.+)/.exec(message.body)[1];
+    }
+    if (message.body && /how's the weather|is it nice outside|what's the weather/.test(message.body)) {
+      placename = "Denver, CO";
+    }
+    if (placename) {
       today = new Date();
       weatherCallback = function(current, forecast) {
         if (current) {
