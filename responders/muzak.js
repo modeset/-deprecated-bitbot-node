@@ -6,8 +6,8 @@
   });
   exports.helpMessage = "recommend you some music when you say 'find me some <mood> tunes' or 'find me some <style> music'";
   exports.receiveMessage = function(message, room) {
-    respondToTunes(message, room);
-    return respondToMusic(message, room);
+    exports.respondToTunes(message, room);
+    return exports.respondToMusic(message, room);
   };
   exports.respondToTunes = function(message, room) {
     var mood, msg_regex, regex_results, request_url;
