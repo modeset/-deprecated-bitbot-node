@@ -13,7 +13,8 @@ client.responders = [
   require('./responders/twss'),
   require('./responders/weather'),
   require('./responders/foursquare'),
-  require('./responders/yo_dawg')
+  require('./responders/laters'),
+  require('./responders/yo_dawg'),
   require('./responders/muzak')
 ]
 
