@@ -38,7 +38,7 @@ A Campfire bot for Bit Theory
 ## Building
 * have node and npm installed
 * run `npm link`
-* code like the badass you are
-* run `./build.sh`
+* code like the badass you are (and include specs)
+* run `cake spec`
 * git commit, push
 * then deploy to heroku (`git push production|heroku master`)
