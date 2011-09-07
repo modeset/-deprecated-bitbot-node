@@ -16,10 +16,8 @@ client.responders = [
   require('./responders/yo_dawg')
 ]
 
-bitBotId = -1
-
 client.me((user) ->
-  bitBotId = user.id
+  client.bitBotId = user.id
 )
 
 client.rooms((rooms) ->
