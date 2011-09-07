@@ -25,6 +25,7 @@ A Campfire bot for Bit Theory
 * Snow report
 * Daily project status updates (analytics, traffic, etc..)
 * Music suggestions
+* HTTP request console stuff
 
 ## How it works
 * Written in [Node](nodejs.org) and [Coffeescript](http://jashkenas.github.com/coffee-script/).
