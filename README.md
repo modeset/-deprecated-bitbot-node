@@ -13,6 +13,7 @@ A Campfire bot for Bit Theory
 ## What it should do
 * Respond to its name
 * Greet people in the morning
+* Repeat the last command
 * Meeting reminders
 * Highrise reminders
 * Deployments
