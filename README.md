@@ -34,3 +34,11 @@ A Campfire bot for Bit Theory
 * Uses [wwwdude](https://github.com/pfleidi/node-wwwdude) for HTTP client interactions
 * Uses [sandbox](http://gf3.github.com/sandbox/) for sandboxing JS execution
 * Uses [environment variables](http://devcenter.heroku.com/articles/config-vars) to set its Campfire room and token
+
+## Building
+* have node and npm installed
+* run `npm link`
+* code like the badass you are
+* run `./build.sh`
+* git commit, push
+* then deploy to heroku (`git push production|heroku master`)
