@@ -10,5 +10,8 @@
     "googleweather":    "0.1.0",
     "geo":              "0.0.3",
     "node-foursquare":  "0.1.3"
+  },
+  "devDependencies": {
+    "jasmine-node":  "1.0.8"
   }
 }
