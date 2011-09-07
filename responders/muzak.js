@@ -11,7 +11,7 @@
     if (message.body && msg_regex.test(message.body)) {
       regex_results = msg_regex.exec(message.body);
       mood = regex_results[1];
-      request_url = "http://developer.echonest.com/api/v4/song/search?api_key=" + process.env.ECHONEST_API_KEY + "&format=json&results=1&mood=" + mood;
+      request_url = "http://developer.echonest.com/api/v4/song/search?api_key=" + process.env.ECHONEST_API_KEY + "&format=json&results=1&mood=" + mood + "&sort=artist_familiarity-desc";
       return json_client.get(request_url).on('success', function(data, response) {
         var song;
         if (data.response.songs.length > 0) {

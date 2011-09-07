@@ -11,7 +11,7 @@ exports.receiveMessage = (message, room) ->
   if message.body and msg_regex.test( message.body )
     regex_results = msg_regex.exec(message.body)
     mood = regex_results[1]
-    request_url = "http://developer.echonest.com/api/v4/song/search?api_key=#{process.env.ECHONEST_API_KEY}&format=json&results=1&mood=#{mood}"
+    request_url = "http://developer.echonest.com/api/v4/song/search?api_key=#{process.env.ECHONEST_API_KEY}&format=json&results=1&mood=#{mood}&sort=artist_familiarity-desc"
     json_client.get(request_url).on('success', (data, response) ->
       if(data.response.songs.length > 0)
         song = data.response.songs[0]
