@@ -14,6 +14,7 @@ client.responders = [
   require('./responders/weather'),
   require('./responders/foursquare'),
   require('./responders/yo_dawg')
+  require('./responders/muzak')
 ]
 
 client.me((user) ->
