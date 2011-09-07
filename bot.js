@@ -1,8 +1,12 @@
 (function() {
-  var client, ranger;
+  var bitBotId, client, ranger;
   ranger = require("ranger");
   client = ranger.createClient(process.env.CAMPFIRE_ACCOUNT, process.env.CAMPFIRE_TOKEN);
   client.responders = [require('./responders/js_sandbox'), require('./responders/meme'), require('./responders/help'), require('./responders/password'), require('./responders/twss'), require('./responders/weather'), require('./responders/foursquare'), require('./responders/yo_dawg')];
+  bitBotId = -1;
+  client.me(function(user) {
+    return bitBotId = user.id;
+  });
   client.rooms(function(rooms) {
     var room, _i, _len, _results;
     _results = [];
