@@ -1,7 +1,7 @@
 (function() {
   exports.receiveMessage = function(message, room, client) {
     var responder, _i, _len, _ref, _results;
-    if (message.body && message.body.match(/what up bot?/)) {
+    if (message.body && message.body.match(/what up bot|help bit bot)/)) {
       room.speak("yo dawg. need some help? here's what i can do:");
       _ref = client.responders;
       _results = [];

@@ -7,12 +7,13 @@ client = ranger.createClient(process.env.CAMPFIRE_ACCOUNT, process.env.CAMPFIRE_
 # Set up the Campfire room listeners
 client.responders = [
   require('./responders/js_sandbox'),
-  require('./responders/meme')
+  require('./responders/meme'),
   require('./responders/help'),
-  require('./responders/password')
-  require('./responders/twss')
-  require('./responders/weather')
-  require('./responders/foursquare')
+  require('./responders/password'),
+  require('./responders/twss'),
+  require('./responders/weather'),
+  require('./responders/foursquare'),
+  require('./responders/yo_dawg')
 ]
 
 client.rooms((rooms) ->
