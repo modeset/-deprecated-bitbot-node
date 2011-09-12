@@ -33,16 +33,6 @@ describe 'TWSS responder', ->
     twssResponder.receiveMessage(message, room, {})
     expect(room.speak).toHaveBeenCalledWith('TWSS')
 
-  it 'should respond to "push"', ->
-    message.body = "pushed it up"
-    twssResponder.receiveMessage(message, room, {})
-    expect(room.speak).toHaveBeenCalledWith('TWSS')
-
-  it 'should respond to "pull"', ->
-    message.body = "pull it down"
-    twssResponder.receiveMessage(message, room, {})
-    expect(room.speak).toHaveBeenCalledWith('TWSS')
-
   it 'should respond to "rough"', ->
     message.body = "that was rough"
     twssResponder.receiveMessage(message, room, {})
