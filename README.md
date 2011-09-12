@@ -28,6 +28,9 @@ A Campfire bot for Bit Theory
 * Daily project status updates (analytics, traffic, etc..)
 * HTTP request console stuff
 * Heroku scaling
+* Automatically check its status and restart itself if needed
+* Automatically join new rooms
+* Be able to turn off responders for specific rooms
 
 ## How it works
 * Written in [Node](nodejs.org) and [Coffeescript](http://jashkenas.github.com/coffee-script/).
