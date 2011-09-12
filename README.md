@@ -9,7 +9,7 @@ A Campfire bot for Bit Theory
 * TWSS
 * Weather
 * Find nearby stuff (based on Foursquare venues)
-* Music suggestions
+* Music suggestions (based on Echonest, though the data's a bit suspect)
 
 ## What it should do
 * Respond to its name
@@ -31,6 +31,8 @@ A Campfire bot for Bit Theory
 * Automatically check its status and restart itself if needed
 * Automatically join new rooms
 * Be able to turn off responders for specific rooms
+* Be able to remember arbitrary things (api tokens, etc)
+* Announce its own deployments and starts/stops
 
 ## How it works
 * Written in [Node](nodejs.org) and [Coffeescript](http://jashkenas.github.com/coffee-script/).
@@ -44,6 +46,6 @@ A Campfire bot for Bit Theory
 * have node and npm installed
 * run `npm link`
 * code like the badass you are (and include specs)
-* run `cake spec`
+* run `cake spec` and make sure all the specs pass
 * git commit, push
 * then deploy to heroku (`git push production|heroku master`)
