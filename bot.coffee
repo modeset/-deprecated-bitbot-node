@@ -1,38 +1,66 @@
 # Load libraries
 ranger  = require("ranger")
 
-# Reusable objects
+# Set up chat client
 client = ranger.createClient(process.env.CAMPFIRE_ACCOUNT, process.env.CAMPFIRE_TOKEN)
 
+# Set up redis client
+redis = {}
+if process.env.REDISTOGO_URL
+  rtg   = require("url").parse(process.env.REDISTOGO_URL);
+  redis = require("redis").createClient(rtg.port, rtg.hostname);
+	redis.auth(rtg.auth.split(":")[1]);
+else
+  redis = require("redis").createClient();
+
+# Bot class
+class Bot
+	
+	constructor: (@client) ->
+		@responders = [] 
+		setOwnId()
+
+	addResponder: (responder) ->
+		@responders.push(responder)
+		
+	setOwnId: ->
+		@client.me((user) ->
+		  @bitBotId = user.id
+		)
+		
+	join: (room) ->
+		room.join ->
+      console.log('Joined ' + room.name)
+      room.listen((message) ->
+        console.log(room.name + ': heard ' + message.body + ' from ' + message.userId)
+				respond(message)
+			console.log('Listening to ' + room.name)
+			
+  respond: (message) ->
+	  for responder in @responders
+      do (responder) ->
+				if (message.user.id == @bitBotId)
+        responder.receiveMessage(message, room, client)
+		
+	bindRooms: ->
+		@client.rooms((rooms) ->
+		  join room for room in rooms
+		)
+		
+# Set up the bot and responders
+bot = new Bot()
+bot.addResponder require('./responders/js_sandbox')
+bot.addResponder require('./responders/meme')
+bot.addResponder require('./responders/help')
+bot.addResponder require('./responders/password')
+bot.addResponder require('./responders/twss')
+bot.addResponder require('./responders/weather')
+bot.addResponder require('./responders/foursquare')
+bot.addResponder require('./responders/laters')
+bot.addResponder require('./responders/yo_dawg')
+bot.addResponder require('./responders/muzak')
+bot.addResponder require('./responders/beer')
+bot.addResponder require('./responders/fuck_that')
+
 # Set up the Campfire room listeners
-client.responders = [
-  require('./responders/js_sandbox'),
-  require('./responders/meme'),
-  require('./responders/help'),
-  require('./responders/password'),
-  require('./responders/twss'),
-  require('./responders/weather'),
-  require('./responders/foursquare'),
-  require('./responders/laters'),
-  require('./responders/yo_dawg'),
-  require('./responders/muzak')
-  require('./responders/beer')
-]
-
-client.me((user) ->
-  client.bitBotId = user.id
-)
-
-client.rooms((rooms) ->
-  for room in rooms
-    do (room) ->
-      room.join ->
-        console.log('Joined ' + room.name)
-        room.listen((message) ->
-          console.log(room.name + ': heard ' + message.body + ' from ' + message.userId)
-          for responder in client.responders
-            do (responder) ->
-              responder.receiveMessage(message, room, client)
-        )
-      console.log('Listening to ' + room.name)
-)
+bot.bindRooms()
