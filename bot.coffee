@@ -37,7 +37,7 @@ class Bot
 			
   respond: (message) ->
 	  for responder in @responders
-      do (responder) =>
+      do (responder) ->
 				if (message.user.id == @bitBotId)
         responder.receiveMessage(message, room, client)
 		
@@ -53,7 +53,7 @@ bot.addResponder require('./responders/help')
 bot.addResponder require('./responders/password')
 bot.addResponder require('./responders/twss')
 bot.addResponder require('./responders/weather')
-# bot.addResponder require('./responders/foursquare')
+bot.addResponder require('./responders/foursquare')
 bot.addResponder require('./responders/laters')
 bot.addResponder require('./responders/yo_dawg')
 bot.addResponder require('./responders/muzak')
