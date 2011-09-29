@@ -37,7 +37,7 @@ class Bot
 			
   respond: (message) ->
 	  for responder in @responders
-      do (responder) ->
+      do (responder) =>
 				if (message.user.id == @bitBotId)
         responder.receiveMessage(message, room, client)
 		
