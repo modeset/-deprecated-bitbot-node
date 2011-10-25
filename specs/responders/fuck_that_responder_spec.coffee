@@ -8,8 +8,6 @@ describe 'fuck that responder', ->
   beforeEach ->
     room.speak = jasmine.createSpy()
     room.speak.andReturn(null)
-    
-    # /hello bit bot|yo dawg|sup bit bot|morning bit bot/
 
   it 'should respond to "fuck that"', ->
     message.body = "fuck that"

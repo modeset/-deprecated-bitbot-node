@@ -1,0 +1,15 @@
+describe 'fuck that responder', ->
+  hatersResponder = require('../../responders/haters')
+  room = {}
+  hatersResponder.responseUrl = "http://www.google.com"
+  message = 
+    userId: 123
+
+  beforeEach ->
+    room.speak = jasmine.createSpy()
+    room.speak.andReturn(null)
+
+  it 'should respond to "haters gonna hate"', ->
+    message.body = "haters gonna hate"
+    hatersResponder.receiveMessage(message, room, {})
+    expect(room.speak).toHaveBeenCalledWith(hatersResponder.responseUrl)
