@@ -1,6 +1,13 @@
-exports.responseUrl = "http://www.lolbrary.com/lolpics/903/haters-gonna-hate-unicorn-bike-edition-6903.jpg"
+SimpleResponder = require './simple_responder'
 
-exports.receiveMessage = (message, room, client) ->
-  haters_regex = /hater/
-  room.speak exports.responseUrl if message.userId != client.bitBotId and message.body and message.body.match(haters_regex)
+responses = [ 'http://www.lolbrary.com/lolpics/903/haters-gonna-hate-unicorn-bike-edition-6903.jpg',
+              'http://www.hatersgoingtohate.com/wp-content/uploads/2010/06/haters-gonna-hate-cat.jpg',
+              'http://i671.photobucket.com/albums/vv78/Sinsei55/HatersGonnaHatePanda.jpg',
+              'http://legacy-cdn.smosh.com/smosh-pit/062010/haters-6.jpg',
+              'http://legacy-cdn.smosh.com/smosh-pit/062010/haters-2.jpg',
+              'http://legacy-cdn.smosh.com/smosh-pit/062010/haters-8.jpg' ]
+              
+regex     = /hater/
+haters    = new SimpleResponder(regex, responses)
 
+module.exports = haters
