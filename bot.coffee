@@ -19,6 +19,7 @@ client.responders = [
   require('./responders/beer')
   require('./responders/fuck_that')
   require('./responders/haters')
+  require('./responders/whois')
 ]
 
 client.me((user) ->
