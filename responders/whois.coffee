@@ -1,4 +1,4 @@
-var whois = require('../lib/whois');
+whois = require('../lib/whois');
 
 exports.receiveMessage = (message, room, client) ->
   match = message.body.match(/whois (\S*)/)
