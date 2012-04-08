@@ -8,7 +8,7 @@ responses = [ 'http://www.lolbrary.com/lolpics/903/haters-gonna-hate-unicorn-bik
               'http://legacy-cdn.smosh.com/smosh-pit/062010/haters-8.jpg',
               'http://s3.amazonaws.com/kym-assets/photos/images/newsfeed/000/085/977/HATERS.jpg',
               'http://s3.amazonaws.com/kym-assets/photos/images/newsfeed/000/055/267/PWHHGH.jpg' ]
-              
+
 regex     = /hater/
 haters    = new SimpleResponder(regex, responses)
 

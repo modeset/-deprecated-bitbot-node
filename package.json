@@ -1,11 +1,15 @@
 {
   "name": "bitbot",
   "version": "0.0.1",
+  "engines": {
+    "node": "0.6.14",
+    "npm": "1.1.16"
+  },
   "dependencies": {
     "coffee-script":    "1.1.2",
     "express":          "2.4.6",
     "campfire":         "0.1.1",
-    "wwwdude":          "0.1.0",
+    "shred":            "0.7.15",
     "sandbox":          "0.8.1",
     "googleweather":    "0.1.0",
     "geo":              "0.0.3",

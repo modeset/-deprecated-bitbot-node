@@ -3,5 +3,4 @@ exports.receiveMessage = (message, room, client) ->
     room.speak "yo dawg. need some help? here's what i can do:"
     for responder in client.responders
       do(responder) ->
-        if responder.helpMessage
-          room.speak(responder.helpMessage)
+        room.speak(responder.helpMessage) if responder.helpMessage?
