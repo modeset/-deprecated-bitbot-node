@@ -1,8 +1,11 @@
 # Load libraries
-ranger  = require("ranger")
+Campfire = require('campfire').Campfire
 
 # Reusable objects
-client = ranger.createClient(process.env.CAMPFIRE_ACCOUNT, process.env.CAMPFIRE_TOKEN)
+client = new Campfire
+  ssl:      true
+  token:    process.env.CAMPFIRE_TOKEN
+  account:  process.env.CAMPFIRE_ACCOUNT
 
 # Set up the Campfire room listeners
 client.responders = [
@@ -23,11 +26,10 @@ client.responders = [
   require('./responders/bummer')
 ]
 
-client.me((user) ->
+client.me (user) ->
   client.bitBotId = user.id
-)
 
-client.rooms((rooms) ->
+client.rooms (rooms) ->
   for room in rooms
     do (room) ->
       room.join ->
@@ -39,4 +41,3 @@ client.rooms((rooms) ->
               responder.receiveMessage(message, room, client)
         )
       console.log('Listening to ' + room.name)
-)
