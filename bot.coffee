@@ -31,7 +31,7 @@ client.me (error,response) ->
   console.log 'Got bot info', user
   client.bitBotId = user.id
 
-client.rooms (rooms) ->
+client.rooms (error, rooms) ->
   for room in rooms
     do (room) ->
       room.join ->
