@@ -27,17 +27,15 @@ client.responders = [
 ]
 
 client.me (user) ->
+  console.log 'Got bot info', user
   client.bitBotId = user.id
 
 client.rooms (rooms) ->
   for room in rooms
     do (room) ->
       room.join ->
-        console.log('Joined ' + room.name)
-        room.listen((message) ->
-          console.log(room.name + ': heard ' + message.body + ' from ' + message.userId)
-          for responder in client.responders
-            do (responder) ->
-              responder.receiveMessage(message, room, client)
-        )
-      console.log('Listening to ' + room.name)
+        console.log 'Joined ' + room.name
+        room.listen (message) ->
+          console.log room.name + ': heard ' + message.body + ' from ' + message.userId
+          responder.receiveMessage(message, room, client) for responder in client.responders
+      console.log 'Listening to ' + room.name
