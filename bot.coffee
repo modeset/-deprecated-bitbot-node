@@ -27,6 +27,7 @@ client.responders = [
 ]
 
 client.me (response) ->
+  console.log 'args', arguments
   user = response.user
   console.log 'Got bot info', user
   client.bitBotId = user.id
