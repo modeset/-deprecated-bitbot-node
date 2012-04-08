@@ -5,5 +5,5 @@ exports.helpMessage = "generate you a fresh new password when you say 'make me a
 
 exports.receiveMessage = (message, room, client) ->
   if message.body and /^make me a password/.test( message.body )
-   shred.get('http://fishsticks.herokuapp.com/?wordlist=propernames').on 200, (response) ->
+   shred.get(url: 'http://fishsticks.herokuapp.com/?wordlist=propernames').on 200, (response) ->
       room.speak('Try this one: ' + response.content.data)
