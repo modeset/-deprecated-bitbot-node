@@ -7,7 +7,6 @@
   },
   "dependencies": {
     "coffee-script":    "1.1.2",
-    "express":          "2.4.6",
     "campfire":         "0.1.1",
     "shred":            "0.7.15",
     "sandbox":          "0.8.1",
