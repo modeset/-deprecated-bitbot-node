@@ -26,7 +26,8 @@ client.responders = [
   require('./responders/bummer')
 ]
 
-client.me (user) ->
+client.me (response) ->
+  user = response.user
   console.log 'Got bot info', user
   client.bitBotId = user.id
 
