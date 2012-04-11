@@ -33,11 +33,10 @@ client.me (error,response) ->
 
 client.rooms (error, rooms) ->
   for room in rooms
-    do (room) ->
-      continue if room.name.match(new RegExp(process.env.EXCLUDED_ROOMS))
-      room.join ->
-        console.log 'Joined ' + room.name
-        room.listen (message) ->
-          console.log room.name + ': heard ' + message.body + ' from ' + message.userId
-          responder.receiveMessage(message, room, client) for responder in client.responders
-      console.log 'Listening to ' + room.name
+    continue if room.name.match(new RegExp(process.env.EXCLUDED_ROOMS))
+    room.join ->
+      console.log 'Joined ' + room.name
+      room.listen (message) ->
+        console.log room.name + ': heard ' + message.body + ' from ' + message.userId
+        responder.receiveMessage(message, room, client) for responder in client.responders
+    console.log 'Listening to ' + room.name
