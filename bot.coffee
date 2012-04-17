@@ -24,6 +24,7 @@ client.responders = [
   require('./responders/haters')
   require('./responders/whois')
   require('./responders/bummer')
+  require('./responders/thanks')
 ]
 
 client.me (error,response) ->
