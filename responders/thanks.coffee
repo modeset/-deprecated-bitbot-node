@@ -9,3 +9,4 @@ regex     = /thank/
 thanks    = new SimpleResponder(regex, responses)
 
 module.exports = thanks
+ 
