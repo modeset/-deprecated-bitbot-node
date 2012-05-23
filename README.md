@@ -10,6 +10,7 @@ A Campfire bot for Bit Theory
 * Weather
 * Find nearby stuff (based on Foursquare venues)
 * Music suggestions (based on Echonest, though the data's a bit suspect)
+* Take credit for other people's thanks
 
 ## What it should do
 * Respond to its name
