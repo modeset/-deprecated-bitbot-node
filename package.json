@@ -2,12 +2,12 @@
   "name": "bitbot",
   "version": "0.0.1",
   "engines": {
-    "node": "0.6.14",
-    "npm": "1.1.9"
+    "node": "0.8.x",
+    "npm": "1.1.x"
   },
   "dependencies": {
     "coffee-script":    "1.1.2",
-    "campfire":         "0.1.1",
+    "campfire":         "git+https://github.com/tristandunn/node-campfire.git#159c7d" ,
     "shred":            "0.7.15",
     "sandbox":          "0.8.1",
     "googleweather":    "0.1.0",
