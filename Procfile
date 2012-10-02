@@ -1,1 +1,1 @@
-campfire: node botstrap.js
+campfire: bin/bitbot

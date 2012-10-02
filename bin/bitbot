@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+# -*- mode: ruby -*-
+
+# Requires
+begin
+  require 'bitbot'
+rescue LoadError
+  $:.unshift(File.dirname(__FILE__) + '/../lib') unless $:.include?(File.dirname(__FILE__) + '/../lib')
+  require 'rubygems'
+  require 'bitbot'
+end
+
+Bitbot::Bot.new.run!
