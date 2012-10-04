@@ -19,16 +19,13 @@ module Bitbot
     end
 
     def bind_to_room
-      Thread.new do
-        @room.listen do |message|
-          puts "#{@room.name}: heard '#{message.body}' from #{message.user.name}"
-          notify_responders self, message
-        end
-        puts "Listening to #{room.name}"
+      @room.listen do |message|
+        notify_responders message
       end
+      puts "Listening to #{room.name}"
     end
 
-    def notify_responders
+    def notify_responders(message)
       @responders.each do |responder|
         if message_from_self?(message) && responder.respond_to?(:receive_own_message)
           responder.receive_own_message(message)
@@ -39,7 +36,7 @@ module Bitbot
     end
 
     def message_from_self?(message)
-      message.user.id == @bot.me.id
+      message.user.id == @bot.campfire.me.id
     end
 
   end

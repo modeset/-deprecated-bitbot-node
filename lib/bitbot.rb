@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'tinder'
-
+require 'eventmachine'
 require 'bitbot/room_binding'
 
 Dir.glob(File.join(File.dirname(__FILE__), 'bitbot', 'responders', '*.rb')) do |responder|
@@ -18,9 +18,9 @@ module Bitbot
     end
 
     def run!
-      puts @campfire.rooms
-      room_bindings = @campfire.rooms.map { |room| RoomBinding.new(self, room.name) }
-      room_bindings.each { |b| b.thread.join }
+      EventMachine::run do
+        @campfire.rooms.map { |room| RoomBinding.new(self, room.name) }
+      end
     end
 
   end
