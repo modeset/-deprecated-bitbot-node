@@ -22,7 +22,6 @@ module Bitbot
       @room.listen do |message|
         notify_responders message
       end
-      puts "Listening to #{room.name}"
     end
 
     def notify_responders(message)
