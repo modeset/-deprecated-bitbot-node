@@ -11,10 +11,11 @@ module Bitbot
 
   class Bot
 
-    attr_accessor :campfire
+    attr_accessor :campfire, :bot_user_id
 
     def initialize(subdomain = ENV['CAMPFIRE_SUBDOMAIN'], token = ENV['CAMPFIRE_TOKEN'], ssl = true)
       @campfire = Tinder::Campfire.new subdomain, token: token, ssl: ssl
+      @bot_user_id = @campfire.me.id
     end
 
     def run!

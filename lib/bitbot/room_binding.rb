@@ -36,7 +36,7 @@ module Bitbot
     end
 
     def message_from_self?(message)
-      message.user.id == @bot.campfire.me.id
+      message.user.id == @bot.bot_user_id
     end
 
   end
