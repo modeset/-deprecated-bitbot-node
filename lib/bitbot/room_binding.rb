@@ -15,7 +15,7 @@ module Bitbot
     private
 
     def register_responders
-      @responders = Bitbot::Responders::BaseResponder.available_responders.map { |r| r.new(self) }
+      @responders = Bitbot::Responders.available_responders.map { |r| r.new(self) }
     end
 
     def bind_to_room
@@ -35,7 +35,7 @@ module Bitbot
     end
 
     def message_from_self?(message)
-      message.user.id == @bot.bot_user_id
+      (message.user && message.user.id) == @bot.bot_user_id
     end
 
   end

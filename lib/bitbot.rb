@@ -18,17 +18,18 @@ module Bitbot
     end
 
     def run!
+      puts "Bot user ID is #{bot_user_id}"
       EventMachine::run do
-        @campfire.rooms.map { |room| RoomBinding.new(self, room.name) }
+        campfire.rooms.map { |room| RoomBinding.new(self, room.name) }
       end
     end
 
     def campfire
-      @campfire ||= Tinder::Campfire.new @subdomain, token: @token, ssl: @ssl
+      @campfire ||= Tinder::Campfire.new @subdomain, token: @token, ssl: @use_ssl
     end
 
     def bot_user_id
-      @bot_user_id = campfire.me.id
+      @bot_user_id ||= campfire.me.id
     end
 
   end
