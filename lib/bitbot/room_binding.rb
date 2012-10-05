@@ -15,6 +15,7 @@ module Bitbot
     private
 
     def register_responders
+      puts "Registering #{Bitbot::Responders.available_responders.count} responders"
       @responders = Bitbot::Responders.available_responders.map { |r| r.new(self) }
     end
 
@@ -35,7 +36,8 @@ module Bitbot
     end
 
     def message_from_self?(message)
-      (message.user && message.user.id) == @bot.bot_user_id
+      message.inspect # This seems to make it more stable
+      message.user.id == @bot.bot_user_id
     end
 
   end
