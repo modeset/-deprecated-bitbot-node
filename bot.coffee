@@ -28,6 +28,7 @@ client.responders = [
   require('./responders/hello')
   require('./responders/no_idea')
   require('./responders/query')
+  require('./responders/love')
 ]
 
 client.me (error,response) ->
