@@ -5,7 +5,7 @@ exports.helpMessage = "tell you the weather when you say 'weather for <location>
 celsiusToFahrenheit = (celsius) ->
   return Math.round((celsius * (9 / 5)) + 32)
 
-exports.receiveMessage = (message, room, client) ->
+exports.receiveMessage = (message, room, bot) ->
   if message.body and /^weather for (.+)/.test( message.body )
     placename = /^weather for (.+)/.exec(message.body)[1]
   if message.body and /how's the weather|is it nice outside|what's the weather/.test( message.body )

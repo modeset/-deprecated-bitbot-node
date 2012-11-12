@@ -5,8 +5,5 @@ responses = [ 'NP',
               'you got it',
               'you\'re welcome' ]
 
-regex     = /thank/
-thanks    = new SimpleResponder(regex, responses)
-
-module.exports = thanks
- 
+regex           = /thank/
+module.exports  = new SimpleResponder(regex, responses)

@@ -16,6 +16,6 @@ describe 'beer responder', ->
   it 'should not respond to "beer" from itself', ->
     message.userId = 123
     message.body = "i like beer"
-    client = { bitBotId: 123}
+    client = { botUserId: 123}
     beerResponder.receiveMessage(message, room, client)
     expect(room.speak).not.toHaveBeenCalled()
