@@ -1,7 +1,7 @@
 class Bitbot
 
   constructor: (@client, @responders, @periodics, @redis, @ignored_room_regex) ->
-    @periodicTImers = []
+    @periodicTimers = []
     @responderBindings = []
     @getOwnInfo()
     @bindPeriodics()
@@ -39,7 +39,7 @@ class Bitbot
   bindResponders: =>
     @responderBindings = []
     @activeRooms (room) =>
-      room.join ->
+      room.join =>
         console.log 'Joined ' + room.name
         @responderBindings.push room.listen (message) ->
           console.log room.name + ': heard ' + message.body + ' from ' + message.userId
