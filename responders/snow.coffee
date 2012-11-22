@@ -8,7 +8,6 @@ exports.receiveMessage = (message, room, bot) ->
   if message.body and /^snow for (.+)/.test( message.body )
     placename = /^snow for (.+)/.exec(message.body)[1].toLowerCase()
     shred.get(url: 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&q=http://www.onthesnow.com/colorado/snow.rss').on 200, (response) ->
-      console.log response.content.body
       entries = JSON.parse(response.content.body).responseData.feed.entries
 
       result = _(entries).find (entry) ->
