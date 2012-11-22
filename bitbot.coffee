@@ -3,7 +3,7 @@ class Bitbot
   constructor: (@client, @responders, @periodics, @redis, @ignored_room_regex) ->
     @periodicTImers = []
     @responderBindings = []
-    @getBotInfo()
+    @getOwnInfo()
     @bindPeriodics()
     @bindResponders()
 
