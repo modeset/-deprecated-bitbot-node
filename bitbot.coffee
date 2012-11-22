@@ -41,7 +41,7 @@ class Bitbot
     @activeRooms (room) =>
       room.join =>
         console.log 'Joined ' + room.name
-        @responderBindings.push room.listen (message) ->
+        @responderBindings.push room.listen (message) =>
           console.log room.name + ': heard ' + message.body + ' from ' + message.userId
           responder.receiveMessage(message, room, @) for name, responder of @responders
         console.log 'Listening to ' + room.name
