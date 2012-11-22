@@ -1,7 +1,7 @@
 # Load libraries
-Campfire = require('campfire').Campfire
-Bitbot = require('./bitbot')
-redis = require('redis-url').connect(process.env.REDISTOGO_URL)
+Campfire  = require('campfire').Campfire
+Bitbot    = require('./bitbot')
+redis     = require('redis-url').connect(process.env.REDISTOGO_URL)
 
 # Reusable objects
 client = new Campfire
@@ -9,11 +9,9 @@ client = new Campfire
   token:    process.env.CAMPFIRE_TOKEN
   account:  process.env.CAMPFIRE_ACCOUNT
 
-# Grab the list of ignored rooms
 ignored_rooms = new RegExp(process.env.EXCLUDED_ROOMS)
+responders    = require('./responders')
+periodics     = require('./periodics')
 
-# Set up the Campfire room listeners
-responders = require('./responders')
-
-new Bitbot(client, responders, redis, ignored_rooms)
+new Bitbot(client, responders, periodics, redis, ignored_rooms)
 
