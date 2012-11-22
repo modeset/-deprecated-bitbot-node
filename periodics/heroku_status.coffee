@@ -10,6 +10,7 @@ class HerokuStatusPeriodic
     setInterval @checkStatus, 60 * 1000
 
   checkStatus: =>
+    console.log 'Checking for Heroku status updates'
     @shred.get(url: 'https://status.heroku.com/api/v3/current-status').on 200, (response) =>
       if response.content.data.issues.length > 0
         @room.speak 'Heroku is reporting issues. Check http://status.heroku.com/ for details'
