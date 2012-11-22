@@ -7,7 +7,7 @@ class HerokuStatusPeriodic
 
   bind: (room) =>
     @room = room
-    setInterval @checkStatus, 60 * 1000
+    setInterval @checkStatus, 5 * 60 * 1000
 
   checkStatus: =>
     console.log 'Checking for Heroku status updates'
