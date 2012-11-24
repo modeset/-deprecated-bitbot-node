@@ -49,7 +49,7 @@ class Bitbot
     binding.abort() for binding in @responderBindings
 
 
-  respondToMessage: (message, room) =>
+  respondToMessage: (room, message) =>
     console.log room.name + ': heard ' + message.body + ' from ' + message.userId
     responder.receiveMessage(message, room, @) for name, responder of @responders
 

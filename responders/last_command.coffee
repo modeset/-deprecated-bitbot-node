@@ -4,7 +4,7 @@ exports.receiveMessage = (message, room, bot) ->
   if message.body is '!!'
     bot.redis.hget 'lastcommands', message.userId, (err, reply) ->
       if reply
-        bot.respondToMessage JSON.parse(reply), room
+        bot.respondToMessage room, JSON.parse(reply)
       else
         console.log 'No last message found to reply to'
   else
