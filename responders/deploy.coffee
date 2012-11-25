@@ -46,9 +46,8 @@ exports.receiveMessage = (message, room, bot) ->
   if command is 'go'
     bot.redis.hgetall redis_key, (err, reply) ->
       config = reply
-      console.log 'Prechecking deployment'
-      console.log config
-      unless config['heroku-app'] and config['git-repo'] and config['branch']
+      console.log 'Prechecking deployment', config
+      unless config and config['heroku-app'] and config['git-repo'] and config['branch']
         room.speak 'I don\'t have all the info I need to deploy from this room. Have you set an app, a repo, and a branch?'
       else
         (new HerokuDeployer(room, config['git-repo'], config['heroku-app'], config['branch'])).run()
