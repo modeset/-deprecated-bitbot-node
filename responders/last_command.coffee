@@ -1,3 +1,5 @@
+_ = require 'underscore'
+
 exports.helpMessage = "repeat your last action when you say '!!'"
 
 exports.receiveMessage = (message, room, bot) ->
@@ -8,4 +10,5 @@ exports.receiveMessage = (message, room, bot) ->
       else
         room.speak 'Sorry, I don\'t have a previous command from you to repeat'
   else
-    bot.redis.hset 'lastcommands', message.userId, JSON.stringify(message), (err, reply) ->
+    strippedMessage = _(message).pick('id', 'body', 'type', 'roomId', 'userId', 'tweet', 'createdAt')
+    bot.redis.hset 'lastcommands', message.userId, JSON.stringify(strippedMessage), (err, reply) ->
