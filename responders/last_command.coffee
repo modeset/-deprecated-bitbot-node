@@ -6,6 +6,6 @@ exports.receiveMessage = (message, room, bot) ->
       if reply
         bot.respondToMessage room, JSON.parse(reply)
       else
-        console.log 'No last message found to reply to'
+        room.speak 'Sorry, I don\'t have a previous command from you to repeat'
   else
     bot.redis.hset 'lastcommands', message.userId, JSON.stringify(message), (err, reply) ->
