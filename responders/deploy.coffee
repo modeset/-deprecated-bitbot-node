@@ -7,7 +7,7 @@ class HerokuDeployer
 
   constructor: (@room, @repo_url, @app_name, @branch) ->
 
-  deploy: =>
+  run: =>
     heroku_url = "git@heroku.com:#{@app_name}.git"
     @room.speak "Deploying #{@branch} from #{@repo_url} to #{heroku_url}"
     deploy = ChildProcess.spawn('bin/git-deploy.sh', [ @repo_url, heroku_url, @branch ])
@@ -45,7 +45,7 @@ exports.receiveMessage = (message, room, bot) ->
       unless config['heroku-app'] and config['git-repo'] and config['branch']
         room.speak 'I don\'t have all the info I need to deploy from this room. Have you set an app, a repo, and a branch?'
       else
-        new HerokuDeployer(room, config['git-repo'], config['heroku-app'], config['branch'])
+        (new HerokuDeployer(room, config['git-repo'], config['heroku-app'], config['branch'])).run()
 
   if command is 'set-heroku-app'
     bot.redis.hset redis_key, 'heroku-app', value, (err, reply) ->
