@@ -26,6 +26,8 @@ exports.helpMessage = "Deploy an app to Heroku when you say 'deploy go'"
 
 exports.receiveMessage = (message, room, bot) ->
 
+  return unless message?.body
+
   # See if we're relevant and get the command
   match = message.body.match(/^deploy (\S+)(?: (\S+))?$/)
   return unless match
