@@ -13,16 +13,22 @@ class HerokuDeployer
     deploy = ChildProcess.spawn('bin/git-deploy.sh', [ @repo_url, heroku_url, @branch ])
     deploy.stdout.on 'data', @processDidOutput
     deploy.stderr.on 'data', @processDidOutput
-    deploy.stderr.on 'exit', @processDidExit
+    deploy.on 'exit', @processDidExit
 
   processDidOutput: (data) =>
     @room.speak(m) for m in data.toString().split("\n") when m.length > 0
 
-  processDidExit: =>
+  processDidExit: (code) =>
     @room.speak 'Deploy complete!'
 
 
-exports.helpMessage = "Deploy an app to Heroku when you say 'deploy go'"
+exports.helpMessage = """
+                      Deploy an app to Heroku when you say 'deploy go'
+                        Note that you must first configure a repo, Heroku app and branch with the following:
+                          deploy set-heroku-app <appname>
+                          deploy set-git-repo <repo>
+                          deploy set-branch <branch>
+                      """
 
 exports.receiveMessage = (message, room, bot) ->
 

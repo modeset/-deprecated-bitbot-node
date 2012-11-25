@@ -10,7 +10,7 @@ HEROKU_URL=$2
 BRANCH=$3
 REPO=`mktemp -d /tmp/tmp.XXXXXXXXXX`
 
-echo "Deploying from $GITHUB_URL to $HEROKU_URL"
+echo "Deploying from $GIT_URL to $HEROKU_URL"
 
 git clone $GIT_URL $REPO
 cd $REPO
