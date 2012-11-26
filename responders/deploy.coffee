@@ -8,7 +8,7 @@ class HerokuDeployer
   constructor: (@room, @repo_url, @app_name, @branch) ->
 
   run: =>
-    @room.speak "Okay, I'm deploying #{@branch} from #{@repo_url} to #{@app_name}. Here we go!"
+    @room.speak "Okay, I'm deploying #{@branch} from #{@repo_url} to #{@app_name}. Here we go..."
     heroku_url = "git@heroku.com:#{@app_name}.git"
     deploy = ChildProcess.spawn('bin/git-deploy.sh', [ @repo_url, heroku_url, @branch ])
     deploy.stdout.on 'data', @processDidOutput
@@ -16,10 +16,10 @@ class HerokuDeployer
     deploy.on 'exit', @processDidExit
 
   processDidOutput: (data) =>
-    @room.paste(m) for m in data.toString().split("\n") when m.length > 0
+    @room.speak(m) for m in data.toString().split("\n") when m.length > 0
 
   processDidExit: (code) =>
-    @room.speak "Hey, I'm all finished deploying #{@app_name}! You should probably check it out now."
+    @room.speak "Alright, I'm done deploying #{@app_name}! You should probably check it out now."
 
 
 exports.helpMessage = """
@@ -46,7 +46,7 @@ exports.receiveMessage = (message, room, bot) ->
   if command is 'go'
     bot.redis.hgetall redis_key, (err, reply) ->
       config = reply
-      room.speak 'One moment, checking deployment settings'
+      room.speak 'One moment, checking deployment settings...'
       unless config and config['heroku-app'] and config['git-repo'] and config['branch']
         room.speak 'Sorry, I don\'t have all the info I need to deploy from this room. Have you set an app, a repo, and a branch?'
       else
