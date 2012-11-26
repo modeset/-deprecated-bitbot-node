@@ -33,7 +33,11 @@ exports.helpMessage = """
 
 exports.receiveMessage = (message, room, bot) ->
 
+  # Abort if this is a presence message
   return unless message?.body
+
+  # Abort if this is a bot message
+  return if message.userId is bot.botUserId
 
   redis_key = "apps-config-#{room.id}"
   app_name  = null

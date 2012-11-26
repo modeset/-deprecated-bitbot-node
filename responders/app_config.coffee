@@ -11,7 +11,11 @@ exports.receiveMessage = (message, room, bot) ->
 
   redis_key = "apps-config-#{room.id}"
 
+  # Abort if this is a presence message
   return unless message?.body
+
+  # Abort if this is a bot message
+  return if message.userId is bot.botUserId
 
   # Add an app
   if match = message.body.match(/add(?: an) app (\S+) (\S+) (\S+)$/)
