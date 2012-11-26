@@ -1,7 +1,7 @@
 Sandbox = require('sandbox')
 sandbox = new Sandbox()
 
-exports.helpMessage = "evaluate arbitrary javascript code in a sandbox when you say 'eval <code>'"
+exports.helpMessage = "Evaluate arbitrary JS code in a sandbox when you say 'eval <code>'"
 
 exports.receiveMessage = (message, room, bot) ->
   if message.body and /^eval (.+)/.test( message.body )

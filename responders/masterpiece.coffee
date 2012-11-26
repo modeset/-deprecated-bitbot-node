@@ -2,7 +2,7 @@ _ = require('underscore')
 Shred = require('shred')
 shred = new Shred()
 
-exports.helpMessage = "grab the specials for masterpiece deli when you say 'mmm masterpiece'"
+exports.helpMessage = "Grab the specials for Masterpiece Deli when you say 'mmm masterpiece'"
 
 exports.receiveMessage = (message, room, bot) ->
   if message.body and /^mmm masterpiece/.test( message.body )

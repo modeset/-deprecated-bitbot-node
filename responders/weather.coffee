@@ -1,6 +1,6 @@
 googleweather = require('googleweather')
 
-exports.helpMessage = "tell you the weather when you say 'weather for <location>'"
+exports.helpMessage = "Tell you the weather when you say 'weather for <location>'"
 
 celsiusToFahrenheit = (celsius) ->
   return Math.round((celsius * (9 / 5)) + 32)

@@ -2,7 +2,7 @@ _ = require('underscore')
 Shred = require('shred')
 shred = new Shred()
 
-exports.helpMessage = "grab a snow report when you say 'snow for <resort>'"
+exports.helpMessage = "Grab a snow report when you say 'snow for <resort>' (Colorado-only for now)"
 
 exports.receiveMessage = (message, room, bot) ->
   if message.body and /^snow for (.+)/.test( message.body )

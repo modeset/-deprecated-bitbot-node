@@ -8,7 +8,7 @@ foursquareConfig =
 console.log foursquareConfig
 foursquare = require("node-foursquare")(foursquareConfig)
 
-exports.helpMessage = "find you nearby coffee/food/booze when you say 'find me <thing> near <location>'"
+exports.helpMessage = "Find you nearby coffee/food/booze when you say 'find me <thing> near <location>'"
 
 exports.receiveMessage = (message, room, client) ->
   msg_regex = /^find me (.+) near (.+)/

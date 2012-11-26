@@ -1,7 +1,7 @@
 Shred = require("shred")
 shred = new Shred()
 
-exports.helpMessage = "make you a fresh meme when you say 'meme'"
+exports.helpMessage = "Make you a fresh meme when you say 'meme'"
 
 exports.receiveMessage = (message, room, bot) ->
   if message.body and message.body.match(/meme/)

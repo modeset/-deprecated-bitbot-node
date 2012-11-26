@@ -1,7 +1,7 @@
 Shred = require("shred")
 shred = new Shred()
 
-exports.helpMessage = "recommend you some music when you say 'find me some <mood> tunes' or 'find me some <style> music'"
+exports.helpMessage = "Recommend you some music when you say 'find me some <mood> tunes' or 'find me some <style> music'"
 
 exports.receiveMessage = (message, room, bot) ->
   exports.respondToTunes(message,room)

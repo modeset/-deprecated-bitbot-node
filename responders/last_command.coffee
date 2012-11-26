@@ -1,6 +1,6 @@
 _ = require 'underscore'
 
-exports.helpMessage = "repeat your last action when you say '!!'"
+exports.helpMessage = "Repeat your last action when you say '!!'"
 
 exports.receiveMessage = (message, room, bot) ->
   if message.body is '!!'
