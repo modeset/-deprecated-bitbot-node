@@ -16,7 +16,7 @@ class HerokuDeployer
     deploy.on 'exit', @processDidExit
 
   processDidOutput: (data) =>
-    @room.paste(m) for m in data.toString()
+    @room.paste(m) for m in data.toString().split("\n") when m.length > 0
 
   processDidExit: (code) =>
     @room.speak "Hey, I'm all finished deploying #{@app_name}! You should probably check it out now."
