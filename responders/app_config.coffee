@@ -1,3 +1,5 @@
+_ = require('underscore')
+
 exports.helpMessage = """
                       Configure an app for management via this room:
                         Add (or update) it when you say 'add an app <name> <heroku app> <repo>'
