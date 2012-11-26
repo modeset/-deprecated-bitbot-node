@@ -17,8 +17,12 @@ cd $REPO
 git remote add heroku $HEROKU_URL
 git push heroku $BRANCH:master
 
+EXIT_STATUS=$?
+
+echo "Cleaning up"
+
 rm -f "$IDENTITY_FILE"
 rm -f "$IDENTITY_FILE.pub"
 rm -rf $REPO
 
-exit 0
+exit $EXIT_STATUS

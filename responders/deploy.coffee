@@ -23,8 +23,11 @@ class HerokuDeployer
     # The outut buffer sometimes lags just slightly, so introduce a delay to make sure it's flushed
     setTimeout @printDoneMessage, 250
 
-  printDoneMessage: =>
-    @room.speak "Alright, I'm done deploying #{@app_name}! You should probably check it out now."
+  printDoneMessage: (code) =>
+    if code is 0
+      @room.speak "Alright, I'm done deploying #{@app_name}! You should probably check it out now."
+    else
+      @room.speak "Something went wrong deploying #{@app_name}. You should probably check the logs and retry."
 
 
 exports.helpMessage = """
