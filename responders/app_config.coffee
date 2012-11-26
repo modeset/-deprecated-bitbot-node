@@ -29,12 +29,15 @@ exports.receiveMessage = (message, room, bot) ->
   # List apps
   if match = message.body.match(/what apps are there(?:\?)?$/)
     bot.redis.hgetall redis_key, (err, apps) ->
-      room.speak "Here's the list of apps I know about:"
-      for name, key of apps
-        do (name, key) ->
-          bot.redis.hgetall key, (err, config) ->
-            if config and config['git_repo'] and config['heroku_app']
-              room.speak "'#{name}' from '#{config['git_repo']}', pointed to '#{config['heroku_app']}' on Heroku"
+      if _(apps).size() > 0
+        room.speak "Here's the list of apps I know about:"
+        for name, key of apps
+          do (name, key) ->
+            bot.redis.hgetall key, (err, config) ->
+              if config and config['git_repo'] and config['heroku_app']
+                room.speak "'#{name}' from '#{config['git_repo']}', pointed to '#{config['heroku_app']}' on Heroku"
+      else
+        room.speak "I don't know any apps"
 
 
   # Delete an app
