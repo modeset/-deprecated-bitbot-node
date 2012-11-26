@@ -19,6 +19,10 @@ class HerokuDeployer
     @room.speak(m) for m in data.toString().split("\n") when m.length > 0
 
   processDidExit: (code) =>
+    # The outut buffer sometimes lags just slightly, so introduce a delay to make sure it's flushed
+    setTimeout @printDoneMessage, 250
+
+  printDoneMessage: =>
     @room.speak "Alright, I'm done deploying #{@app_name}! You should probably check it out now."
 
 
@@ -50,7 +54,7 @@ exports.receiveMessage = (message, room, bot) ->
       unless config and config['heroku-app'] and config['git-repo'] and config['branch']
         room.speak 'Sorry, I don\'t have all the info I need to deploy from this room. Have you set an app, a repo, and a branch?'
       else
-        (new HerokuDeployer(room, config['git-repo'], config['heroku-app'], config['branch'])).run()
+        setTimeout (new HerokuDeployer(room, config['git-repo'], config['heroku-app'], config['branch'])).run, 250
 
   if command is 'set-app'
     bot.redis.hset redis_key, 'heroku-app', value, (err, reply) ->
