@@ -8,7 +8,8 @@ class Bitbot
     @bindResponders()
 
     # Reload the bot every 30 minutes
-    @reloadInterval = setInterval(@reload, 30 * 60 * 1000)
+    # Disabled for now because the campfire lib doesn't return the info we need to unbind listeners properly
+    # @reloadInterval = setInterval(@reload, 30 * 60 * 1000)
 
 
   reload: =>
@@ -46,7 +47,8 @@ class Bitbot
 
 
   unbindResponders: =>
-    binding.abort() for binding in @responderBindings
+    binding?.abort() for binding in @responderBindings
+    true
 
 
   respondToMessage: (room, message) =>
