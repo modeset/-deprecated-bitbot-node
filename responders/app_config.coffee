@@ -31,7 +31,7 @@ exports.receiveMessage = (message, room, bot) ->
   # List apps
   if match = message.body.match(/what apps are there(?:\?)?$/)
     bot.redis.hgetall redis_key, (err, apps) ->
-      if _(apps).size() > 0
+      if apps and _(apps).size() > 0
         room.speak "Here's the list of apps I know about:"
         for name, key of apps
           do (name, key) ->
