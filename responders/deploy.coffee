@@ -5,29 +5,27 @@ ChildProcess = require('child_process')
 
 class HerokuDeployer
 
-  constructor: (@room, @repo_url, @app_name, @branch, @quiet = false) ->
+  constructor: (@room, @repo_url, @app_name, @branch) ->
+    @transcript = []
 
   run: =>
     @room.speak "Okay, I'm deploying #{@branch} from #{@repo_url} to #{@app_name}. Here we go..."
     heroku_url = "git@heroku.com:#{@app_name}.git"
     deploy = ChildProcess.spawn('bin/git-deploy.sh', [ @repo_url, heroku_url, @branch ])
-    unless @quiet
-      deploy.stdout.on 'data', @processDidOutput
-      deploy.stderr.on 'data', @processDidOutput
+    deploy.stdout.on 'data', @processDidOutput
+    deploy.stderr.on 'data', @processDidOutput
     deploy.on 'exit', @processDidExit
 
   processDidOutput: (data) =>
-    @room.speak(m) for m in data.toString().split("\n") when m.length > 0
+    @transcript.push(m) for m in data.toString().split("\n") when m.length > 0
 
   processDidExit: (code) =>
-    # The outut buffer sometimes lags just slightly, so introduce a delay to make sure it's flushed
-    setTimeout @printDoneMessage, 250
-
-  printDoneMessage: (code) =>
     if code is 0
       @room.speak "Alright, I'm done deploying #{@app_name}! You should probably check it out now."
     else
       @room.speak "Something went wrong deploying #{@app_name}. You should probably check the logs and retry."
+
+    @room.paste @transcript.join("\n")
 
 
 exports.helpMessage = """
@@ -46,7 +44,6 @@ exports.receiveMessage = (message, room, bot) ->
   redis_key = "apps-config-#{room.id}"
   app_name  = null
   branch    = 'master'
-  quiet = false
 
   if match = message.body.match(/deploy (\S+)$/)
     room.speak 'Nuh-uh. Ask nicely.'
@@ -59,18 +56,9 @@ exports.receiveMessage = (message, room, bot) ->
   if match = message.body.match(/deploy (\S+) please$/)
     app_name = match[1]
 
-  if match = message.body.match(/deploy (\S+) quietly please$/)
-    app_name = match[1]
-    quiet = true
-
   if match = message.body.match(/deploy (\S+) from (\S+) please$/)
     app_name  = match[1]
     branch    = match[2]
-
-  if match = message.body.match(/deploy (\S+) from (\S+) quietly please$/)
-    app_name  = match[1]
-    branch    = match[2]
-    quiet = true
 
   return unless app_name
 
@@ -83,4 +71,4 @@ exports.receiveMessage = (message, room, bot) ->
         unless config and config['heroku_app'] and config['git_repo']
           room.speak "Sorry, I don't have all the info I need to deploy from this room. Have you set an app, a repo, and a branch?"
         else
-          setTimeout (new HerokuDeployer(room, config['git_repo'], config['heroku_app'], branch, quiet)).run, 250
+          setTimeout (new HerokuDeployer(room, config['git_repo'], config['heroku_app'], branch)).run, 250
