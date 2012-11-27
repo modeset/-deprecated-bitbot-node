@@ -20,12 +20,12 @@ class HerokuDeployer
     @transcript.push(m) for m in data.toString().split("\n") when m.length > 0
 
   processDidExit: (code) =>
+    @room.paste @transcript.join("\n")
     if code is 0
       @room.speak "Alright, I'm done deploying #{@app_name}! You should probably check it out now."
     else
       @room.speak "Something went wrong deploying #{@app_name}. You should probably check the logs and retry."
 
-    @room.paste @transcript.join("\n")
 
 
 exports.helpMessage = """
