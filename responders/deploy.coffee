@@ -9,7 +9,7 @@ class HerokuDeployer
     @transcript = []
 
   run: =>
-    @room.speak "Okay, I'm deploying #{@branch} from #{@repo_url} to #{@app_name}. Here we go..."
+    @room.speak "Okay, I'm deploying #{@branch} from #{@repo_url} to #{@app_name}. Hold on to your hats."
     heroku_url = "git@heroku.com:#{@app_name}.git"
     deploy = ChildProcess.spawn('bin/git-deploy.sh', [ @repo_url, heroku_url, @branch ])
     deploy.stdout.on 'data', @processDidOutput
@@ -22,9 +22,9 @@ class HerokuDeployer
   processDidExit: (code) =>
     @room.paste @transcript.join("\n")
     if code is 0
-      @room.speak "Alright, I'm done deploying #{@app_name}! You should probably check it out now."
+      @room.speak "Alright, #{@app_name} is deployed!"
     else
-      @room.speak "Something went wrong deploying #{@app_name}. You should probably check the logs and retry."
+      @room.speak "Uh oh, something went wrong deploying #{@app_name}. You might want to check the logs and retry."
 
 
 
