@@ -1,4 +1,4 @@
-SimpleResponder = require '../simple_responder'
+SimpleResponder = require '../src/simple_responder'
 
 responses = [ 'http://i0.kym-cdn.com/photos/images/newsfeed/000/234/765/b7e.jpg',
               'http://i1.kym-cdn.com/photos/images/newsfeed/000/234/146/bf8.jpg',

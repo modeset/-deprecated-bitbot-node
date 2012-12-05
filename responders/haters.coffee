@@ -1,4 +1,4 @@
-SimpleResponder = require '../simple_responder'
+SimpleResponder = require '../src/simple_responder'
 
 responses = [ 'http://www.lolbrary.com/lolpics/903/haters-gonna-hate-unicorn-bike-edition-6903.jpg',
               'http://www.hatersgoingtohate.com/wp-content/uploads/2010/06/haters-gonna-hate-cat.jpg',

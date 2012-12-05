@@ -1,4 +1,4 @@
-SimpleResponder = require '../simple_responder'
+SimpleResponder = require '../src/simple_responder'
 
 responses = [ 'NP',
               'any time!',
