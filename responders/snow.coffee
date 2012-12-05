@@ -5,8 +5,8 @@ shred = new Shred()
 exports.helpMessage = "Grab a snow report when you say 'snow for <resort>' (Colorado-only for now)"
 
 exports.receiveMessage = (message, room, bot) ->
-  if message.body and /^snow for (.+)/.test( message.body )
-    placename = /^snow for (.+)/.exec(message.body)[1].toLowerCase()
+  if message.body and /snow for (.+)$/.test( message.body )
+    placename = /snow for (.+)$/.exec(message.body)[1].toLowerCase()
     shred.get(url: 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=100&q=http://www.onthesnow.com/colorado/snow.rss').on 200, (response) ->
       entries = JSON.parse(response.content.body).responseData.feed.entries
 
