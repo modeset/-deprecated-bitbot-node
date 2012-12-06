@@ -17,6 +17,9 @@ A Campfire bot for Mode Set
 
 ## Roadmap (wishlist in rough priority order)
 * Swap in scoped-http-client for shred
+* Swap in Weather Underground for the (now-deprecated) Google Weather
+  API
+* Pull Github status updates from https://twitter.com/githubstatus
 * Play integration
 * Automatically check its status and restart itself if needed
 * Automatically join new rooms
