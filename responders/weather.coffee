@@ -1,20 +1,54 @@
-googleweather = require('googleweather')
+ScopedClient = require 'scoped-http-client'
+exports.helpMessage = "Tell you the current weather or forecast when you say 'weather for <location>' or 'forecast for <location>'"
 
-exports.helpMessage = "Tell you the weather when you say 'weather for <location>'"
+class WeatherFetcher
 
-celsiusToFahrenheit = (celsius) ->
-  return Math.round((celsius * (9 / 5)) + 32)
+  forecast: (query, callback) =>
+    @findLocation query, (loc) =>
+      if loc
+        @dataClient().path("forecast#{loc}.json").get() (err, resp, body) =>
+          json = JSON.parse(body).forecast.txt_forecast
+          callback.call @, json.forecastday[0].fcttext
+      else
+        callback.call @, "Sorry, I couldn't find that location"
+
+  conditions: (query, callback) =>
+    @findLocation query, (loc) =>
+      if loc
+        @dataClient().path("conditions#{loc}.json").get() (err, resp, body) =>
+          json = JSON.parse(body).current_observation
+          callback.call @, "Conditions in #{json.display_location.full} are #{json.weather}, temperature is #{json.temperature_string}, winds #{json.wind_string}, #{json.relative_humidity} relative humidity"
+      else
+        callback.call @, "Sorry, I couldn't find that location"
+
+  findLocation: (query, callback) =>
+    @autocompleteClient().path('aq').query(query: query).get() (err, resp, body) =>
+      json = JSON.parse(body)['RESULTS']
+      if json?.length
+        callback.call(@, json[0].l)
+      else
+        callback.call(@, null)
+
+  autocompleteClient: =>
+    @acClient or= ScopedClient.create 'http://autocomplete.wunderground.com'
+
+  dataClient: =>
+    @dtClient or= ScopedClient.create "http://api.wunderground.com/api/#{process.env.WUNDERGROUND_API_KEY}"
+
+exports.WeatherFetcher = WeatherFetcher
 
 exports.receiveMessage = (message, room, bot) ->
-  if message.body and /^weather for (.+)/.test( message.body )
-    placename = /^weather for (.+)/.exec(message.body)[1]
-  if message.body and /how's the weather|is it nice outside|what's the weather/.test( message.body )
+  return unless message?.body
+
+  placename = null
+  action = 'conditions'
+  if match = message.body.match /weather for (.+)$/
+    placename = match[1]
+  else if match = message.body.match /forecast for (.+)$/
+    action = 'forecast'
+    placename = match[1]
+  else if match = message.body.match /how's the weather|is it nice outside|what's the weather/
     placename = "Denver, CO"
+  console.log placename, action
   if placename
-    today = new Date()
-    weatherCallback = (current, forecast) ->
-      if current
-        room.speak("currently #{placename} is #{current.condition.toLowerCase()} - #{celsiusToFahrenheit(current.temperature)} degrees, #{current.humidity}% humidity, wind #{current.wind.speed}#{current.wind.direction}")
-      if forecast
-        room.speak("forecast is a low of #{celsiusToFahrenheit(forecast.temperature.low)}, high of #{celsiusToFahrenheit(forecast.temperature.high)}, and #{forecast.condition.toLowerCase()} conditions")
-    googleweather.get(weatherCallback, placename, today.toISODate())
+    (new WeatherFetcher)[action].call @, placename, room.speak
