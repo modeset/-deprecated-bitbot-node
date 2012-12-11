@@ -51,4 +51,4 @@ exports.receiveMessage = (message, room, bot) ->
     placename = "Denver, CO"
   console.log placename, action
   if placename
-    (new WeatherFetcher)[action].call @, placename, room.speak
+    (new WeatherFetcher)[action].call @, placename, (msg) -> room.speak(msg)
