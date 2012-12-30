@@ -1,5 +1,7 @@
 # Bitbot
 
+[![Build Status](https://travis-ci.org/modeset/bitbot.png?branch=master)](https://travis-ci.org/modeset/bitbot)
+
 A Campfire bot for Mode Set
 
 ## What it can do currently
@@ -7,7 +9,7 @@ A Campfire bot for Mode Set
 * Evaluate javascript code in a sandbox
 * Tell you what it can do
 * TWSS
-* Weather
+* Weather (via Weather Underground)
 * Find nearby stuff (based on Foursquare venues)
 * Music suggestions (based on Echonest, though the data's a bit suspect)
 * Take credit for other people's thanks
@@ -16,8 +18,7 @@ A Campfire bot for Mode Set
 * Heroku deployments
 
 ## Roadmap (wishlist in rough priority order)
-* Swap in scoped-http-client for shred
-* Swap in Weather Underground for the (now-deprecated) Google Weather
+* Swap in scoped-http-client or request.js for shred
   API
 * Pull Github status updates from https://twitter.com/githubstatus
 * Play integration
@@ -38,8 +39,7 @@ A Campfire bot for Mode Set
 
 ## How it works
 * Written in [node.js](nodejs.org) and [coffeescript](http://jashkenas.github.com/coffee-script/).
-* Uses [node-campfire](https://github.com/mrduncan/ranger) for Campfire integration
-* Uses [shred](https://github.com/automatthew/shred) for HTTP client interactions
+* Uses [node-campfire](https://github.com/tristandunn/node-campfire) for Campfire integration
 * Uses [sandbox](http://gf3.github.com/sandbox/) for sandboxing JS execution
 * Uses [jasmine](http://pivotal.github.com/jasmine) for unit tests
 * Uses [environment variables](http://devcenter.heroku.com/articles/config-vars) to set its credentials for Campfire, Foursquare, Echonest, etc.
