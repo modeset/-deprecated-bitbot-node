@@ -51,3 +51,14 @@ A Campfire bot for Mode Set
 * run `cake spec` and make sure all the specs pass
 * git commit, push
 * then deploy to heroku (`git push production|heroku master`)
+
+
+## License
+
+Licensed under the [MIT License](http://creativecommons.org/licenses/MIT/)
+
+Copyright 2012 [Mode Set](https://github.com/modeset)
+
+
+## Make Code Not War
+![crest](https://secure.gravatar.com/avatar/aa8ea677b07f626479fd280049b0e19f?s=75)
