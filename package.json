@@ -16,7 +16,6 @@
     "redis-url":          "0.1.0",
     "require-dir":        "0.1.0",
     "underscore":         "~1.4",
-    "scoped-http-client": "0.9.7",
     "request":          " ~2.12"
   },
   "devDependencies": {

@@ -18,8 +18,7 @@ A Campfire bot for Mode Set
 * Heroku deployments
 
 ## Roadmap (wishlist in rough priority order)
-* Swap in scoped-http-client or request.js for shred
-  API
+* Swap in request.js for Shred
 * Pull Github status updates from https://twitter.com/githubstatus
 * Play integration
 * Automatically check its status and restart itself if needed
