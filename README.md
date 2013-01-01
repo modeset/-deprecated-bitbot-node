@@ -14,7 +14,7 @@ A Campfire bot for Mode Set
 * Music suggestions (based on Echonest, though the data's a bit suspect)
 * Take credit for other people's thanks
 * Repeat the last command
-* Snow report (Colorado-only for now)
+* Snow reports and forecasts (Colorado-only for now)
 * Heroku deployments
 
 ## Roadmap (wishlist in rough priority order)
