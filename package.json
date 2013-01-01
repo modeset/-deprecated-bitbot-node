@@ -10,7 +10,6 @@
     "campfire":           "git+https://github.com/tristandunn/node-campfire.git#159c7d" ,
     "shred":              "0.7.15",
     "sandbox":            "0.8.1",
-    "googleweather":      "0.1.0",
     "geo":                "0.0.3",
     "node-foursquare":    "0.1.3",
     "redis-url":          "0.1.0",
