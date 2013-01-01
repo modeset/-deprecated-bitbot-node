@@ -1,0 +1,15 @@
+GET /api/getLocationIds.php?apikey=mykey&state=CO&type=json
+host: opensnow.com
+
+200 HTTP/1.1
+date: Tue, 01 Jan 2013 22:06:39 GMT
+server: Apache/2.2.15 (CentOS)
+x-powered-by: PHP/5.3.3
+vary: Accept-Encoding,User-Agent
+content-length: 2127
+content-type: application/json
+connection: Keep-alive
+keep-alive: timeout=15, max=100
+via: 1.1 ID-5003323700470671 uproxy-4
+
+{"location":[{"id":"1","snowid":"303015","name":"Loveland Ski Area","shortname":"loveland"},{"id":"2","snowid":"303001","name":"Arapahoe Basin","shortname":"arapahoebasin"},{"id":"3","snowid":"303014","name":"Keystone","shortname":"keystone"},{"id":"4","snowid":"303004","name":"Aspen Highlands","shortname":"aspenhighlands"},{"id":"5","snowid":"303005","name":"Beaver Creek","shortname":"beavercreek"},{"id":"6","snowid":"303007","name":"Breckenridge","shortname":"breckenridge"},{"id":"7","snowid":"303009","name":"Copper Mountain","shortname":"copper"},{"id":"8","snowid":"303010","name":"Crested Butte","shortname":"crestedbutte"},{"id":"9","snowid":"303017","name":"Durango Mountain","shortname":"durango"},{"id":"10","snowid":"303011","name":"Eldora","shortname":"eldora"},{"id":"11","snowid":"719002","name":"Monarch","shortname":"monarch"},{"id":"12","snowid":"303016","name":"Powderhorn","shortname":"powderhorn"},{"id":"13","snowid":"303021","name":"Steamboat","shortname":"steamboat"},{"id":"14","snowid":"303022","name":"Telluride","shortname":"telluride"},{"id":"15","snowid":"303023","name":"Vail","shortname":"vail"},{"id":"16","snowid":"303024","name":"Winter Park","shortname":"winterpark"},{"id":"18","snowid":"719003","name":"Ski Cooper","shortname":"skicooper"},{"id":"19","snowid":"303018","name":"Ski Granby Ranch","shortname":"skigranby"},{"id":"20","snowid":"303019","name":"Sunlight","shortname":"sunlight"},{"id":"21","snowid":"303025","name":"Wolf Creek","shortname":"wolfcreekcolorado"},{"id":"23","snowid":"303387","name":"Silverton","shortname":"silverton"},{"id":"24","snowid":"303003","name":"Aspen Mountain","shortname":"aspenmountain"},{"id":"25","snowid":{},"name":"Berthoud Pass","shortname":"berthoud"},{"id":"26","snowid":"303027","name":"Buttermilk","shortname":"buttermilk"},{"id":"28","snowid":"303026","name":"Irwin","shortname":"irwin"},{"id":"29","snowid":{},"name":"Rocky Mountain National Park","shortname":"rockymountainnationalpark"},{"id":"30","snowid":"303020","name":"Snowmass","shortname":"snowmass"},{"id":"172","snowid":{},"name":"Cameron Pass","shortname":"cameronpass"}]}

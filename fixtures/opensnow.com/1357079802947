@@ -1,0 +1,15 @@
+GET /api/getLocationData.php?apikey=mykey&lids=5&type=json
+host: opensnow.com
+
+200 HTTP/1.1
+date: Tue, 01 Jan 2013 22:36:39 GMT
+server: Apache/2.2.15 (CentOS)
+x-powered-by: PHP/5.3.3
+vary: Accept-Encoding,User-Agent
+content-length: 2462
+content-type: application/json
+connection: Keep-alive
+keep-alive: timeout=15, max=100
+via: 1.1 ID-5003323700470671 uproxy-2
+
+{"location":{"meta":{"location_id":"5","snow_id":"303005","print_name":"Beaver Creek, CO","name":"Beaver Creek","state":"Colorado","shortname":"beavercreek","shortstate":"CO","custom_forecast":"y","url":"http:\/\/opensnow.com\/location\/beavercreek","icon_url":"http:\/\/opensnow.com\/img\/wxicons\/medium\/"},"watch_warnings":{},"current_conditions":{"temp":"17","wind_speed":"NA","wind_dir":"NA","updated_at":"2013-01-01 14:00:00","location":"Mid-Mountain"},"forecast":{"updated_at":"2013-01-01 08:04:52","forecaster":"Joel Gratz","period":[{"date":"2013-01-01","dow":"Tuesday","day":{"weather":"Chance Snow","icon":"chancesn.png","temp":"11","snow":"0-1","flag":"n","text":"A 40 percent chance of snow, mainly before 5pm.  Partly sunny, with a high near 11. West northwest wind 5 to 10 mph. "},"night":{"weather":"Chance Snow","icon":"nsn.png","temp":"0","snow":"0-1","text":"A 50 percent chance of snow, mainly after 8pm.  Mostly cloudy, with a low around 0. Wind chill values as low as -15. West wind 5 to 10 mph becoming south southwest in the evening. "}},{"date":"2013-01-02","dow":"Wednesday","day":{"weather":"Chance Snow","icon":"chancesn.png","temp":"13","snow":"0","flag":"n","text":"A 30 percent chance of snow, mainly before 10am.  Partly sunny, with a high near 13. Wind chill values as low as -10. Light west southwest wind becoming northwest 5 to 10 mph in the morning. "},"night":{"weather":"Partly Cloudy","icon":"nsct.png","temp":"-1","snow":"0","text":"Partly cloudy, with a low around -1. North northeast wind around 5 mph becoming calm. "}},{"date":"2013-01-03","dow":"Thursday","day":{"weather":"Sunny","icon":"few.png","temp":"21","snow":"0","flag":"n","text":"Sunny, with a high near 21. East northeast wind around 5 mph becoming south southwest in the morning. "},"night":{"weather":"Mostly Clear","icon":"nfew.png","temp":"6","snow":"0","text":"Mostly clear, with a low around 6."}},{"date":"2013-01-04","dow":"Friday","day":{"weather":"Sunny","icon":"few.png","temp":"29","snow":"0","flag":"n","text":"Sunny, with a high near 29."},"night":{"weather":"Mostly Clear","icon":"nfew.png","temp":"7","snow":"0","text":"Mostly clear, with a low around 7."}},{"date":"2013-01-05","dow":"Saturday","day":{"weather":"Sunny","icon":"few.png","temp":"28","snow":"0","flag":"n","text":"Sunny, with a high near 28."},"night":{"weather":"Partly Cloudy","icon":"nsct.png","temp":"11","snow":"0","text":"Partly cloudy, with a low around 11."}}]}}}
