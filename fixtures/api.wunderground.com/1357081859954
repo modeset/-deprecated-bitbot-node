@@ -1,0 +1,107 @@
+GET /api/mykey/conditions/q/zmw:80202.1.99999.json
+host: api.wunderground.com
+
+200 HTTP/1.1
+date: Tue, 01 Jan 2013 23:10:56 GMT
+server: Apache/1.3.42 (Unix) PHP/5.3.2
+cache-control: no-cache, must-revalidate, no-cache="Set-Cookie", private
+expires: Fri, 01 Jan 1990 00:00:00 GMT
+pragma: no-cache
+x-creationtime: 0.077
+set-cookie: DT=1357081856:13091:365-v3; path=/; expires=Fri, 01-Jan-2020 00:00:00 GMT; domain=.wunderground.com
+connection: close
+transfer-encoding: chunked
+content-type: application/json; charset=UTF-8
+
+
+{
+	"response": {
+		"version": "0.1"
+		,"termsofService": "http://www.wunderground.com/weather/api/d/terms.html"
+		,"features": {
+		"conditions": 1
+		}
+	}
+		,	"current_observation": {
+		"image": {
+		"url":"http://icons-ak.wxug.com/graphics/wu2/logo_130x80.png",
+		"title":"Weather Underground",
+		"link":"http://www.wunderground.com"
+		},
+		"display_location": {
+		"full":"Denver, CO",
+		"city":"Denver",
+		"state":"CO",
+		"state_name":"Colorado",
+		"country":"US",
+		"country_iso3166":"US",
+		"zip":"80202",
+		"latitude":"39.74983978",
+		"longitude":"-104.99559784",
+		"elevation":"1600.00000000"
+		},
+		"observation_location": {
+		"full":"Geography and Env. Sciences, CU Denver, Denver, Colorado",
+		"city":"Geography and Env. Sciences, CU Denver, Denver",
+		"state":"Colorado",
+		"country":"US",
+		"country_iso3166":"US",
+		"latitude":"39.745201",
+		"longitude":"-105.002403",
+		"elevation":"5225 ft"
+		},
+		"estimated": {
+		},
+		"station_id":"KCODENVE78",
+		"observation_time":"Last Updated on January 1, 4:10 PM MST",
+		"observation_time_rfc822":"Tue, 01 Jan 2013 16:10:05 -0700",
+		"observation_epoch":"1357081805",
+		"local_time_rfc822":"Tue, 01 Jan 2013 16:10:56 -0700",
+		"local_epoch":"1357081856",
+		"local_tz_short":"MST",
+		"local_tz_long":"America/Denver",
+		"local_tz_offset":"-0700",
+		"weather":"Scattered Clouds",
+		"temperature_string":"31.6 F (-0.2 C)",
+		"temp_f":31.6,
+		"temp_c":-0.2,
+		"relative_humidity":"35%",
+		"wind_string":"From the West at 2.0 MPH Gusting to 12.0 MPH",
+		"wind_dir":"West",
+		"wind_degrees":266,
+		"wind_mph":2.0,
+		"wind_gust_mph":"12.0",
+		"wind_kph":3.2,
+		"wind_gust_kph":"19.3",
+		"pressure_mb":"1024",
+		"pressure_in":"30.23",
+		"pressure_trend":"0",
+		"dewpoint_string":"7 F (-14 C)",
+		"dewpoint_f":7,
+		"dewpoint_c":-14,
+		"heat_index_string":"NA",
+		"heat_index_f":"NA",
+		"heat_index_c":"NA",
+		"windchill_string":"32 F (0 C)",
+		"windchill_f":"32",
+		"windchill_c":"0",
+		"feelslike_string":"32 F (0 C)",
+		"feelslike_f":"32",
+		"feelslike_c":"0",
+		"visibility_mi":"10.0",
+		"visibility_km":"16.1",
+		"solarradiation":"35",
+		"UV":"0.0",
+		"precip_1hr_string":"0.00 in ( 0 mm)",
+		"precip_1hr_in":"0.00",
+		"precip_1hr_metric":" 0",
+		"precip_today_string":"0.00 in (0 mm)",
+		"precip_today_in":"0.00",
+		"precip_today_metric":"0",
+		"icon":"partlycloudy",
+		"icon_url":"http://icons-ak.wxug.com/i/c/k/partlycloudy.gif",
+		"forecast_url":"http://www.wunderground.com/US/CO/Denver.html",
+		"history_url":"http://www.wunderground.com/weatherstation/WXDailyHistory.asp?ID=KCODENVE78",
+		"ob_url":"http://www.wunderground.com/cgi-bin/findweather/getForecast?query=39.745201,-105.002403"
+	}
+}

@@ -17,7 +17,7 @@ class WeatherFetcher
       if loc
         @dataClient().path("conditions#{loc}.json").get() (err, resp, body) =>
           json = JSON.parse(body).current_observation
-          callback.call @, "Conditions in #{json.display_location.full} are #{json.weather}, temperature is #{json.temperature_string}, winds #{json.wind_string}, #{json.relative_humidity} relative humidity"
+          callback.call @, "Current weather in #{json.display_location.full} is #{json.weather.toLowerCase()}, temperature is #{json.temperature_string}, winds #{json.wind_string.toLowerCase()}, #{json.relative_humidity} relative humidity"
       else
         callback.call @, "Sorry, I couldn't find that location"
 

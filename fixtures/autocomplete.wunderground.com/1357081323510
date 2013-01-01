@@ -1,0 +1,11 @@
+GET /aq?query=blablabla
+host: autocomplete.wunderground.com
+
+200 HTTP/1.0
+content-type: text/html
+connection: close
+
+{ "RESULTS": [
+
+]
+}

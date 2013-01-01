@@ -1,0 +1,178 @@
+GET /aq?query=denver
+host: autocomplete.wunderground.com
+
+200 HTTP/1.0
+content-type: text/html
+connection: close
+
+{ "RESULTS": [
+	{
+		"name": "Denver, Colorado", 
+		"type": "city", 
+		"c": "US",
+		"zmw": "80202.1.99999",
+		"tz": "America/Denver",
+		"tzs": "MST",
+		"l": "/q/zmw:80202.1.99999"
+	},
+	{
+		"name": "Denver City, Texas", 
+		"type": "city", 
+		"c": "US",
+		"zmw": "79323.1.99999",
+		"tz": "America/Chicago",
+		"tzs": "CST",
+		"l": "/q/zmw:79323.1.99999"
+	},
+	{
+		"name": "Denver, Pennsylvania", 
+		"type": "city", 
+		"c": "US",
+		"zmw": "17517.1.99999",
+		"tz": "America/New_York",
+		"tzs": "EST",
+		"l": "/q/zmw:17517.1.99999"
+	},
+	{
+		"name": "Denver, Iowa", 
+		"type": "city", 
+		"c": "US",
+		"zmw": "50622.1.99999",
+		"tz": "America/Chicago",
+		"tzs": "CST",
+		"l": "/q/zmw:50622.1.99999"
+	},
+	{
+		"name": "Denver CO", 
+		"type": "Sailing", 
+		"l": "/sailing-weather/beach:Wal-Mart 22988"
+	},
+	{
+		"name": "Denver NC", 
+		"type": "Sailing", 
+		"l": "/sailing-weather/beach:Westport%20Marina 9760"
+	},
+	{
+		"name": "Denver TN", 
+		"type": "Sailing", 
+		"l": "/sailing-weather/beach:Hickman-Lockhart%20Bridge 19985"
+	},
+	{
+		"name": "Denver Artcc, Colorado", 
+		"type": "city", 
+		"c": "US",
+		"zmw": "80501.3.99999",
+		"tz": "America/Denver",
+		"tzs": "MST",
+		"l": "/q/zmw:80501.3.99999"
+	},
+	{
+		"name": "Denver Centennial, Colorado", 
+		"type": "city", 
+		"c": "US",
+		"zmw": "80112.15.99999",
+		"tz": "America/Denver",
+		"tzs": "MST",
+		"l": "/q/zmw:80112.15.99999"
+	},
+	{
+		"name": "Denver Federal Center Helistop, Colorado", 
+		"type": "city", 
+		"c": "US",
+		"zmw": "80225.3.99999",
+		"tz": "America/Denver",
+		"tzs": "MST",
+		"l": "/q/zmw:80225.3.99999"
+	},
+	{
+		"name": "Denver Health, Colorado", 
+		"type": "city", 
+		"c": "US",
+		"zmw": "80273.9.99999",
+		"tz": "America/Denver",
+		"tzs": "MST",
+		"l": "/q/zmw:80273.9.99999"
+	},
+	{
+		"name": "Denver International, Colorado", 
+		"type": "city", 
+		"c": "US",
+		"zmw": "80019.3.99999",
+		"tz": "America/Denver",
+		"tzs": "MST",
+		"l": "/q/zmw:80019.3.99999"
+	},
+	{
+		"name": "Denver Of The East, North Carolina", 
+		"type": "city", 
+		"c": "US",
+		"zmw": "28037.3.99999",
+		"tz": "America/New_York",
+		"tzs": "EST",
+		"l": "/q/zmw:28037.3.99999"
+	},
+	{
+		"name": "Denver Police Department-District 3, Colorado", 
+		"type": "city", 
+		"c": "US",
+		"zmw": "80243.3.99999",
+		"tz": "America/Denver",
+		"tzs": "MST",
+		"l": "/q/zmw:80243.3.99999"
+	},
+	{
+		"name": "Denver Water Department, Colorado", 
+		"type": "city", 
+		"c": "US",
+		"zmw": "80204.3.99999",
+		"tz": "America/Denver",
+		"tzs": "MST",
+		"l": "/q/zmw:80204.3.99999"
+	},
+	{
+		"name": "Denver, Illinois", 
+		"type": "city", 
+		"c": "US",
+		"zmw": "62321.3.99999",
+		"tz": "America/Chicago",
+		"tzs": "CST",
+		"l": "/q/zmw:62321.3.99999"
+	},
+	{
+		"name": "Denver, Indiana", 
+		"type": "city", 
+		"c": "US",
+		"zmw": "46926.1.99999",
+		"tz": "America/Indianapolis",
+		"tzs": "EST",
+		"l": "/q/zmw:46926.1.99999"
+	},
+	{
+		"name": "Denver, Kentucky", 
+		"type": "city", 
+		"c": "US",
+		"zmw": "41222.3.99999",
+		"tz": "America/New_York",
+		"tzs": "EST",
+		"l": "/q/zmw:41222.3.99999"
+	},
+	{
+		"name": "Denver, Missouri", 
+		"type": "city", 
+		"c": "US",
+		"zmw": "64441.1.99999",
+		"tz": "America/Chicago",
+		"tzs": "CST",
+		"l": "/q/zmw:64441.1.99999"
+	},
+	{
+		"name": "Denver, New York", 
+		"type": "city", 
+		"c": "US",
+		"zmw": "12421.1.99999",
+		"tz": "America/New_York",
+		"tzs": "EST",
+		"l": "/q/zmw:12421.1.99999"
+	}
+]
+}
