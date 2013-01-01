@@ -1,19 +1,26 @@
-Shred = require("shred")
+request = require('request')
 
 class HerokuStatusPeriodic
 
   constructor: ->
     @rooms = []
-    @shred = new Shred()
+    @notifiedOfTrouble = false
 
-  bind: (room) =>
+  bind: (room, setTimer = true) =>
     @rooms.push room
-    setInterval @checkStatus, 5 * 60 * 1000
+    setInterval(@checkOnStatus, 5 * 60 * 1000) if setTimer
 
-  checkStatus: =>
-    console.log 'Checking for Heroku status updates'
-    @shred.get(url: 'https://status.heroku.com/api/v3/current-status').on 200, (response) =>
-      if response.content.data.issues.length > 0
-        room.speak 'Heroku is reporting issues. Check http://status.heroku.com/ for details' for room in @rooms
+  checkOnStatus: =>
+    @doesHerokuHaveIssues (isInTrouble) =>
+      if isInTrouble
+        unless @notifiedOfTrouble
+          room.speak 'Heroku is reporting issues. Check http://status.heroku.com/ for details' for room in @rooms
+        @notifiedOfTrouble = true
+      else
+        @notifiedOfTrouble = false
+
+  doesHerokuHaveIssues: (callback) =>
+    request 'https://status.heroku.com/api/v3/current-status', (error, response, body) =>
+      callback.call @, (JSON.parse(body).issues.length > 0)
 
 module.exports = new HerokuStatusPeriodic()

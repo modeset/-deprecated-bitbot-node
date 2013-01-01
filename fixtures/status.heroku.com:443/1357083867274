@@ -1,0 +1,19 @@
+GET /api/v3/current-status
+
+200 HTTP/1.1
+server: nginx/1.0.14
+date: Tue, 01 Jan 2013 23:44:24 GMT
+content-type: application/json
+connection: keep-alive
+status: 200 OK
+cache-control: private, max-age=0, must-revalidate
+expires: Fri, 01 Jan 1990 00:00:00 GMT
+content-length: 67
+vary: Accept-Encoding
+x-ua-compatible: IE=Edge,chrome=1
+etag: "14b7e0abc89a72e311d93ea51f4160bb"
+x-request-id: 715acc22c7ebbf56a07cd6226acb54a1
+x-runtime: 0.041264
+x-rack-cache: miss
+
+{"status":{"Production":"green","Development":"green"},"issues":[]}
