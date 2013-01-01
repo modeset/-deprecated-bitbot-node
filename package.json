@@ -6,7 +6,7 @@
     "npm": "1.1.x"
   },
   "dependencies": {
-    "coffee-script":      "1.1.2",
+    "coffee-script":      "~1.1.2",
     "campfire":           "git+https://github.com/tristandunn/node-campfire.git#159c7d" ,
     "shred":              "0.7.15",
     "sandbox":            "0.8.1",
@@ -15,11 +15,13 @@
     "node-foursquare":    "0.1.3",
     "redis-url":          "0.1.0",
     "require-dir":        "0.1.0",
-    "underscore":         "1.4.2",
-    "scoped-http-client": "0.9.7"
+    "underscore":         "~1.4",
+    "scoped-http-client": "0.9.7",
+    "request":          " ~2.12"
   },
   "devDependencies": {
-    "jasmine-node":  "1.0.26"
+    "jasmine-node":  "1.0.26",
+    "replay":  "~1.6.0"
   },
   "scripts": {
     "test": "cake spec"
