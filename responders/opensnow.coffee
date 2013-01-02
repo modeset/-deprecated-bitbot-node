@@ -27,6 +27,9 @@ class OpenSnowResponder
   helpMessage: "Grab a snow forecast when you say 'snow forecast for <resort>' (Colorado-only for now)"
 
   receiveMessage: (message, room, bot) =>
+    # Abort if this is a bot message
+    return if message.userId is bot.botUserId
+
     if message.body and /snow forecast for (.+)$/.test( message.body )
       placename = /snow forecast for (.+)$/.exec(message.body)[1].toLowerCase()
       @locationByName placename, (location) =>

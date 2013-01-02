@@ -30,6 +30,10 @@ class WeatherFetcher
         callback.call(@, null)
 
 exports.receiveMessage = (message, room, bot) ->
+  # Abort if this is a bot message
+  return if message.userId is bot.botUserId
+
+  # Abort if this is a presence message
   return unless message?.body
 
   placename = null
