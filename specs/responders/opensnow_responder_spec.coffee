@@ -19,7 +19,7 @@ describe 'opensnow responder', ->
 
   describe 'fetching a forecast for a nonexistent resort', ->
     it 'should respond with a error message', ->
-      message.body = "snow forecast for nowhere"
+      message.body = "powder for nowhere"
       runs ->
         responder.receiveMessage(message, room, {})
       waitsFor ->
@@ -29,7 +29,7 @@ describe 'opensnow responder', ->
 
   describe 'fetching a forecast for a resort', ->
     it 'should respond with a forecast summary', ->
-      message.body = "snow forecast for beaver creek"
+      message.body = "powder for beaver creek"
       runs ->
         responder.receiveMessage(message, room, {})
       waitsFor ->

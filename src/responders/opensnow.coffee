@@ -24,14 +24,14 @@ class OpenSnowResponder
         entry.name.toLowerCase().indexOf(searchTerm) >= 0
       callback.call(@, result)
 
-  helpMessage: "Grab a snow forecast when you say 'snow forecast for <resort>' (Colorado-only for now)"
+  helpMessage: "Grab a snow forecast when you say 'powder for <resort>' (Colorado-only for now)"
 
   receiveMessage: (message, room, bot) =>
     # Abort if this is a bot message
     return if message.userId is bot.botUserId
 
-    if message.body and /snow forecast for (.+)$/.test( message.body )
-      placename = /snow forecast for (.+)$/.exec(message.body)[1].toLowerCase()
+    if message.body and /powder for (.+)$/.test( message.body )
+      placename = /powder for (.+)$/.exec(message.body)[1].toLowerCase()
       @locationByName placename, (location) =>
         if location
           request "http://opensnow.com/api/getLocationData.php?apikey=#{@apiKey}&lids=#{location.id}&type=json", (error, response, body) ->
