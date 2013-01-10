@@ -1,2 +1,2 @@
 require('coffee-script');
-require('./run');
+require('./src/bootstrap');

@@ -1,5 +1,5 @@
 describe 'help responder', ->
-  responder = require('../../responders/help')
+  responder = require('../../src/responders/help')
   room = {}
   message =
     userId: 123

@@ -1,5 +1,5 @@
 describe 'coin toss responder', ->
-  responder = require('../../responders/coin_toss')
+  responder = require('../../src/responders/coin_toss')
   room = {}
   message = 
     userId: 123

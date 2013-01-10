@@ -1,5 +1,5 @@
 describe 'fuck that responder', ->
-  fuckThatResponder = require('../../responders/fuck_that')
+  fuckThatResponder = require('../../src/responders/fuck_that')
   room = {}
   fuckThatResponder.responses = [ 'http://www.google.com' ]
   message = 

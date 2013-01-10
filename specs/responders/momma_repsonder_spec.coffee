@@ -1,6 +1,5 @@
-
 describe 'momma responder', ->
-  mommaResponder = require('../../responders/momma')
+  mommaResponder = require('../../src/responders/momma')
   room = {}
   mommaResponder.responses = [ "http://www.google.com" ]
   message =

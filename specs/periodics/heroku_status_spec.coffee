@@ -6,7 +6,7 @@ describe 'heroku status periodic', ->
   periodic = null
 
   beforeEach ->
-    periodic = require('../../periodics/heroku_status')
+    periodic = require('../../src/periodics/heroku_status')
     room =
       speak: jasmine.createSpy().andReturn(null)
     periodic.bind room, false

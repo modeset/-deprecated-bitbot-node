@@ -1,5 +1,5 @@
 describe 'yo dawg responder', ->
-  yoDawgResponder = require('../../responders/yo_dawg')
+  yoDawgResponder = require('../../src/responders/yo_dawg')
   room = {}
   message =
     userId: 123

@@ -10,7 +10,7 @@ describe 'opensnow responder', ->
 
   beforeEach ->
     process.env.OPENSNOW_API_KEY = 'mykey'
-    responder = require('../../responders/opensnow')
+    responder = require('../../src/responders/opensnow')
     room =
       speak: jasmine.createSpy().andReturn(null)
 
@@ -35,10 +35,5 @@ describe 'opensnow responder', ->
       waitsFor ->
         room.speak.wasCalled
       runs ->
-        lines = [
-          'Ok, I found the snow forecast for Beaver Creek, CO:'
-          'During the day, the forecast is \'Chance Snow\' with a high of 11 and 0-1" of accumulation'
-          'Tonight, the forecast is \'Chance Snow\' with a low of 0 and 0-1" of accumulation'
-          'Tomorrow, the forecast is \'Chance Snow\' with a high of 13 and 0" of accumulation'
-        ]
-        expect(room.speak).toHaveBeenCalledWith(line) for line in lines
+        line = "During the day, the forecast is 'Chance Snow' with a high of 11 and 0-1\" of accumulation. Tonight, the forecast is 'Chance Snow' with a low of 0 and 0-1\" of accumulation. Tomorrow, the forecast is \'Chance Snow\' with a high of 13 and 0\" of accumulation."
+        expect(room.speak).toHaveBeenCalledWith(line)

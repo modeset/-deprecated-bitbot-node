@@ -10,7 +10,7 @@ describe 'weather responder', ->
 
   beforeEach ->
     process.env.WUNDERGROUND_API_KEY = 'mykey'
-    responder = require('../../responders/weather')
+    responder = require('../../src/responders/weather')
     room =
       speak: jasmine.createSpy().andReturn(null)
 

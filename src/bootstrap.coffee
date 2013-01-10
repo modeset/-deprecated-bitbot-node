@@ -2,7 +2,7 @@
 Campfire  = require('campfire').Campfire
 Bitbot    = require('./bitbot')
 redis     = require('redis-url').connect(process.env.REDISTOGO_URL)
-_         = require('underscore');
+_         = require('underscore')
 
 # Reusable objects
 client = new Campfire

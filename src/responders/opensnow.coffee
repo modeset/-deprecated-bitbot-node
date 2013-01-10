@@ -40,10 +40,7 @@ class OpenSnowResponder
               location_name = json.location.meta.print_name
               today = json.location.forecast.period[0]
               tomorrow = json.location.forecast.period[1]
-              room.speak "Ok, I found the snow forecast for #{location_name}:"
-              room.speak "During the day, the forecast is '#{today.day.weather}' with a high of #{today.day.temp} and #{today.day.snow}\" of accumulation"
-              room.speak "Tonight, the forecast is '#{today.night.weather}' with a low of #{today.night.temp} and #{today.night.snow}\" of accumulation"
-              room.speak "Tomorrow, the forecast is '#{tomorrow.day.weather}' with a high of #{tomorrow.day.temp} and #{tomorrow.day.snow}\" of accumulation"
+              room.speak "During the day, the forecast is '#{today.day.weather}' with a high of #{today.day.temp} and #{today.day.snow}\" of accumulation. Tonight, the forecast is '#{today.night.weather}' with a low of #{today.night.temp} and #{today.night.snow}\" of accumulation. Tomorrow, the forecast is '#{tomorrow.day.weather}' with a high of #{tomorrow.day.temp} and #{tomorrow.day.snow}\" of accumulation."
             else
               room.speak "Sorry, something went wrong and I couldn't retrieve that forecast"
         else

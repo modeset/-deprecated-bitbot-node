@@ -1,4 +1,4 @@
-SimpleResponder = require '../src/simple_responder'
+SimpleResponder = require '../simple_responder'
 
 responses       = ['Heads', 'Tails']
 regex           = /flip a coin/

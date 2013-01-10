@@ -1,5 +1,5 @@
 describe 'TWSS responder', ->
-  twssResponder = require('../../responders/twss')
+  twssResponder = require('../../src/responders/twss')
   room = {}
   message =
     userId: 1231231

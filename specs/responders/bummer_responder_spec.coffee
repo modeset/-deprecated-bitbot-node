@@ -1,5 +1,5 @@
 describe 'bummer responder', ->
-  bummerResponder = require('../../responders/bummer')
+  bummerResponder = require('../../src/responders/bummer')
   room = {}
   bummerResponder.responses = [ "http://www.google.com" ]
   message =

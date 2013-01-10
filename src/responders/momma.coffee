@@ -1,4 +1,4 @@
-SimpleResponder = require '../src/simple_responder'
+SimpleResponder = require '../simple_responder'
 
 responses = [ 'http://i.imgur.com/o0Vbs.jpg',
               'http://25.media.tumblr.com/tumblr_lmm9rn8LwA1qzxfy9o1_400.jpg',

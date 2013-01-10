@@ -1,4 +1,4 @@
-whois = require '../lib/whois'
+whois = require '../../lib/whois'
 
 exports.helpMessage = "Perform a WHOIS search when you say 'whois <domain>'"
 
