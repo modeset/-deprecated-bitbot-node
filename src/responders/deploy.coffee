@@ -2,6 +2,7 @@
 # https://github.com/ngauthier/hubot-github-heroku-deploy
 
 ChildProcess = require('child_process')
+AppRegistry = require('../app_registry')
 
 class HerokuDeployer
 
@@ -41,7 +42,8 @@ exports.receiveMessage = (message, room, bot) ->
   # Abort if this is a bot message
   return if message.userId is bot.botUserId
 
-  redis_key = "apps-config-#{room.id}"
+  registry = new AppRegistry(bot.redis, room)
+
   app_name  = null
   branch    = 'master'
 
@@ -63,12 +65,11 @@ exports.receiveMessage = (message, room, bot) ->
   return unless app_name
 
   # Let's do it
-  bot.redis.hget redis_key, app_name, (err, key) ->
-    unless key
+  registry.fetch app_name, (config) =>
+    unless config
       room.speak "Sorry, I don't think that app is set up for this room"
     else
-      bot.redis.hgetall key, (err, config) ->
-        unless config and config['heroku_app'] and config['git_repo']
-          room.speak "Sorry, I don't have all the info I need to deploy from this room. Have you set an app, a repo, and a branch?"
-        else
-          setTimeout (new HerokuDeployer(room, config['git_repo'], config['heroku_app'], branch)).run, 250
+      unless config and config['heroku_app'] and config['git_repo']
+        room.speak "Sorry, I don't have all the info I need to deploy from this room. Have you set an app, a repo, and a branch?"
+      else
+        setTimeout (new HerokuDeployer(room, config['git_repo'], config['heroku_app'], branch)).run, 250
