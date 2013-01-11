@@ -5,7 +5,6 @@ foursquareConfig =
     clientSecret: process.env.FOURSQUARE_CLIENTSECRET
     redirectUrl:  process.env.FOURSQUARE_REDIRECTURL
 
-console.log foursquareConfig
 foursquare = require("node-foursquare")(foursquareConfig)
 
 exports.helpMessage = "Find you nearby coffee/food/booze when you say 'find me <thing> near <location>'"
