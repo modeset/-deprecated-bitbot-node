@@ -56,10 +56,10 @@ class Bitbot
     console.log room.name + ': heard ' + message.body + ' from ' + message.userId
 
     # Abort if this is a presence message or from the bot itself
-    return if !(message?.body) or message.userId is bot.botUserId
+    return if !(message?.body) or message.userId is @botUserId
 
     for name, responder of @responders
-      if message.body.match(new Regexp("^[@]?(?:#{@name}[:,]?|#{@botUserName}[:,]?)")) and typeof responder['respond'] is 'function'
+      if message.body.match(new RegExp("^[@]?(?:#{@name}[:,]?|#{@botUserName}[:,]?)")) and typeof responder['respond'] is 'function'
         responder.respond(message, room, @)
       else if typeof responder['hear'] is 'function'
         responder.hear(message, room, @)
