@@ -11,45 +11,45 @@ describe 'fuck that responder', ->
 
   it 'should respond to "fuck that"', ->
     message.body = "fuck that"
-    fuckThatResponder.receiveMessage(message, room, {})
+    fuckThatResponder.hear(message, room, {})
     expect(room.speak).toHaveBeenCalledWith('http://www.google.com')
  
   it 'should respond to "broke"', ->
     message.body = "broke some shit"
-    fuckThatResponder.receiveMessage(message, room, {})
+    fuckThatResponder.hear(message, room, {})
     expect(room.speak).toHaveBeenCalledWith('http://www.google.com')
 
   it 'should respond to "bullshit"', ->
     message.body = "this is bullshit"
-    fuckThatResponder.receiveMessage(message, room, {})
+    fuckThatResponder.hear(message, room, {})
     expect(room.speak).toHaveBeenCalledWith('http://www.google.com')
     
   it 'should respond to "damn it"', ->
     message.body = "god damn it"
-    fuckThatResponder.receiveMessage(message, room, {})
+    fuckThatResponder.hear(message, room, {})
     expect(room.speak).toHaveBeenCalledWith('http://www.google.com')
     
   it 'should respond to "crap"', ->
     message.body = "what's this crap?"
-    fuckThatResponder.receiveMessage(message, room, {})
+    fuckThatResponder.hear(message, room, {})
     expect(room.speak).toHaveBeenCalledWith('http://www.google.com')
     
   it 'should respond to "dammit"', ->
     message.body = "dammit all"
-    fuckThatResponder.receiveMessage(message, room, {})
+    fuckThatResponder.hear(message, room, {})
     expect(room.speak).toHaveBeenCalledWith('http://www.google.com')
     
   it 'should respond to "bull shit"', ->
     message.body = "this is some serious bull shit"
-    fuckThatResponder.receiveMessage(message, room, {})
+    fuckThatResponder.hear(message, room, {})
     expect(room.speak).toHaveBeenCalledWith('http://www.google.com')
 
   it 'should respond to "fuck all"', ->
     message.body = "fuck all"
-    fuckThatResponder.receiveMessage(message, room, {})
+    fuckThatResponder.hear(message, room, {})
     expect(room.speak).toHaveBeenCalledWith('http://www.google.com')
 
   it 'should respond to "fuckall"', ->
     message.body = "fuckall"
-    fuckThatResponder.receiveMessage(message, room, {})
+    fuckThatResponder.hear(message, room, {})
     expect(room.speak).toHaveBeenCalledWith('http://www.google.com')

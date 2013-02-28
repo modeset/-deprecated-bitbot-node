@@ -9,7 +9,7 @@ foursquare = require("node-foursquare")(foursquareConfig)
 
 exports.helpMessage = "Find you nearby coffee/food/booze when you say 'find me <thing> near <location>'"
 
-exports.receiveMessage = (message, room, client) ->
+exports.respond = (message, room, client) ->
   msg_regex = /^find me (.+) near (.+)/
   if message.body and msg_regex.test( message.body )
     regex_results = msg_regex.exec(message.body)

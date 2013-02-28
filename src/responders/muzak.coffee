@@ -3,7 +3,7 @@ shred = new Shred()
 
 exports.helpMessage = "Recommend you some music when you say 'find me some <mood> tunes' or 'find me some <style> music'"
 
-exports.receiveMessage = (message, room, bot) ->
+exports.respond = (message, room, bot) ->
   exports.respondToTunes(message,room)
   exports.respondToMusic(message,room)
 

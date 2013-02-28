@@ -10,5 +10,5 @@ describe 'coin toss responder', ->
 
   it 'should respond to "flip a coin"', ->
     message.body = 'flip a coin'
-    responder.receiveMessage(message, room, {})
+    responder.hear(message, room, {})
     expect([ 'Heads', 'Tails' ]).toContain(room.speak.mostRecentCall.args[0])

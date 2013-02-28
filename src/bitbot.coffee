@@ -1,6 +1,6 @@
 class Bitbot
 
-  constructor: (@client, @responders, @periodics, @redis, @ignored_room_regex) ->
+  constructor: (@name, @client, @responders, @periodics, @redis, @ignored_room_regex) ->
     @periodicTimers = []
     @responderBindings = []
     @getOwnInfo()
@@ -25,6 +25,7 @@ class Bitbot
       user = response.user
       console.log 'Got bot info', user
       @botUserId = user.id
+      @botUserName = user.name
 
 
   bindPeriodics: =>
@@ -53,7 +54,15 @@ class Bitbot
 
   respondToMessage: (room, message) =>
     console.log room.name + ': heard ' + message.body + ' from ' + message.userId
-    responder.receiveMessage(message, room, @) for name, responder of @responders
+
+    # Abort if this is a presence message or from the bot itself
+    return if !(message?.body) or message.userId is bot.botUserId
+
+    for name, responder of @responders
+      if message.body.match(new Regexp("^[@]?(?:#{@name}[:,]?|#{@botUserName}[:,]?)")) and typeof responder['respond'] is 'function'
+        responder.respond(message, room, @)
+      else if typeof responder['hear'] is 'function'
+        responder.hear(message, room, @)
 
 
   #

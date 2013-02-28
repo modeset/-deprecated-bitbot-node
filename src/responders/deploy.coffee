@@ -34,13 +34,7 @@ exports.helpMessage = """
                         By default that will deploy from master, but you can change the branch with 'deploy <name> from <branch> please'
                       """
 
-exports.receiveMessage = (message, room, bot) ->
-
-  # Abort if this is a presence message
-  return unless message?.body
-
-  # Abort if this is a bot message
-  return if message.userId is bot.botUserId
+exports.respond = (message, room, bot) ->
 
   registry = new AppRegistry(bot.redis, room)
 

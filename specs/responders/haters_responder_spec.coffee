@@ -11,5 +11,5 @@ describe 'fuck that responder', ->
 
   it 'should respond to "haters gonna hate"', ->
     message.body = "haters gonna hate"
-    hatersResponder.receiveMessage(message, room, {})
+    hatersResponder.hear(message, room, {})
     expect(room.speak).toHaveBeenCalledWith(hatersResponder.responses[0])

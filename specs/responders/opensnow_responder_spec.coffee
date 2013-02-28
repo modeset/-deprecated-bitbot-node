@@ -21,7 +21,7 @@ describe 'opensnow responder', ->
     it 'should respond with a error message', ->
       message.body = "powder for nowhere"
       runs ->
-        responder.receiveMessage(message, room, {})
+        responder.respond(message, room, {})
       waitsFor ->
         room.speak.wasCalled
       runs ->
@@ -31,7 +31,7 @@ describe 'opensnow responder', ->
     it 'should respond with a forecast summary', ->
       message.body = "powder for beaver creek"
       runs ->
-        responder.receiveMessage(message, room, {})
+        responder.respond(message, room, {})
       waitsFor ->
         room.speak.wasCalled
       runs ->

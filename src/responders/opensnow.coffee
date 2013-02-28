@@ -26,7 +26,7 @@ class OpenSnowResponder
 
   helpMessage: "Grab a snow forecast when you say 'powder for <resort>' (Colorado-only for now)"
 
-  receiveMessage: (message, room, bot) =>
+  respond: (message, room, bot) =>
     # Abort if this is a bot message
     return if message.userId is bot.botUserId
 

@@ -3,7 +3,7 @@ sandbox = new Sandbox()
 
 exports.helpMessage = "Evaluate arbitrary JS code in a sandbox when you say 'eval <code>'"
 
-exports.receiveMessage = (message, room, bot) ->
+exports.respond = (message, room, bot) ->
   if message.body and /^eval (.+)/.test( message.body )
     sandbox.run /^eval (.+)/.exec(message.body)[1], ( output ) ->
       room.paste(output.result.replace( /\n/g, ' ' ))

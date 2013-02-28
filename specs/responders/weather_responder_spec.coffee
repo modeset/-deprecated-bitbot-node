@@ -21,7 +21,7 @@ describe 'weather responder', ->
     it 'should respond with a error message', ->
       message.body = "weather for blablabla"
       runs ->
-        responder.receiveMessage(message, room, {})
+        responder.respond(message, room, {})
       waitsFor ->
         room.speak.wasCalled
       runs ->
@@ -31,7 +31,7 @@ describe 'weather responder', ->
     it 'should respond with a forecast summary', ->
       message.body = "forecast for denver"
       runs ->
-        responder.receiveMessage(message, room, {})
+        responder.respond(message, room, {})
       waitsFor ->
         room.speak.wasCalled
       runs ->
@@ -41,7 +41,7 @@ describe 'weather responder', ->
     it 'should respond with a conditions summary', ->
       message.body = "weather for denver"
       runs ->
-        responder.receiveMessage(message, room, {})
+        responder.respond(message, room, {})
       waitsFor ->
         room.speak.wasCalled
       runs ->

@@ -18,5 +18,5 @@ client = new Campfire
   account:  process.env.CAMPFIRE_ACCOUNT
 
 
-new Bitbot(client, responders, periodics, redis, ignored_rooms)
+new Bitbot('bitbot', client, responders, periodics, redis, ignored_rooms)
 

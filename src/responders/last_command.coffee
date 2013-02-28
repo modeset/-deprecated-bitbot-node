@@ -2,7 +2,7 @@ _ = require 'underscore'
 
 exports.helpMessage = "Repeat your last action when you say '!!'"
 
-exports.receiveMessage = (message, room, bot) ->
+exports.hear = (message, room, bot) ->
   redis_key = "lastcommands-#{room.id}"
   if message.body is '!!'
     bot.redis.hget redis_key, message.userId, (err, reply) ->

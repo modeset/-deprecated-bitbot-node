@@ -10,14 +10,9 @@ class AppRegistryResponder
                     Remove one when you say 'remove the app <name>'
                """
 
-  receiveMessage: (message, room, bot) =>
+  respond: (message, room, bot) =>
     registry = new AppRegistry(bot.redis, room)
 
-    # Abort if this is a presence message
-    return unless message?.body
-
-    # Abort if this is a bot message
-    return if message.userId is bot.botUserId
 
     # Add an app
     if match = message.body.match(/add(?: an) app (\S+) (\S+) (\S+)$/)

@@ -11,5 +11,5 @@ describe 'bummer responder', ->
 
   it 'should respond to "bummer"', ->
     message.body = "bummer"
-    bummerResponder.receiveMessage(message, room, {})
+    bummerResponder.hear(message, room, {})
     expect(room.speak).toHaveBeenCalledWith(bummerResponder.responses[0])

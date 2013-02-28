@@ -29,7 +29,7 @@ class WeatherFetcher
       else
         callback.call(@, null)
 
-exports.receiveMessage = (message, room, bot) ->
+exports.respond = (message, room, bot) ->
   # Abort if this is a bot message
   return if message.userId is bot.botUserId
 
