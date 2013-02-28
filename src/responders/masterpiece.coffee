@@ -11,7 +11,7 @@ exports.respond = (message, room, bot) ->
       todayInDenver = new Date(new Date() - 8 * 3600 * 1000)
 
       special = _(entries).find (entry) ->
-        (new Date(entry.publishedDate).getDate() is todayInDenver.getDate()) and (entry.content.indexOf(':') >= 0)
+        new Date(entry.publishedDate).getDate() is todayInDenver.getDate()
 
       if special
         room.speak 'Today\'s Masterpiece Deli special is:'
