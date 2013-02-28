@@ -61,8 +61,12 @@ class Bitbot
     for name, responder of @responders
       if message.body.match(new RegExp("^[@]?(?:#{@name}[:,]?|#{@botUserName}[:,]?)")) and typeof responder['respond'] is 'function'
         responder.respond(message, room, @)
-      else if typeof responder['hear'] is 'function' and !@roomHasEarmuffs(room)
-        responder.hear(message, room, @)
+      else if typeof responder['hear'] is 'function'
+        @roomHasEarmuffs room, (result) =>
+          if result
+            console.log "Ignoring conversational responders since #{room.name} is earmuffed"
+          else
+            responder.hear(message, room, @)
 
 
   #
@@ -75,8 +79,9 @@ class Bitbot
         do (room) =>
           callback.call(@, room) unless room.name.match(@ignored_room_regex)
 
-  roomHasEarmuffs: (room) =>
-    @redis.exists "#{room.id}-muted"
+  roomHasEarmuffs: (room, callback) =>
+    @redis.exists "#{room.id}-muted", (err, res) =>
+      callback.call @, (res is 1)
 
   earmuffs: (room, time = 300) =>
     key = "#{room.id}-muted"
