@@ -8,7 +8,7 @@ exports.respond = (message, room, bot) ->
   exports.respondToMusic(message,room)
 
 exports.respondToTunes = (message, room) ->
-  msg_regex = /^find me some (.+) tunes/
+  msg_regex = /find me some (.+) tunes$/
   if message.body and msg_regex.test( message.body )
     regex_results = msg_regex.exec(message.body)
     mood = regex_results[1]
@@ -22,7 +22,7 @@ exports.respondToTunes = (message, room) ->
         room.speak "sorry, couldn't find any #{mood} tunes for you"
 
 exports.respondToMusic = (message, room) ->
-  msg_regex = /^find me some (.+) music/
+  msg_regex = /find me some (.+) music$/
   if message.body and msg_regex.test( message.body )
     regex_results = msg_regex.exec(message.body)
     style = regex_results[1]
