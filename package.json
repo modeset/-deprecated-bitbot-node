@@ -19,7 +19,7 @@
     "request":          " ~2.12"
   },
   "devDependencies": {
-    "jasmine-node":  "1.0.26",
+    "jasmine-node":  "1.5.0",
     "replay":  "~1.6.0"
   },
   "scripts": {
