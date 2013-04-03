@@ -15,6 +15,7 @@
     "redis-url":          "0.1.0",
     "require-dir":        "0.1.0",
     "underscore":         "~1.4",
+    "underscore.string":  "~2.3.1",
     "request":          " ~2.12"
   },
   "devDependencies": {

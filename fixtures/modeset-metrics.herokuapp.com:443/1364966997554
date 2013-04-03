@@ -1,0 +1,18 @@
+GET /api/billability/current.json
+authorization: Token token=abc123
+host: modeset-metrics.herokuapp.com
+
+200 HTTP/1.1
+cache-control: must-revalidate, private, max-age=0
+content-type: application/json; charset=utf-8
+date: Wed, 03 Apr 2013 05:29:57 GMT
+etag: "42248fce67ce54d3552146bd9f2e245a"
+server: thin 1.5.1 codename Straight Razor
+x-rack-cache: miss
+x-request-id: 863957f1ba4def2761465d490f1755d3
+x-runtime: 0.027861
+x-ua-compatible: IE=Edge,chrome=1
+transfer-encoding: chunked
+connection: keep-alive
+
+[{"billability":"0.525","billings":"3215","hours":21.0,"name":"Someone","week":"2013-03-25 00:00:00"},{"billability":"0.925","billings":"5415","hours":37.0,"name":"Someone Else","week":"2013-03-25 00:00:00"},{"billability":"0.55","billings":"3310","hours":22.0,"name":"A Third Guy","week":"2013-03-25 00:00:00"}]
