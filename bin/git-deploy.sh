@@ -17,7 +17,7 @@ cd $REPO
 git checkout $BRANCH
 git pull origin $BRANCH
 git remote add heroku $HEROKU_URL
-git push heroku $BRANCH:master
+git push -f heroku $BRANCH:master
 
 EXIT_STATUS=$?
 
