@@ -14,6 +14,8 @@ echo "Deploying from $GIT_URL to $HEROKU_URL"
 
 git clone $GIT_URL $REPO
 cd $REPO
+git checkout $BRANCH
+git pull origin $BRANCH
 git remote add heroku $HEROKU_URL
 git push heroku $BRANCH:master
 
