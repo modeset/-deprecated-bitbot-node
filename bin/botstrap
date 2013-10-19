@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+
+// ENV:
+// BOT_NAME            specify your bot name (default: 'bitbot')
+// CAMPFIRE_TOKEN      campfire token
+// CAMPFIRE_ACCOUNT    campfire account
+// JOIN_ROOMS          regexp for which rooms to join
+//
+// RESPONDERS          path to your own responders -- default: './responders'
+// PERIODICS           path to your own periodics -- default: './periodics'
+//
+// REDISTOGO_URL       used for connecting to redis
+//
+require('coffee-script');
+Campfire  = require('campfire').Campfire;
+Redis     = require('redis-url').connect(process.env.REDISTOGO_URL);
+_         = require('underscore');
+Bitbot    = require('../lib/bitbot');
+
+// Ensure we're good to start
+if (!process.env.CAMPFIRE_TOKEN || !process.env.CAMPFIRE_ACCOUNT) {
+  console.log('Please specify CAMPFIRE_TOKEN and CAMPFIRE_ACCOUNT env variables.');
+  process.exit();
+}
+
+// Load the configuration
+if (process.argv[0]) {
+
+}
+
+
+// Load responders and periodics
+Bitbot.responders = require(process.env.RESPONDERS_PATH || '../lib/responders');
+Bitbot.periodics = require(process.env.PERIODICS_PATH || '../lib/periodics');
+
+new Bitbot({
+  name: process.env.BOT_NAME || 'bitbot',
+  roomsRegexp: new RegExp(process.env.ROOMS),
+//  cfToken: process.env.CAMPFIRE_TOKEN,
+//  cfAccount: process.env.CAMPFIRE_ACCOUNT
+//});
+//

@@ -1,9 +1,9 @@
 class SimpleResponder
 
-  constructor: (@messageRegex, @responses) ->
-
   @messageRegex = null
   @responses = []
+
+  constructor: (@messageRegex, @responses) ->
 
   hear: (message, room, bot) ->
     random = @responses[Math.floor(Math.random() * @responses.length)]

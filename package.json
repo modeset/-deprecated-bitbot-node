@@ -1,9 +1,10 @@
 {
-  "name": "bitbot",
-  "version": "0.0.1",
+  "name"              : "bitbot",
+  "version"           : "0.1.0",
+  "bin"               : "./bin/botstrap",
   "engines": {
-    "node": "0.8.x",
-    "npm": "1.1.x"
+    "node": ">=0.8.0",
+    "npm": ">=1.1.0"
   },
   "dependencies": {
     "coffee-script":      "~1.1.2",
@@ -16,13 +17,11 @@
     "require-dir":        "0.1.0",
     "underscore":         "~1.4",
     "underscore.string":  "~2.3.1",
-    "request":          " ~2.12"
+    "node.extend":        "1.0.8",
+    "node-whois":         "0.2.0"
   },
   "devDependencies": {
     "jasmine-node":  "1.5.0",
     "replay":  "~1.6.0"
-  },
-  "scripts": {
-    "test": "cake spec"
   }
 }
