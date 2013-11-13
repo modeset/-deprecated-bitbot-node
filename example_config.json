@@ -1,0 +1,20 @@
+{
+  "Bzzzrt": {
+    "token": ">TOKEN_BZZZRT",
+    "rooms": ["1782", "Jawa Yard Sale"],
+    "respondsTo": ["bzzzrt", "bot"],
+
+    "commands": {
+    },
+
+    "periodics": {
+    },
+
+    "responders": {
+      "boobs": "lib/responders/boobs.coffee",
+      "racist": {
+        "file": "lib/responders/racist.coffee"
+      }
+    }
+  }
+}

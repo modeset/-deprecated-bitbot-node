@@ -1,42 +1,38 @@
 #!/usr/bin/env node
+//
+// Expected Environment Variables
+// CAMPFIRE_ACCOUNT
+// REDISTOGO_URL
+//
+// Optional Environment Variables
+// WIT_TOKEN
+//
+Coffee = require('coffee-script');
+Campfire = require('campfire').Campfire;
+SandCastle = require('sandcastle').SandCastle;
+Redis = require('redis-url');
+Path = require('path');
+Wit = require('wit-node').wit;
+Bitbot = require('../lib/bitbot');
+_ = require('underscore');
 
-// ENV:
-// BOT_NAME            specify your bot name (default: 'bitbot')
-// CAMPFIRE_TOKEN      campfire token
-// CAMPFIRE_ACCOUNT    campfire account
-// JOIN_ROOMS          regexp for which rooms to join
-//
-// RESPONDERS          path to your own responders -- default: './responders'
-// PERIODICS           path to your own periodics -- default: './periodics'
-//
-// REDISTOGO_URL       used for connecting to redis
-//
-require('coffee-script');
-Campfire  = require('campfire').Campfire;
-Redis     = require('redis-url').connect(process.env.REDISTOGO_URL);
-_         = require('underscore');
-Bitbot    = require('../lib/bitbot');
+// Create basic globals
+redis = Redis.connect(process.env.REDISTOGO_URL);
+root = process.cwd();
+m = null;
+r = null;
+configPath = process.argv[2];
 
 // Ensure we're good to start
-if (!process.env.CAMPFIRE_TOKEN || !process.env.CAMPFIRE_ACCOUNT) {
-  console.log('Please specify CAMPFIRE_TOKEN and CAMPFIRE_ACCOUNT env variables.');
+if (!process.env.CAMPFIRE_ACCOUNT) {
+  Bitbot.log('Missing CAMPFIRE_ACCOUNT environment variable', 'error');
   process.exit();
 }
 
-// Load the configuration
-if (process.argv[0]) {
-
+if (!configPath) {
+  Bitbot.log('Missing configuration -- use `bitbot [path_or_url]` to specify configuration', 'error');
+  process.exit();
 }
 
-
-// Load responders and periodics
-Bitbot.responders = require(process.env.RESPONDERS_PATH || '../lib/responders');
-Bitbot.periodics = require(process.env.PERIODICS_PATH || '../lib/periodics');
-
-new Bitbot({
-  name: process.env.BOT_NAME || 'bitbot',
-  roomsRegexp: new RegExp(process.env.ROOMS),
-//  cfToken: process.env.CAMPFIRE_TOKEN,
-//  cfAccount: process.env.CAMPFIRE_ACCOUNT
-//});
-//
+// Load the configuration and instantiate the bot(s).
+Bitbot.createFromConfig(configPath);
