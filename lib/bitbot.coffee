@@ -1,23 +1,11 @@
 class Bitbot
 
-  # Base Commands
+  # Base responders
 
-  @UntrustedCommand: require('./bitbot/base_commands/untrusted_command')
+  @BaseResponder: require('./bitbot/responders/base_responder')
+  @RegexpResponder: require('./bitbot/responders/regexp_responder')
 
-  # Base Periodics
-
-  @UntrustedPeriodic: require('./bitbot/base_periodics/untrusted_periodic')
-
-  # Base Responders
-
-  @SimpleResponder: require('./bitbot/base_responders/simple_responder')
-  @UntrustedResponder: require('./bitbot/base_responders/untrusted_responder')
-
-  # Base Periodics
-
-  @UntrustedPeriodic: require('./bitbot/base_periodics/untrusted_periodic')
-
-  # Core Extensions
+  # Core extensions
 
   @log: require('./bitbot/logger')
   @load: require('./bitbot/loader')
@@ -27,76 +15,70 @@ class Bitbot
   @logPrefix: 'Core:'
   @bots: {}
 
-  @createFromConfig: (@configPath) ->
-    @load @configPath, name: 'configuration', (err, content) ->
-      if (err)
-        @log(err.message, 'error')
-        process.exit()
+  @loadConfig: (@configPath) ->
+    @load @configPath, name: 'configuration', (err, content) =>
+      @log(err.message, 'error') && process.exit() if (err)
 
       for name, config of JSON.parse(content)
-        Bitbot.verify config, (config, token, account) ->
-          Bitbot.create(name, config, token, account)
+        @verifyConfig config, (config, token, account) =>
+          @create(name, config, token, account)
 
 
-  @verify: (config, callback) ->
+  @verifyConfig: (config, callback) ->
     account = process.env.CAMPFIRE_ACCOUNT
     token = config.token
+    env = token.replace(/^>/, '')
 
     if !token
-      @log("You must specify a token for #{name}", 'error')
-      return
+      return @log("No token specified for #{name}", 'error')
 
-    if token.match(/^>/) && !token = process.env[env = token.replace(/^>/, '')]
-      @log("You must specify a token for #{env} in your environment", 'error')
-      return
+    if token.match(/^>/) && !token = process.env[env]
+      return @log("Missing environment token for #{env}", 'error')
 
     callback(config, token, account)
 
 
   @create: (name, config, token, account) ->
-    @log("Creating bot #{name}")
+    @log("Creating bot \033[33m#{name}")
 
     client = new Campfire(ssl: true, account: account, token: token)
     client.me (err, response) =>
-      if err
-        @log("Unable to connect to campfire (#{err.message})", 'error')
-        return
-      console.log(name)
-      @bots[response.user.id] = new Bitbot(client, name, response.user, config)
+      return @log("Unable to connect (#{err.message})", 'error') if err
+
+      user = response.user
+      @bots[user.id] = new Bitbot(name, client, user, config)
 
   # Instance methods
 
   log: @log
   load: @load
 
-  constructor: (@client, @name, @user, @config) ->
+  constructor: (@name, @client, @user, @config) ->
     @logPrefix = "#{@user.name}:"
 
     @respondsTo = @config.respondsTo || @user.name
     @respondsTo = [@respondsTo] unless _(@respondsTo).isArray()
 
-    @log("Connected (#{user.id} -- #{@respondsTo.join(', ')})")
+    @log("Connected (\033[33m#{user.id}\033[37m)")
+    @log("Responding to \033[35m#{@respondsTo.join(', ')}")
 
     @initialize()
 
 
   initialize: ->
     @joinRooms()
-    @loadCommands()
     @loadResponders()
-    @loadPeriodics()
 
 
   reload: ->
-    room.speak("Reloading...") for id, room of @rooms
+    room.speak("BRB") for id, room of @rooms
+
     @load Bitbot.configPath, name: 'configuration', (err, content) =>
-      if (err)
-        @log(err.message, 'error')
-        return
+      return @log(err.message, 'error') if (err)
 
       for name, config of JSON.parse(content)
         continue unless name == @name
-        Bitbot.verify config, (config, token, account) =>
+        Bitbot.verifyConfig config, (config, token, account) =>
           @config = config
           @initialize()
 
@@ -105,189 +87,91 @@ class Bitbot
     @rooms ||= {}
 
     joinOrLeave = (room, allowed) =>
-      if allowed && !@rooms[room.id]
-        @log("Joining #{room.name}")
+      if allowed
+        return if @rooms[room.id]
+
+        @log("Joining \033[32m#{room.name}")
 
         (@rooms[room.id] = room).join =>
-          room.listen room.listener = (message) =>
-            @respondTo(room, message)
+          room.listen((message) => @respondTo(room, message))
 
-#      else if @rooms[room.id]
-#        @log("Leaving #{room.name}")
-#
-#        room.listener.abort()
-#        room.leave()
-#        delete(@rooms[room.id])
+      else if @rooms[room.id]
+        @log("Leaving \033[32m#{room.name}")
+
+        room.leave()
+        delete(@rooms[room.id])
 
     @client.rooms (err, rooms) =>
-      if err
-        @log('Unable to get room list', 'error')
-        return
+      return @log('Unable to get room list', 'error') if err
 
       for room in rooms
         joinOrLeave(room, @isAllowedRoom(room.name, @config.rooms))
 
 
-  loadCommands: ->
-    @commands = {}
-
-    for name, command of @config.commands || {}
-      opts = name: "#{name} command"
-      @loadResource name, command, opts, (name, command, handler) =>
-        handler = new Bitbot.UntrustedCommand(name, handler) if _(handler).isString()
-        @commands[name] =
-          handler: handler
-          rooms: command.rooms || true
-
-
   loadResponders: ->
+    for name, responder of @responder
+      for interval in responder.intervals || []
+        clearInterval(interval)
+
     @responders = {}
 
-    for name, responder of @config.responders || {}
-      opts = name: "#{name} responder"
-      @loadResource name, responder, opts, (name, responder, handler) =>
-        handler = new Bitbot.UntrustedResponder(name, handler) if _(handler).isString()
+    for name, responder of @config.responders
+      # todo: should load from more than one path -- checking in a few places
+      source = responder.url || Path.join(root, 'lib', 'responders', responder.file || responder)
+
+      opts =
+        name: "#{name} responder",
+        trusted: !responder.untrusted
+
+      @load source, _(opts).extend(responder), (err, handler) =>
+        return @log("#{name} - #{err.message}", 'error') if err
+
+        handler.bot = @ if responder.core
+
         @responders[name] =
           handler: handler
           rooms: responder.rooms || true
 
-
-  loadPeriodics: ->
-    for name, periodic of @periodics || {}
-      clearInterval(perodic.interval)
-
-    @periodics = {}
-
-    for name, periodic of @config.periodics || {}
-      opts = name: "#{name} periodic"
-      @loadResource name, periodic, opts, (name, periodic, handler) =>
-        handler = new Bitbot.UntrustedPeriodic(name, handler) if _(handler).isString()
-        tick = (periodic.tick || 5 * 60) * 1000
-
-        out = (res) =>
-          return unless _(res).isObject()
-          for id, room of @rooms
-            continue unless @isAllowedRoom(room.name, @periodics[name].rooms)
-            room.speak(res.speak) if res.speak
-            room.paste(res.paste) if res.paste
-
-        @periodics[name] =
-          handler: handler
-          rooms: periodic.rooms || true
-          interval: setInterval((-> out(handler.main(out))), tick)
+        @addResponderIntervals(name) if handler.intervals
 
 
-  loadResource: (name, resource, options = {}, callback = ->) ->
-    # todo: should load from more than one path -- checking in a few places
-    source = resource.url || Path.join(root, resource.file || resource)
-    options.trusted = true if _(resource).isString()
-
-    @load source, _(options).extend(resource), (err, handler) =>
-      if err
-        @log("#{name} - #{err.message}", 'error')
-        return
-
-      callback(name, resource, handler)
-
-
-  # message handling
-
-  respondTo: (room, message) ->
-    return unless message && message.body
-    return if @constructor.bots[message.userId]
-
-    message.roomName = room.name
-
-    if command = @isCommand(message.body)
-      message.body = command
-      @log("#{room.name}: responding to command #{message.body} (#{message.userId})")
-      @processMessage message, (message) => @respondToCommand(room, message)
-    else
-      @log("#{room.name}: responding to message #{message.body} (#{message.userId})")
-      @roomIsSilenced room, (result) =>
-        return if result
-        @processMessage message, (message) => @respondToMessage(room, message)
-
-
-  isCommand: (message) ->
-    command = message.replace(new RegExp("^(#{@respondsTo.join('|')})[:,]?\\s+", 'gi'), '', '')
-    return false if command == message
-    command
-
-
-  processMessage: (message, callback) ->
-    msg =
-      body: message.body,
-      type: message.type,
-      userId: message.userId,
-      roomId: message.roomId,
-      tweet: message.tweet,
-      roomName: message.roomName
-
-    if Wit.token
-      promise = Wit.message(msg.body)
-      promise.fail -> callback(msg)
-      promise.then (response) ->
-        _(msg).extend(response)
-        callback(msg)
-    else
-      callback(msg)
-
-
-  respondToCommand: (room, message) ->
-    return if @respondToInternalCommand(room, message)
-
-    out = (res) ->
+  addResponderIntervals: (name) ->
+    respond = (res) =>
       return unless _(res).isObject()
-      room.speak(res.speak) if res.speak
-      room.paste(res.paste) if res.paste
+      for id, room of @rooms
+        continue unless @isAllowedRoom(room.name, @responders[name].rooms)
+        room.speak(res.speak) if res.speak
+        room.paste(res.paste) if res.paste
 
-    respond = (name, command) =>
-      output = command.handler.main(message, out)
-      out(output)
+    handler = @responders[name].handler
+    intervals = []
+    for method, tick of handler.intervals || []
+      callback = => respond(handler.interval(method, respond))
+      intervals.push = setInterval(callback, tick)
 
-    for name, command of @commands
-      continue unless @isAllowedRoom(room.name, command.rooms)
-      respond(name, command)
-
-
-  respondToInternalCommand: (room, message) ->
-    if message.body == 'silence!' || (message.intent == 'silence' && message.confidence > 0.7)
-      room.speak("I'm sorry.. I'll be quite for a while.")
-      redis.set("#{message.roomId}-muted", true)
-      redis.expire("#{message.roomId}-muted", time)
-
-    else if message.body == 'resume!' || (message.intent == 'unsilence' && message.confidence > 0.7)
-      room.speak('Thanks!')
-      redis.del("#{message.roomId}-muted", true)
-
-    else if message.body == 'reload!' || (message.intent == 'reload' && message.confidence > 0.7)
-      @reload()
-      callback(speak: 'Done reloading. It may be a bit before you see me joining or leaving rooms etc.')
-
-    else if message.body == 'help!' || (message.intent == 'help' && message.confidence > 0.7)
-      room.paste """
-      Commands:
-        - help! - you're looking at it
-        - reload! - I'll reload the configuration and reinitialize
-        - silence! - I'll be silent for a while and will only respond to commands
-        - resume! - Lets me resume after being silenced
-      """
+    @responders[name].intervals = intervals
 
 
-  respondToMessage: (room, message) ->
-    out = (res) ->
-      return unless _(res).isObject()
-      room.speak(res.speak) if res.speak
-      room.paste(res.paste) if res.paste
+  getUser: (userId, callback) ->
+    @users ||= {}
 
-    respond = (name, responder) =>
-      output = responder.handler.main(message, out)
-      out(output)
+    if @users[userId]
+      callback(@users[userId])
+      return
 
-    for name, responder of @responders
-      continue unless @isAllowedRoom(room.name, responder.rooms)
-      respond(name, responder)
+    @client.user userId, (err, user) =>
+      name = (user ||= user: {name: "Unknown"}).user.name
+      names = name.split(' ')
+      initials = ''
+      initials += n[0] for n in names
+
+      @users[userId] =
+        name: names[0],
+        fullName: name,
+        initials: initials,
+        lastMessage: ''
+
+      callback(@users[userId])
 
 
   isAllowedRoom: (name, rooms) ->
@@ -298,9 +182,81 @@ class Bitbot
     else true
 
 
-  roomIsSilenced: (room, callback) =>
+  isMutedRoom: (room, callback) =>
     redis.exists "#{room.id}-muted", (err, res) =>
       callback(res == 1)
+
+
+  isCommandMessage: (message) ->
+    startRegexp = new RegExp("^(#{@respondsTo.join('|')})[:,]?\\s+", 'gi')
+    anyRegexp = new RegExp("(#{@respondsTo.join('|')})", 'gi')
+    command = message.replace(startRegexp, '', '')
+    return false if command == message && !message.match(anyRegexp)
+    command
+
+
+  respondTo: (room, message) ->
+    return unless message && message.body
+    return if @constructor.bots[message.userId]
+
+    @getUser message.userId, (user) =>
+      message.user = user
+      message.room = id: room.id, name: room.name
+
+      if command = @isCommandMessage(message.body)
+        message.body = command
+        message.command = true
+
+      @isMutedRoom room, (result) =>
+        return if result && !command
+
+        @processMessage message, (message) =>
+          info = "\033[32m#{room.name}\033[37m/\033[35m#{user.fullName}"
+          @log("#{info}\033[37m: \033[90m#{JSON.stringify(message)}")
+
+          @respondToMessage(room, message)
+          user.lastMessage = message.body
+
+
+  processMessage: (original, callback) ->
+    message =
+      body: original.body
+      type: original.type
+      tweet: original.tweet
+      user: original.user
+      room: original.room
+      command: original.command
+
+    Sentiment message.body, (err, result) ->
+      if result
+        message.sentiment = result.score
+        message.comparative = result.comparative
+
+      if Wit.token
+        Wit.message(message.body)
+        .fail(-> callback(message))
+        .then (res) ->
+            message.intent = res.intent
+            message.confidence = res.confidence
+            message.entities = res.entities
+            callback(message)
+      else
+        callback(message)
+
+
+  respondToMessage: (room, message) ->
+    respond = (response) ->
+      return unless _(response).isObject()
+      room.speak(response.speak) if response.speak
+      room.paste(response.paste) if response.paste
+
+    for name, responder of @responders
+      continue unless @isAllowedRoom(room.name, responder.rooms)
+      continue unless responder.handler.respondsTo?(message)
+
+      try respond(responder.handler.respond?(message, respond))
+      catch e
+        @log(e, 'error')
 
 
 module.exports = Bitbot

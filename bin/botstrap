@@ -9,11 +9,11 @@
 //
 Coffee = require('coffee-script');
 Campfire = require('campfire').Campfire;
-SandCastle = require('sandcastle').SandCastle;
 Redis = require('redis-url');
 Path = require('path');
 Wit = require('wit-node').wit;
 Bitbot = require('../lib/bitbot');
+Sentiment = require('sentiment');
 _ = require('underscore');
 
 // Create basic globals
@@ -35,4 +35,4 @@ if (!configPath) {
 }
 
 // Load the configuration and instantiate the bot(s).
-Bitbot.createFromConfig(configPath);
+Bitbot.loadConfig(configPath);

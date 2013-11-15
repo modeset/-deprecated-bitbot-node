@@ -1,20 +1,28 @@
 {
   "Bzzzrt": {
     "token": ">TOKEN_BZZZRT",
-    "rooms": ["1782", "Jawa Yard Sale"],
+    "rooms": ["Jawa Yard Sale"],
+    "ops": ["Jeremy Jackson"],
     "respondsTo": ["bzzzrt", "bot"],
 
-    "commands": {
-    },
-
-    "periodics": {
-    },
-
     "responders": {
-      "boobs": "lib/responders/boobs.coffee",
-      "racist": {
-        "file": "lib/responders/racist.coffee"
-      }
+      "core": { "core": true, "file": "core.coffee" },
+      "8ball": "8ball.coffee",
+      "coin_toss": "coin_toss.coffee",
+      "heroku_status": "heroku_status.coffee",
+      "fortune": "fortune.coffee",
+      "password": "password.coffee",
+      "weather": "weather.coffee",
+      "whois": "whois.coffee",
+
+      "beer": "modeset/beer.coffee",
+      "boobs": "modeset/boobs.coffee",
+      "bummer": "modeset/bummer.coffee",
+      "busted": "modeset/busted.coffee",
+      "hater": "modeset/hater.coffee",
+      "meme": "modeset/meme.coffee",
+      "mom": "modeset/mom.coffee",
+      "twss": "modeset/twss.coffee"
     }
   }
 }

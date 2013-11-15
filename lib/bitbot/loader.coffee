@@ -9,7 +9,7 @@ load = (file, args...) ->
 
   if file.match(/^https?/)
     opts.name ||= 'url'
-    @log("Loading remote #{opts.name} (at #{file})...")
+    @log("Loading remote #{opts.name} (at \033[34m#{file}\033[37m)...")
 
     request file, (err, response, body) ->
       if err || response.statusCode != 200
@@ -35,7 +35,7 @@ load = (file, args...) ->
 
   else
     opts.name ||= 'file'
-    @log("Loading local #{opts.name} (at #{file})...")
+    @log("Loading local #{opts.name} (at \033[34m#{file}\033[37m)...")
 
     unless fs.existsSync(file)
       callback(new Error("Unable to locate #{file}"))
