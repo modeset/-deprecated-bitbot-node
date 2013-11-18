@@ -21,7 +21,7 @@ class Responder extends Bitbot.BaseResponder
         @log(err, 'error')
         callback(speak: "Sorry, #{@message.user.initials}, the password generating service isn't working. :(")
 
-      callback(speak: "#{@message.user.initials}, here's a new password: #{body}")
+      callback(speak: "🔒 #{@message.user.initials}, here's a new password: #{body}")
 
 
 module.exports = new Responder()

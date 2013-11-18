@@ -94,6 +94,8 @@ class Bitbot
 
         (@rooms[room.id] = room).join =>
           room.listen((message) => @respondTo(room, message))
+          room.confirmations = {}
+          room.prompts = {}
 
       else if @rooms[room.id]
         @log("Leaving \033[32m#{room.name}")
@@ -142,6 +144,7 @@ class Bitbot
         continue unless @isAllowedRoom(room.name, @responders[name].rooms)
         room.speak(res.speak) if res.speak
         room.paste(res.paste) if res.paste
+        room.sound(res.sound) if res.sound
 
     handler = @responders[name].handler
     intervals = []
@@ -249,6 +252,26 @@ class Bitbot
       return unless _(response).isObject()
       room.speak(response.speak) if response.speak
       room.paste(response.paste) if response.paste
+      room.sound(response.sound) if response.sound
+      if response.confirm
+        room.confirmations[message.user.id] = response.confirm.callback
+        room.speak(response.confirm.speak) if response.confirm.speak
+        room.paste(response.confirm.paste) if response.confirm.paste
+      else if response.prompt
+        room.prompts[message.user.id] = response.prompt.callback
+        room.speak(response.prompt.speak) if response.prompt.speak
+        room.paste(response.prompt.paste) if response.prompt.paste
+
+    if callback = room.confirmations[message.user.id]
+      confirmed = message.body.match(/yes/) || message.intent == true
+      respond(callback(confirmed, message, respond))
+      delete(room.confirmations[message.user.id])
+      return
+
+    if callback = room.prompts[message.user.id]
+      respond(callback(message, respond))
+      delete(room.confirmations[message.user.id])
+      return
 
     for name, responder of @responders
       continue unless @isAllowedRoom(room.name, responder.rooms)

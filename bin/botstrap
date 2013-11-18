@@ -14,6 +14,7 @@ Path = require('path');
 Wit = require('wit-node').wit;
 Bitbot = require('../lib/bitbot');
 Sentiment = require('sentiment');
+Moment = require('moment');
 _ = require('underscore');
 
 // Create basic globals

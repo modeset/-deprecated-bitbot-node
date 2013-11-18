@@ -7,7 +7,7 @@ class Responder extends Bitbot.BaseResponder
 
   commands:
     '8ball':
-      desc: "Ask the all mighty 8-ball for an answer to your question."
+      desc: "Ask the all mighty 8-ball for an answer to your question"
       examples: ["8ball me", "magic is needed", "magic 8 ball says?"]
       intent: 'magic8ball'
 
@@ -38,6 +38,3 @@ class Responder extends Bitbot.BaseResponder
     speak: "🎱 #{@message.user.initials}, #{@responses[Math.floor(Math.random() * @responses.length)]}"
 
 module.exports  = new Responder()
-
-
-

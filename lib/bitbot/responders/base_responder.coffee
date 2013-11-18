@@ -36,9 +36,8 @@ class BaseResponder
     options = @commands[command]
 
     args = []
-    if options.opts
-      for name, opts of options.opts
-        args.push(@message.entities[name]?.value || @message.entities[opts.entity]?.value || opts.default || null)
+    for name, opts of options.opts || {}
+      args.push(@message.entities[name]?.value || @message.entities[opts.entity]?.value || opts.default || null)
     args.push(callback)
 
     callback(@[command]?.apply(@, args))

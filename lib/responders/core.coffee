@@ -4,7 +4,7 @@ class Responder extends Bitbot.BaseResponder
 
   commands:
     help:
-      desc: "You're looking at it (you can get help for a specific cammand too)"
+      desc: "You're looking at it (you can get help for a specific command too)"
       examples: ["please help", "what commands do you have?", "help for reload!"]
       opts:
         command: type: "string"
@@ -94,17 +94,22 @@ class Responder extends Bitbot.BaseResponder
 
 
   commandList: ->
-    ret = ''
+    coreCommands = []
+    commands = []
+
     for name, responder of @bot.responders
-      continue unless responder.handler.commands
-      ret += "\n☛️ #{responder.handler.responderName || name} Commands"
-      for command, options of responder.handler.commands
+      for command, options of responder.handler.commands || {}
         prefix = ''
         prefix = "#{commandPrefix}:" if commandPrefix = responder.handler.commandPrefix
         command = "#{prefix}#{command}"
-        ret += "\n  ∙ #{command + Array(20 - command.length + 1).join(" ")}"
-        ret += " #{options.desc}" if options.desc
-    ret
+        command = "\n  ∙ #{command + Array(20 - command.length + 1).join(" ")}"
+        command += " #{options.desc}" if options.desc
+        if prefix
+          commands.push(command)
+        else
+          coreCommands.push(command)
+
+    "\n☛ Available Commands#{coreCommands.join('')}#{commands.join('')}"
 
 
   responderList: ->

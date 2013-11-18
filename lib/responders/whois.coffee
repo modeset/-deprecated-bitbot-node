@@ -16,7 +16,7 @@ class Responder extends Bitbot.BaseResponder
     unless domain
       return speak: "Sorry #{@message.user.initials}, you need to provide a domain for this command."
     whois.lookup domain, timeout: 5000, (err, response) ->
-      return callback(speak: err) if err
+      return callback(speak: "Sorry #{@message.user.name}, I wasn't able to find that information. :(") if err
       response = response.replace(/[\s\n]+Corporation(.*)\n+/g, '')
       response = response.replace(/[\s\n]?Contact(.*)\n+/g, '')
       response = response.replace(/[\s\n]?NOTICE:(.*)\n+/g, '')

@@ -12,8 +12,13 @@
       "heroku_status": "heroku_status.coffee",
       "fortune": "fortune.coffee",
       "password": "password.coffee",
+      "reminder": "_reminder.coffee",
+      "timer": "_timer.coffee",
       "weather": "weather.coffee",
       "whois": "whois.coffee",
+
+      "billability": "modeset/billability.coffee",
+      "snowfall": "modeset/snow_report.coffee",
 
       "beer": "modeset/beer.coffee",
       "boobs": "modeset/boobs.coffee",
@@ -22,7 +27,14 @@
       "hater": "modeset/hater.coffee",
       "meme": "modeset/meme.coffee",
       "mom": "modeset/mom.coffee",
-      "twss": "modeset/twss.coffee"
+      "twss": "modeset/twss.coffee",
+
+      "inception": "modeset/sounds/inception.coffee",
+      "rimshot": "modeset/sounds/rimshot.coffee",
+      "the_best": "modeset/sounds/the_best.coffee",
+      "whoops": "modeset/sounds/whoops.coffee",
+      "yeah": "modeset/sounds/yeah.coffee"
+
     }
   }
 }

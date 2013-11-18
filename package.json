@@ -17,6 +17,7 @@
     "campfire": "git+https://github.com/tristandunn/node-campfire.git#159c7d" ,
     "redis-url": "0.1.0",
     "eval": "0.1.0",
+    "moment": "2.4.0",
     "wit-node": "0.0.3",
     "sentiment": "0.1.0",
 
