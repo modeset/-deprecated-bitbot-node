@@ -18,7 +18,7 @@ class Responder extends Bitbot.BaseResponder
 
     name = @message.user.name
     @delay duration * 1000, ->
-      callback(speak: "Okay #{name}, you're timer's done.")
+      callback(speak: "Okay #{name}, your timer's done.")
 
 
   delay: (time, callback) ->
