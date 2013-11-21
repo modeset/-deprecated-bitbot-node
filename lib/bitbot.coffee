@@ -56,8 +56,9 @@ class Bitbot
   constructor: (@name, @client, @user, @config) ->
     @logPrefix = "#{@user.name}:"
 
-    @respondsTo = @config.respondsTo || @user.name
+    @respondsTo = @config.respondsTo || []
     @respondsTo = [@respondsTo] unless _(@respondsTo).isArray()
+    @respondsTo.push(@user.name)
 
     @log("Connected (\033[33m#{user.id}\033[37m)")
     @log("Responding to \033[35m#{@respondsTo.join(', ')}")
