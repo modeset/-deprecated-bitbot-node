@@ -36,6 +36,7 @@ class Responder extends Bitbot.BaseResponder
           options = handler.commands[command.replace(handler.commandPrefix + ':', '')]
           return callback(paste: @helpForCommand(command, options)) if options
       speak: "Sorry #{@message.user.name}, I don't know about the #{command} command. :("
+      paste: @helpForAllCommands()
     else
       paste: @helpForAllCommands()
 

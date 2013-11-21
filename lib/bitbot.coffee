@@ -190,7 +190,7 @@ class Bitbot
   isCommandMessage: (message) ->
     return false unless message
     bRegexp = new RegExp("^(#{@respondsTo.join('|')})[:,;]?\\s+", 'gi')
-    aRegexp = new RegExp("(#{@respondsTo.join('|')})", 'gi')
+    aRegexp = new RegExp("(\\s+)(#{@respondsTo.join('|')})(?:\\b)", 'gi')
     command = message.replace(bRegexp, '', '')
     return false if command == message && !message.match(aRegexp)
     command
