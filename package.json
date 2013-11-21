@@ -18,7 +18,7 @@
     "redis-url": "0.1.0",
     "eval": "0.1.0",
     "moment": "2.4.0",
-    "wit-node": "0.0.3",
+    "wit-node": "0.0.4",
     "sentiment": "0.1.0",
 
     "node-whois": "0.2.0"
