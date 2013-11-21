@@ -99,11 +99,11 @@ class Responder extends Bitbot.BaseResponder
 
     for name, responder of @bot.responders
       for command, options of responder.handler.commands || {}
+        continue unless options.desc
         prefix = ''
         prefix = "#{commandPrefix}:" if commandPrefix = responder.handler.commandPrefix
         command = "#{prefix}#{command}"
-        command = "\n  ∙ #{command + Array(20 - command.length + 1).join(" ")}"
-        command += " #{options.desc}" if options.desc
+        command = "\n  ∙ #{command + Array(20 - command.length + 1).join(" ")} #{options.desc}"
         if prefix
           commands.push(command)
         else
