@@ -220,7 +220,7 @@ class Bitbot
         message.sentiment = result.score
         message.comparative = result.comparative
 
-      if Wit.token
+      if Wit.token && message.command
         Wit.message(message.body)
         .fail(-> callback(message))
         .then (res) ->
@@ -229,6 +229,9 @@ class Bitbot
             message.entities = res.entities
             callback(message)
       else
+        message.intent = ""
+        message.confidence = 0.0
+        message.entities = {}
         callback(message)
 
 
