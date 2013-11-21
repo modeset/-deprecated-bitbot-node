@@ -6,6 +6,10 @@
   "bugs"         : { "url": "https://github.com/modeset/bitbot/issues" },
   "license"      : { "type": "MIT", "url": "https://github.com/modeset/bitbot/blob/master/MIT.LICENSE" },
   "bin"          : "./bin/botstrap",
+  "engines": {
+    "node": "0.8.10",
+    "npm": "1.2.x"
+  },
   "scripts": {
     "run": "bitbot example_config.json",
     "test": "mocha"
