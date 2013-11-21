@@ -23,7 +23,7 @@ class Responder extends Bitbot.BaseResponder
     @checkHeroku (issues) =>
       if issues
         if !@notified || @message.command
-          callback(speak: "⚠️Heroku is reporting issues. Check http://status.heroku.com/ for details")
+          callback(speak: "⚠️ Heroku is reporting issues. Check http://status.heroku.com/ for details")
         @notified = true unless @message.command
       else
         if @message.command
