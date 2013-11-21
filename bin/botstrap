@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+//
+// Expected Environment Variables
+// CAMPFIRE_ACCOUNT
+// REDISTOGO_URL
+//
+// Optional Environment Variables
+// WIT_TOKEN
+//
+Coffee = require('coffee-script');
+Campfire = require('campfire').Campfire;
+Redis = require('redis-url');
+Path = require('path');
+Wit = require('wit-node').wit;
+Bitbot = require('../lib/bitbot');
+Sentiment = require('sentiment');
+Moment = require('moment');
+_ = require('underscore');
+
+// Create basic globals
+redis = Redis.connect(process.env.REDISTOGO_URL);
+root = process.cwd();
+m = null;
+r = null;
+configPath = process.argv[2];
+
+// Ensure we're good to start
+if (!process.env.CAMPFIRE_ACCOUNT) {
+  Bitbot.log('Missing CAMPFIRE_ACCOUNT environment variable', 'error');
+  process.exit();
+}
+
+if (!configPath) {
+  Bitbot.log('Missing configuration -- use `bitbot [path_or_url]` to specify configuration', 'error');
+  process.exit();
+}
+
+// Load the configuration and instantiate the bot(s).
+Bitbot.loadConfig(configPath);
