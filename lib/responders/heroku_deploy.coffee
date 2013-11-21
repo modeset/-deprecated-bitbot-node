@@ -182,8 +182,8 @@ class DeployerOfWorlds
 
 
   processDidExit: (code) =>
-    message = "Okay #{@userName}, #{@app} deployed successfully. Pasting the logs here for you to review."
-    message = "Sorry #{@userName}, something went wrong deploying #{@app}. Pasting the logs here for you to review." if code != 0
+    message = "Sorry #{@userName}, something went wrong deploying #{@app}. Pasting the logs here for you to review."
+    message = "Okay #{@userName}, #{@app} deployed successfully. Pasting the logs here for you to review." if code is 0
     @callback(speak: message, paste: @transcript.join("\n"))
 
 
