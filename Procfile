@@ -1,1 +1,1 @@
-campfire: bitbot https://raw.github.com/modeset/bitbot/master/example_config.json
+campfire: bitbot example_config.json
