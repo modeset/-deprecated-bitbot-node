@@ -1,6 +1,6 @@
 class Responder extends Bitbot.RegexpResponder
 
-  regexp: /inception|dream|deeper/
+  regexp: /(?:\b)(inception|dream|deeper)(?:\b)/
 
   randomResponse: ->
     sound: 'deeper'

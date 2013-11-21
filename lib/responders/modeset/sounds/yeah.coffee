@@ -1,6 +1,6 @@
 class Responder extends Bitbot.RegexpResponder
 
-  regexp: /fuck yeah|shit yeah/
+  regexp: /(?:\b)(fuck yeah|shit yeah)(?:\b)/
 
   randomResponse: ->
     sound: 'yeah'

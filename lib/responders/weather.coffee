@@ -13,21 +13,21 @@ class Responder extends Bitbot.BaseResponder
       examples: ["what's the forecast for Denver CO?", "Denver CO forecast"]
       intent: "weatherforecast"
       opts:
-        location: type: 'string', default: 'Denver, CO'
+        location: {type: 'string', default: 'Denver, CO'}
 
     conditions:
       desc: "Displays current conditions for a given location"
       examples: ["Denver CO weather", "weather for Denver CO", "current conditions for Denver"]
       intent: "weatherconditions"
       opts:
-        location: type: 'string', default: 'Denver, CO'
+        location: {type: 'string', default: 'Denver, CO'}
 
     moon:
       desc: "Displays the moon phase information for a given location"
       examples: ["Denver CO moon", "moon for Denver CO", "moon phase for Denver"]
       intent: "weathermoon"
       opts:
-        location: type: 'string', default: 'Denver, CO'
+        location: {type: 'string', default: 'Denver, CO'}
 
 
   token: process.env['WUNDERGROUND_TOKEN']

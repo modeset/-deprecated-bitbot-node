@@ -7,7 +7,7 @@ class Responder extends Bitbot.BaseResponder
       desc: "You're looking at it (you can get help for a specific command too)"
       examples: ["please help", "what commands do you have?", "help for reload!"]
       opts:
-        command: type: "string"
+        command: {type: "string"}
 
     reload:
       desc: "I'll reload my configuration and reinitialize"
@@ -17,7 +17,7 @@ class Responder extends Bitbot.BaseResponder
       desc: "I'll be silent for a while, only responding to commands"
       examples: ["be quite for 20 seconds", "shut your face"]
       opts:
-        duration: type: "integer", default: 300, note: "seconds"
+        duration: {type: "integer", default: 300, note: "seconds"}
 
     resume:
       desc: "I'll resume my normal banter after having been silenced"

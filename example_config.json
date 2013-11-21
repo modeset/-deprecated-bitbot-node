@@ -1,29 +1,30 @@
 {
-  "Bzzzrt": {
-    "token": ">TOKEN_BZZZRT",
+  "Bit Bot (full)": {
+    "token": ">TOKEN_BITBOT",
     "rooms": ["Jawa Yard Sale"],
-    "ops": ["Jeremy Jackson"],
-    "respondsTo": ["bzzzrt", "bot"],
+    "respondsTo": ["bot", "bb", "bitch"],
 
     "responders": {
       "core": { "core": true, "file": "core.coffee" },
       "8ball": "8ball.coffee",
       "coin_toss": "coin_toss.coffee",
+      "heroku_deploy": "heroku_deploy.coffee",
       "heroku_status": "heroku_status.coffee",
       "fortune": "fortune.coffee",
       "password": "password.coffee",
-      "reminder": "_reminder.coffee",
-      "timer": "_timer.coffee",
+      "reminder": "reminder.coffee",
+      "timer": "timer.coffee",
       "weather": "weather.coffee",
       "whois": "whois.coffee",
 
-      "billability": "modeset/billability.coffee",
       "snowfall": "modeset/snow_report.coffee",
-
+      "sandwich": "modeset/sandwich.coffee",
       "beer": "modeset/beer.coffee",
       "boobs": "modeset/boobs.coffee",
       "bummer": "modeset/bummer.coffee",
       "busted": "modeset/busted.coffee",
+      "clueless": "modeset/clueless.coffee",
+      "cocaine": "modeset/cocaine.coffee",
       "hater": "modeset/hater.coffee",
       "meme": "modeset/meme.coffee",
       "mom": "modeset/mom.coffee",
@@ -34,7 +35,6 @@
       "the_best": "modeset/sounds/the_best.coffee",
       "whoops": "modeset/sounds/whoops.coffee",
       "yeah": "modeset/sounds/yeah.coffee"
-
     }
   }
 }

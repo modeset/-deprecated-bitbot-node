@@ -1,6 +1,6 @@
 class Responder extends Bitbot.RegexpResponder
 
-  regexp: /\^mom|mom$| mom |mamma|momma|fat|phat|mother/
+  regexp: /(?:\b)(mom|mamma|fat|phat|mother)(?:\b)/
   responses: [
     'http://i.imgur.com/o0Vbs.jpg',
     'http://25.media.tumblr.com/tumblr_lmm9rn8LwA1qzxfy9o1_400.jpg',

@@ -1,6 +1,6 @@
 class Responder extends Bitbot.RegexpResponder
 
-  regexp: /rimshot/
+  regexp: /(?:\b)(rimshot)(?:\b)/
 
   randomResponse: ->
     sound: 'rimshot'

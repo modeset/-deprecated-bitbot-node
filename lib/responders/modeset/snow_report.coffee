@@ -10,7 +10,7 @@ class Responder extends Bitbot.BaseResponder
   commands:
     report:
       desc: "Provides a snow report for a given resort"
-      examples: ["snowfall for Copper Mountain?", "what's the snowfall for snowmass"]
+      examples: ["snow report for Copper Mountain?", "what's the snow like at snowmass"]
       intent: "snowreport"
       opts:
         resort: type: "string", entity: "location"
@@ -28,12 +28,13 @@ class Responder extends Bitbot.BaseResponder
         unless result
           return callback(speak: "Sorry #{@message.user.name}, I couldn't find a resort named \"#{resort}\" in #{@state}.")
         response = """
-        Snow report for "#{result.title}" (as of #{result.publishedDate}):
+        Snow report for "#{result.title}" (as of #{Moment(result.publishedDate).format('dddd, MMMM Do [at] h:mma')}):
         ⛄️ #{result.content}
         """
         callback(speak: response)
       catch e
         @log(e, 'error')
         callback(speak: "Sorry #{@message.user.name}, something went wrong in the responder. :L")
+
 
 module.exports  = new Responder()

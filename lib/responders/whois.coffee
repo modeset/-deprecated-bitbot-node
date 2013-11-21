@@ -10,7 +10,7 @@ class Responder extends Bitbot.BaseResponder
       desc: "Performs a whois command for a given domain"
       examples: ["whois modeset.com"]
       opts:
-        domain: type: "string", entity: "url"
+        domain: {type: "string", entity: "url"}
 
   whois: (domain, callback) ->
     unless domain

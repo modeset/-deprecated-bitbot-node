@@ -38,9 +38,4 @@ class Responder extends Bitbot.BaseResponder
         @log(e.message, 'error')
 
 
-
 module.exports = new Responder()
-#
-#module.exports =
-#  respondsTo: -> true
-#  respond: -> speak: 'foo'

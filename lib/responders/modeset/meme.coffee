@@ -2,7 +2,7 @@ request = require('request')
 
 class Responder extends Bitbot.RegexpResponder
 
-  regexp: /meme/
+  regexp: /(?:\b)(meme)(?:\b)/
   url: "http://api.automeme.net/text.json?lines=1"
 
   randomResponse: (callback) ->

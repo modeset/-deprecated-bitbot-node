@@ -23,15 +23,11 @@ load = (file, args...) ->
           callback(new Error("Unable to compile #{opts.name} (#{err.message})"))
           return
 
-      if opts.trusted
-        try
-          mod = _eval(fileContents, file, {}, true)
-          callback(null, mod)
-        catch err
-          callback(new Error("Unable to load #{file} (#{err.message})"))
-        return
-
-      callback(null, fileContents)
+      try
+        mod = _eval(fileContents, file, {}, true)
+        callback(null, mod)
+      catch err
+        callback(new Error("Unable to load #{file} (#{err.message})"))
 
   else
     opts.name ||= 'file'
@@ -41,14 +37,10 @@ load = (file, args...) ->
       callback(new Error("Unable to locate #{file}"))
       return
 
-    if opts.trusted
-      try
-        mod = require(file)
-        callback(null, mod)
-      catch err
-        callback(new Error("Unable to load #{file} (#{err.message})"))
-      return
-    else
+    try
+      mod = require(file)
+      callback(null, mod)
+    catch err
       fs.readFile file, 'utf8', (err, body) ->
         if (err)
           callback(new Error("Unable to load #{file} (#{err.message}"))
@@ -60,6 +52,7 @@ load = (file, args...) ->
           catch err
             callback(new Error("Unable to compile #{opts.name} (#{err.message})"))
             return
+
         callback(null, fileContents)
 
 module.exports = load

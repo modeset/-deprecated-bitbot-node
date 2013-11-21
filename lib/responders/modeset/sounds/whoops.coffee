@@ -1,6 +1,6 @@
 class Responder extends Bitbot.RegexpResponder
 
-  regexp: /oops/
+  regexp: /(?:\b)(oops|woops|whoops)(?:\b)/
 
   randomResponse: ->
     sound: 'trombone'

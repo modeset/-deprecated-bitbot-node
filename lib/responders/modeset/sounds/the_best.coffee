@@ -1,6 +1,6 @@
 class Responder extends Bitbot.RegexpResponder
 
-  regexp: /you're the best|your the best/
+  regexp: /(?:\b)(you're the best|your the best)(?:\b)/
 
   randomResponse: ->
     sound: 'danielsan'

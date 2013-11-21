@@ -74,11 +74,11 @@ class Bitbot
     room.speak("BRB") for id, room of @rooms
 
     @load Bitbot.configPath, name: 'configuration', (err, content) =>
-      return @log(err.message, 'error') if (err)
+      return @log("Unable to load configuration: #{err}", 'error') if (err)
 
       for name, config of JSON.parse(content)
         continue unless name == @name
-        Bitbot.verifyConfig config, (config, token, account) =>
+        Bitbot.verifyConfig config, (config) =>
           @config = config
           @initialize()
 
@@ -86,28 +86,27 @@ class Bitbot
   joinRooms: ->
     @rooms ||= {}
 
-    joinOrLeave = (room, allowed) =>
-      if allowed
-        return if @rooms[room.id]
-
-        @log("Joining \033[32m#{room.name}")
-
-        (@rooms[room.id] = room).join =>
-          room.listen((message) => @respondTo(room, message))
-          room.confirmations = {}
-          room.prompts = {}
-
-      else if @rooms[room.id]
-        @log("Leaving \033[32m#{room.name}")
-
-        room.leave()
-        delete(@rooms[room.id])
-
     @client.rooms (err, rooms) =>
-      return @log('Unable to get room list', 'error') if err
+      return @log("Unable to get room list #{err}", 'error') if err
 
-      for room in rooms
-        joinOrLeave(room, @isAllowedRoom(room.name, @config.rooms))
+      @joinOrLeaveRoom(room) for room in rooms
+
+
+  joinOrLeaveRoom: (room, allowed) =>
+    if @isAllowedRoom(room.name, @config.rooms)
+      return if @rooms[room.id]
+      @log("Joining \033[32m#{room.name}")
+
+      (@rooms[room.id] = room).join =>
+        room.confirms = {}
+        room.prompts = {}
+        room.listen (message) => @receivedMessage(room, message)
+
+    else if @rooms[room.id]
+      @log("Leaving \033[32m#{room.name}")
+
+      room.leave()
+      delete(@rooms[room.id])
 
 
   loadResponders: ->
@@ -121,33 +120,30 @@ class Bitbot
       # todo: should load from more than one path -- checking in a few places
       source = responder.url || Path.join(root, 'lib', 'responders', responder.file || responder)
 
-      opts =
-        name: "#{name} responder",
-        trusted: !responder.untrusted
-
+      opts = name: "#{name} responder",
       @load source, _(opts).extend(responder), (err, handler) =>
         return @log("#{name} - #{err.message}", 'error') if err
 
         handler.bot = @ if responder.core
 
-        @responders[name] =
-          handler: handler
-          rooms: responder.rooms || true
-
+        @responders[name] = handler: handler, rooms: responder.rooms || true
         @addResponderIntervals(name) if handler.intervals
 
 
   addResponderIntervals: (name) ->
-    respond = (res) =>
-      return unless _(res).isObject()
-      for id, room of @rooms
-        continue unless @isAllowedRoom(room.name, @responders[name].rooms)
-        room.speak(res.speak) if res.speak
-        room.paste(res.paste) if res.paste
-        room.sound(res.sound) if res.sound
+    respond = (response) =>
+      return unless _(response).isObject()
+      ids = if response.roomId then [response.roomId] else Object.keys(@rooms)
+      for id in ids
+        room = @rooms[id]
+        continue unless room && @isAllowedRoom(room.name, @responders[name].rooms)
+        room.speak(response.speak) if response.speak
+        room.paste(response.paste) if response.paste
+        room.sound(response.sound) if response.sound
 
     handler = @responders[name].handler
     intervals = []
+
     for method, tick of handler.intervals || []
       callback = => respond(handler.interval(method, respond))
       intervals.push = setInterval(callback, tick)
@@ -158,9 +154,7 @@ class Bitbot
   getUser: (userId, callback) ->
     @users ||= {}
 
-    if @users[userId]
-      callback(@users[userId])
-      return
+    return callback?(@users[userId]) if @users[userId]
 
     @client.user userId, (err, user) =>
       name = (user ||= user: {name: "Unknown"}).user.name
@@ -169,12 +163,13 @@ class Bitbot
       initials += n[0] for n in names
 
       @users[userId] =
-        name: names[0],
-        fullName: name,
-        initials: initials,
+        name: names[0]
+        fullName: name
+        initials: initials
         lastMessage: ''
+        id: userId
 
-      callback(@users[userId])
+      callback?(@users[userId])
 
 
   isAllowedRoom: (name, rooms) ->
@@ -186,39 +181,29 @@ class Bitbot
 
 
   isMutedRoom: (room, callback) =>
-    redis.exists "#{room.id}-muted", (err, res) =>
-      callback(res == 1)
+    redis.exists "#{room.id}-muted", (err, silenced) =>
+      @rooms[room.id].silenced = !!silenced
+      callback(!!silenced)
 
 
   isCommandMessage: (message) ->
-    startRegexp = new RegExp("^(#{@respondsTo.join('|')})[:,]?\\s+", 'gi')
-    anyRegexp = new RegExp("(#{@respondsTo.join('|')})", 'gi')
-    command = message.replace(startRegexp, '', '')
-    return false if command == message && !message.match(anyRegexp)
+    return false unless message
+    bRegexp = new RegExp("^(#{@respondsTo.join('|')})[:,;]?\\s+", 'gi')
+    aRegexp = new RegExp("(#{@respondsTo.join('|')})", 'gi')
+    command = message.replace(bRegexp, '', '')
+    return false if command == message && !message.match(aRegexp)
     command
 
 
-  respondTo: (room, message) ->
-    return unless message && message.body
+  receivedMessage: (room, message) ->
+    return unless message.userId
     return if @constructor.bots[message.userId]
 
     @getUser message.userId, (user) =>
       message.user = user
       message.room = id: room.id, name: room.name
 
-      if command = @isCommandMessage(message.body)
-        message.body = command
-        message.command = true
-
-      @isMutedRoom room, (result) =>
-        return if result && !command
-
-        @processMessage message, (message) =>
-          info = "\033[32m#{room.name}\033[37m/\033[35m#{user.fullName}"
-          @log("#{info}\033[37m: \033[90m#{JSON.stringify(message)}")
-
-          @respondToMessage(room, message)
-          user.lastMessage = message.body
+      @isMutedRoom(room, => @delegateResponse(room, user, message))
 
 
   processMessage: (original, callback) ->
@@ -230,7 +215,7 @@ class Bitbot
       room: original.room
       command: original.command
 
-    Sentiment message.body, (err, result) ->
+    Sentiment message.body, (err, result = {}) ->
       if result
         message.sentiment = result.score
         message.comparative = result.comparative
@@ -247,30 +232,60 @@ class Bitbot
         callback(message)
 
 
-  respondToMessage: (room, message) ->
-    respond = (response) ->
-      return unless _(response).isObject()
-      room.speak(response.speak) if response.speak
-      room.paste(response.paste) if response.paste
-      room.sound(response.sound) if response.sound
-      if response.confirm
-        room.confirmations[message.user.id] = response.confirm.callback
-        room.speak(response.confirm.speak) if response.confirm.speak
-        room.paste(response.confirm.paste) if response.confirm.paste
-      else if response.prompt
-        room.prompts[message.user.id] = response.prompt.callback
-        room.speak(response.prompt.speak) if response.prompt.speak
-        room.paste(response.prompt.paste) if response.prompt.paste
+  delegateResponse: (room, user, message) ->
+    info = "\033[32m#{room.name}\033[37m/\033[35m#{user.fullName}"
 
-    if callback = room.confirmations[message.user.id]
-      confirmed = message.body.match(/yes/) || message.intent == true
+    if message.type == 'EnterMessage'
+      @log("#{info}\033[37m: \033[90mEntered the room")
+      @respondToEnter(room, user)
+    else if message.type == 'KickMessage'
+      @log("#{info}\033[37m: \033[90mExited the room")
+      @respondToLeave(room, user)
+    else if message.body
+      if command = @isCommandMessage(message.body)
+        message.body = command
+        message.command = true
+
+      return if room.silenced && !message.command
+
+      @processMessage message, (message) =>
+        @log("#{info}\033[37m: \033[90m#{JSON.stringify(message)}")
+        @respondToMessage(room, user, message)
+        user.lastMessage = message.body
+
+
+  respondToEnter: (room, user) ->
+    respond = (response) => @sendResponse(room, user, response)
+
+    for name, responder of @responders
+      continue unless @isAllowedRoom(room.name, responder.rooms)
+      try respond(responder.handler.event?('enter', user, respond))
+      catch e
+        @log(e, 'error')
+
+
+  respondToLeave: (room, user) ->
+    respond = (response) => @sendResponse(room, user, response)
+
+    for name, responder of @responders
+      continue unless @isAllowedRoom(room.name, responder.rooms)
+      try respond(responder.handler.event?('leave', user, respond))
+      catch e
+        @log(e, 'error')
+
+
+  respondToMessage: (room, user, message) ->
+    respond = (response) => @sendResponse(room, user, response)
+
+    if callback = room.confirms[user.id]
+      delete(room.confirms[user.id])
+      confirmed = message.body.match(/yes/) || message.intent == "true"
       respond(callback(confirmed, message, respond))
-      delete(room.confirmations[message.user.id])
       return
 
-    if callback = room.prompts[message.user.id]
+    if callback = room.prompts[user.id]
+      delete(room.prompts[user.id])
       respond(callback(message, respond))
-      delete(room.confirmations[message.user.id])
       return
 
     for name, responder of @responders
@@ -280,6 +295,17 @@ class Bitbot
       try respond(responder.handler.respond?(message, respond))
       catch e
         @log(e, 'error')
+
+
+  sendResponse: (room, user, response) ->
+    return unless _(response).isObject()
+    room.speak(response.speak) if response.speak
+    room.paste(response.paste) if response.paste
+    room.sound(response.sound) if response.sound
+    if _(response.confirm).isFunction()
+      return room.confirms[user.id] = response.confirm
+    if _(response.prompt).isFunction()
+      return room.prompts[user.id] = response.prompt
 
 
 module.exports = Bitbot
