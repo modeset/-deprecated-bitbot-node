@@ -48,7 +48,7 @@ class Responder extends Bitbot.BaseResponder
   silence: (time) ->
     redis.set("#{@message.room.id}-muted", true)
     redis.expire("#{@message.room.id}-muted", time)
-    speak: "I'm sorry.. I'll be quite for a while. (~#{parseInt(time / 60)} minutes)"
+    speak: "I'm sorry.. I'll be quiet for a while. (~#{parseInt(time / 60)} minutes)"
 
 
   resume: ->

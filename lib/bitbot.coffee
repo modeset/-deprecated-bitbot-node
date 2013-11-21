@@ -247,6 +247,7 @@ class Bitbot
       @respondToLeave(room, user)
     else if message.body
       if command = @isCommandMessage(message.body)
+        message.original = message.body
         message.body = command
         message.command = true
 

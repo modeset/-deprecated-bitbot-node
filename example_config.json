@@ -3,7 +3,7 @@
     "token": ">TOKEN_BITBOT",
     "rooms": ["1782", "Bits"],
     "logRooms": ["1782"],
-    "respondsTo": ["bot", "bb"],
+    "respondsTo": ["bot", "bb", "bitbot", "baby"],
 
     "responders": {
       "core": { "core": true, "file": "core.coffee" },
@@ -43,7 +43,7 @@
     "token": ">TOKEN_BITBOT",
     "rooms": ["CirrusMD", "Legwork", "Made Set", "Open Source", "Qdoba Website", "TopFan + VisitMobile", "Inspirato", "Antisocial"],
     "logRooms": [],
-    "respondsTo": ["bot", "bb"],
+    "respondsTo": ["bot", "bb", "bitbot"],
     "responders": {
       "core": { "core": true, "file": "core.coffee" },
 
