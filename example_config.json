@@ -1,12 +1,13 @@
 {
   "Bit Bot (full)": {
     "token": ">TOKEN_BITBOT",
-    "rooms": ["Jawa Yard Sale"],
-    "logRooms": ["Jawa Yard Sale"],
-    "respondsTo": ["bot", "bb", "bitch"],
+    "rooms": ["1782", "Bits"],
+    "logRooms": ["1782"],
+    "respondsTo": ["bot", "bb"],
 
     "responders": {
       "core": { "core": true, "file": "core.coffee" },
+
       "8ball": "8ball.coffee",
       "coin_toss": "coin_toss.coffee",
       "heroku_deploy": "heroku_deploy.coffee",

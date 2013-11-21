@@ -1,1 +1,1 @@
-campfire: node botstrap.js
+campfire: bitbot https://raw.github.com/modeset/bitbot/master/example_config.json
