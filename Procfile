@@ -1,1 +1,1 @@
-campfire: bitbot example_config.json
+campfire: node ./bin/botstrap example_config.json
