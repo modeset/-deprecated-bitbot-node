@@ -249,7 +249,8 @@ class Bitbot
       return if room.silenced && !message.command
 
       @processMessage message, (message) =>
-        @log("#{info}\033[37m: \033[90m#{JSON.stringify(message)}")
+        if @isAllowedRoom(room.name, @config.logRooms)
+          @log("#{info}\033[37m: \033[90m#{JSON.stringify(message)}")
         @respondToMessage(room, user, message)
         user.lastMessage = message.body
 

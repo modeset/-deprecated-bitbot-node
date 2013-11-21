@@ -2,6 +2,7 @@
   "Bit Bot (full)": {
     "token": ">TOKEN_BITBOT",
     "rooms": ["Jawa Yard Sale"],
+    "logRooms": ["Jawa Yard Sale"],
     "respondsTo": ["bot", "bb", "bitch"],
 
     "responders": {
