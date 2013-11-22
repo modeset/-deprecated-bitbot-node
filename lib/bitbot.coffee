@@ -54,7 +54,7 @@ class Bitbot
   load: @load
 
   constructor: (@name, @client, @user, @config) ->
-    @logPrefix = "#{@user.name}:"
+    @logPrefix = "#{@name}:"
 
     @respondsTo = @config.respondsTo || []
     @respondsTo = [@respondsTo] unless _(@respondsTo).isArray()
@@ -246,8 +246,10 @@ class Bitbot
       @log("#{info}\033[37m: \033[90mExited the room")
       @respondToLeave(room, user)
     else if message.body
+      message.responses = 0
+      message.original = message.body
+      message.command = false
       if command = @isCommandMessage(message.body)
-        message.original = message.body
         message.body = command
         message.command = true
 
@@ -301,6 +303,8 @@ class Bitbot
       try respond(responder.handler.respond?(message, respond))
       catch e
         @log(e, 'error')
+      finally
+        message.responses += 1
 
 
   sendResponse: (room, user, response) ->

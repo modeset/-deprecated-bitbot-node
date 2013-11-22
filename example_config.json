@@ -36,7 +36,9 @@
       "rimshot": "modeset/sounds/rimshot.coffee",
       "the_best": "modeset/sounds/the_best.coffee",
       "whoops": "modeset/sounds/whoops.coffee",
-      "yeah": "modeset/sounds/yeah.coffee"
+      "yeah": "modeset/sounds/yeah.coffee",
+
+      "converational": "modeset/conversational.coffee"
     }
   },
   "Bit Bot (clean)": {
