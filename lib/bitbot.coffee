@@ -207,35 +207,6 @@ class Bitbot
       @isMutedRoom(room, => @delegateResponse(room, user, message))
 
 
-  processMessage: (original, callback) ->
-    message =
-      body: original.body
-      type: original.type
-      tweet: original.tweet
-      user: original.user
-      room: original.room
-      command: original.command
-
-    Sentiment message.body, (err, result = {}) ->
-      if result
-        message.sentiment = result.score
-        message.comparative = result.comparative
-
-      if Wit.token && message.command
-        Wit.message(message.body)
-        .fail(-> callback(message))
-        .then (res) ->
-            message.intent = res.intent
-            message.confidence = res.confidence
-            message.entities = res.entities
-            callback(message)
-      else
-        message.intent = ""
-        message.confidence = 0.0
-        message.entities = {}
-        callback(message)
-
-
   delegateResponse: (room, user, message) ->
     info = "\033[32m#{room.name}\033[37m/\033[35m#{user.fullName}"
 
@@ -255,11 +226,40 @@ class Bitbot
 
       return if room.silenced && !message.command
 
-      @processMessage message, (message) =>
+      @processMessage room, message, (message) =>
         if @isAllowedRoom(room.name, @config.logRooms)
           @log("#{info}\033[37m: \033[90m#{JSON.stringify(message)}")
         @respondToMessage(room, user, message)
         user.lastMessage = message.body
+
+
+  processMessage: (room, original, callback) ->
+    message =
+      body: original.body
+      type: original.type
+      tweet: original.tweet
+      user: original.user
+      room: original.room
+      command: original.command
+
+    Sentiment message.body, (err, result = {}) ->
+      if result
+        message.sentiment = result.score
+        message.comparative = result.comparative
+
+      if Wit.token && (message.command || room.confirms[message.user.id])
+        Wit.message(message.body)
+        .fail(-> callback(message))
+        .then (res) ->
+            message.intent = res.intent
+            message.confidence = res.confidence
+            message.entities = res.entities
+            callback(message)
+      else
+        message.intent = ""
+        message.confidence = 0.0
+        message.entities = {}
+        callback(message)
 
 
   respondToEnter: (room, user) ->
