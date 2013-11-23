@@ -6,7 +6,7 @@ class Responder extends Bitbot.BaseResponder
   commandPrefix: "reminder"
 
   intervals:
-    remind: 20 * 1000
+    remind: 60 * 1000
 
   commands:
     create:
@@ -57,12 +57,11 @@ class Responder extends Bitbot.BaseResponder
       for key in keys
         redis.get key, (err, str) ->
           obj = JSON.parse(str)
-          # todo: this should take timezone into account.
-          if Moment(obj.time).isBefore(Moment().add('minutes', 2))
+          if Moment(obj.time).utc().subtract('minutes', 2).isBefore(Moment().utc())
             message = "⏰ #{obj.userName}, here's your reminder: #{obj.reminder}"
             message += " (location: #{obj.location})" if obj.location
-            redis.del(key)
             callback(roomId: obj.roomId, speak: message)
+            redis.del(key)
 
   create: (reminder, datetime, location) ->
     return {speak: "Sorry #{@message.user.name}, you need to provide something to remind you about."} unless reminder
@@ -97,7 +96,7 @@ class Responder extends Bitbot.BaseResponder
       for key in keys
         redis.get key, (err, str) =>
           obj = JSON.parse(str)
-          response += "#{@clockDisplay(obj.time)} \"#{obj.reminder}\", on #{@displayableTime(obj.time)}."
+          response += "#{@clockDisplay(obj.time)} \"#{obj.reminder}\" is scheduled for #{@displayableTime(obj.time)}."
           response += " Location: #{obj.location}." if obj.location
           response += "\n"
           count -= 1
