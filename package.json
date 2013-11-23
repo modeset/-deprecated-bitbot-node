@@ -1,6 +1,6 @@
 {
   "name"         : "bitbot",
-  "version"      : "0.1.0",
+  "version"      : "0.1.1",
   "contributors" : ["Jay Zeschin <jay.zeschin@modeset.com>", "Jeremy Jackson <jejacks0n@gmail.com>"],
   "repository"   : { "type": "git", "url": "https://github.com/modeset/bitbot.git" },
   "bugs"         : { "url": "https://github.com/modeset/bitbot/issues" },
@@ -9,10 +9,6 @@
   "engines": {
     "node": "0.8.10",
     "npm": "1.2.x"
-  },
-  "scripts": {
-    "run": "bitbot example_config.json",
-    "test": "mocha"
   },
   "dependencies": {
     "coffee-script": "~1.1.2",
