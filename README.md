@@ -25,6 +25,7 @@ cd bitbot
 npm install && npm link
 ```
 
+
 ## Setup
 
 You should already have a Campfire account, and you can setup Redis on heroku by adding the "Redis To Go" add-on (there's a free option that'll probably be enough). And of course, you can [sign up for Wit.ai here](https://wit.ai/).

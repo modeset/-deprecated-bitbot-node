@@ -10,6 +10,9 @@
     "node": "0.8.10",
     "npm": "1.2.x"
   },
+  "scripts": {
+    "test": "mocha --compilers coffee:coffee-script"
+  },
   "dependencies": {
     "coffee-script": "~1.1.2",
     "underscore": "~1.4",
@@ -25,6 +28,7 @@
     "node-whois": "0.2.0"
   },
   "devDependencies": {
-    "mocha": "1.13.0"
+    "mocha": "1.13.0",
+    "chai": "1.8.1"
   }
 }
