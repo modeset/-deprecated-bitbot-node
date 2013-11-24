@@ -277,12 +277,13 @@ class Bitbot
           message.entities[i] = value: arg.replace(/^"|"$/, '')
       callback(message)
 
+
   respondToEnter: (room, user) ->
     respond = (response) => @sendResponse(room, user, response)
 
     for name, responder of @responders
       continue unless @isAllowedRoom(room.name, responder.rooms)
-      try respond(responder.handler.event?('enter', user, respond))
+      try respond(responder.handler.respondToEvent?('enter', user, respond))
       catch e
         @log(e, 'error')
 
@@ -292,7 +293,7 @@ class Bitbot
 
     for name, responder of @responders
       continue unless @isAllowedRoom(room.name, responder.rooms)
-      try respond(responder.handler.event?('leave', user, respond))
+      try respond(responder.handler.respondToEvent?('leave', user, respond))
       catch e
         @log(e, 'error')
 
