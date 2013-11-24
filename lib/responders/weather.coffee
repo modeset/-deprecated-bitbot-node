@@ -1,5 +1,3 @@
-request = require('request')
-
 class Responder extends Bitbot.BaseResponder
 
   token: process.env["WUNDERGROUND_TOKEN"]
