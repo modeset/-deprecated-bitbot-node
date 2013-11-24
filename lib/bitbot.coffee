@@ -63,7 +63,7 @@ class Bitbot
     @config.allowedReferences ||= ['hey', 'yeah', 'yes', 'excuse me', 'please', 'yo', 'word']
     allowed = @config.allowedReferences.join('|')
     respond = @respondsTo.join('|')
-    regex = "(^((#{allowed})\s+)?(#{respond})[;:,.]?\s+|\s+(#{respond})[?!.~]+$)"
+    regex = "^((#{allowed})[;:,.]?\s+)?(#{respond})[;:,.]?\s+|\s+(#{respond})[?!.~]*$"
     @respondsToRegexp = new RegExp(regex, 'gi')
 
     @log("Connected (\033[33m#{user.id}\033[37m)")
