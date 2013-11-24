@@ -60,6 +60,12 @@ class Bitbot
     @respondsTo = [@respondsTo] unless _(@respondsTo).isArray()
     @respondsTo.push(@user.name)
 
+    @config.allowedReferences ||= ['hey', 'yeah', 'yes', 'excuse me', 'please', 'yo', 'word']
+    allowed = @config.allowedReferences.join('|')
+    respond = @respondsTo.join('|')
+    regex = "(^((#{allowed})\s+)?(#{respond})[;:,.]?\s+|\s+(#{respond})[?!.~]+$)"
+    @respondsToRegexp = new RegExp(regex, 'gi')
+
     @log("Connected (\033[33m#{user.id}\033[37m)")
     @log("Responding to \033[35m#{@respondsTo.join(', ')}")
 
@@ -187,10 +193,8 @@ class Bitbot
 
   isCommandMessage: (message) ->
     return false unless message
-    bRegexp = new RegExp("^(#{@respondsTo.join('|')})[:,;]?\\s+", 'gi')
-    aRegexp = new RegExp("(\\s+)(#{@respondsTo.join('|')})(?:\\b)", 'gi')
-    command = message.replace(bRegexp, '', '')
-    return false if command == message && !message.match(aRegexp)
+    command = message.replace(@respondsToRegexp, '', '')
+    return false if command == message
     command
 
 
