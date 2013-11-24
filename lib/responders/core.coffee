@@ -19,7 +19,7 @@ class Responder extends Bitbot.BaseResponder
       opts:
         duration: {type: "integer", default: 300}
 
-    unslience:
+    unsilence:
       desc: "I'll resume my normal banter after having been silenced"
       examples: ["ok, you want to join us again?", "you can resume now."]
 
@@ -78,7 +78,7 @@ class Responder extends Bitbot.BaseResponder
     speak: @t('silence', duration: @humanDuration(duration))
 
 
-  unslience: ->
+  unsilence: ->
     redis.del("#{@message.room.id}-muted", true)
     speak: @t('unsilence')
 

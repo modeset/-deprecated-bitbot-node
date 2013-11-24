@@ -48,9 +48,12 @@ class BaseResponder
     return unless command = @respondsTo(@message)
     options = @commands[command]
 
+    i = 0
     args = []
+    entities = @message.entities
     for name, opts of options.opts || {}
-      args.push(@message.entities[name]?.value || @message.entities[opts.entity]?.value || opts.default || null)
+      args.push(entities[name]?.value || entities[opts.entity]?.value || entities[i]?.value || opts.default || null)
+      i += 1
     args.push(callback)
 
     callback(@[command]?.apply(@, args))
@@ -126,7 +129,9 @@ class BaseResponder.Registry
 
   fetch: (token, callback) ->
     redis.hgetall @key, (err, records) ->
-      callback?(null) unless records[token]
+      unless records?[token]
+        callback?(null)
+        return
       redis.hgetall records[token], (err, record) ->
         if record
           record = JSON.parse(record.value) if record.value

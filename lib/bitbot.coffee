@@ -63,7 +63,7 @@ class Bitbot
     @config.allowedReferences ||= ['hey', 'yeah', 'yes', 'excuse me', 'please', 'yo', 'word']
     allowed = @config.allowedReferences.join('|')
     respond = @respondsTo.join('|')
-    regex = "^((#{allowed})[;:,.]?\s+)?(#{respond})[;:,.]?\s+|\s+(#{respond})[?!.~]*$"
+    regex = "^((#{allowed})[;:,.]?\\s+)?(#{respond})[;:,.]?\\s+|\\s+(#{respond})[?!.~]*$"
     @respondsToRegexp = new RegExp(regex, 'gi')
 
     @log("Connected (\033[33m#{user.id}\033[37m)")
@@ -219,9 +219,8 @@ class Bitbot
       @log("#{info}\033[37m: \033[90mExited the room")
       @respondToLeave(room, user)
     else if message.body
-      message.responses = 0
-      message.original = message.body
       message.command = false
+      message.original = message.body
       if command = @isCommandMessage(message.body)
         message.body = command
         message.command = true
@@ -238,31 +237,45 @@ class Bitbot
   processMessage: (room, original, callback) ->
     message =
       body: original.body
+      original: original.original
       type: original.type
       tweet: original.tweet
       user: original.user
       room: original.room
       command: original.command
+      responses: 0
+      intent: ''
+      confidence: 0.0
+      entities: {}
+      sentiment: 0
+      comparative: 0
 
-    Sentiment message.body, (err, result = {}) ->
+    Sentiment message.body, (err, result = {}) =>
       if result
         message.sentiment = result.score
         message.comparative = result.comparative
 
-      if Wit.token && (message.command || room.confirms[message.user.id])
-        Wit.message(message.body)
-        .fail(-> callback(message))
-        .then (res) ->
-            message.intent = res.intent
-            message.confidence = res.confidence
-            message.entities = res.entities
-            callback(message)
+      if message.command || room.confirms[message.user.id]
+        @parseMessageOptions(message, callback)
       else
-        message.intent = ""
-        message.confidence = 0.0
-        message.entities = {}
         callback(message)
 
+
+  parseMessageOptions: (message, callback) ->
+    if Wit.token && !@config.rawCommands
+      Wit.message(message.body)
+      .fail(-> callback(message))
+      .then (res) ->
+        message.intent = res.intent
+        message.confidence = res.confidence
+        message.entities = res.entities
+        callback(message)
+    else
+      if match = message.body.match(/^([\w|:]+)\s+(.*)/i)
+        message.body = match[1]
+        for arg, i in (match[2] || '').match(/"[^"]+"|[^\s]+/gi) || []
+          message.entities[i] = value: arg.replace(/^"|"$/, '')
+      callback(message)
 
   respondToEnter: (room, user) ->
     respond = (response) => @sendResponse(room, user, response)
