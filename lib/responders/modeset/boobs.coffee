@@ -6,4 +6,6 @@ class Responder extends Bitbot.RegexpResponder
     'http://jamesrayneau.files.wordpress.com/2013/02/katy-perry-funny-elmo.gif'
   ]
 
+
+
 module.exports = new Responder()

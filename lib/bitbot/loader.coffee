@@ -2,6 +2,12 @@ fs = require('fs')
 request = require('request')
 _eval = require('eval')
 
+compile = (str) ->
+  try str = Coffee.compile(str)
+  catch e
+    throw new(e)
+
+
 load = (file, args...) ->
   callback = args.pop() || ->
   opts = args.pop() || {}
@@ -17,11 +23,7 @@ load = (file, args...) ->
         return
 
       fileContents = body
-      if opts.coffee || file.match(/.coffee$/)
-        try fileContents = Coffee.compile(fileContents)
-        catch err
-          callback(new Error("Unable to compile #{opts.name} (#{err.message})"))
-          return
+      fileContents = compile(fileContents) if opts.coffee || file.match(/.coffee$/)
 
       try
         mod = _eval(fileContents, file, {}, true)
@@ -47,12 +49,10 @@ load = (file, args...) ->
           return
 
         fileContents = body
-        if opts.coffee || file.match(/.coffee$/)
-          try fileContents = Coffee.compile(fileContents)
-          catch err
-            callback(new Error("Unable to compile #{opts.name} (#{err.message})"))
-            return
+        fileContents = compile(fileContents) if opts.coffee || file.match(/.coffee$/)
 
         callback(null, fileContents)
+
+
 
 module.exports = load

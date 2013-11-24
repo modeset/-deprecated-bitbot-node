@@ -17,6 +17,7 @@
     "campfire": "git+https://github.com/tristandunn/node-campfire.git#159c7d" ,
     "redis-url": "0.1.0",
     "eval": "0.1.0",
+    "mustache": "0.7.3",
     "moment": "2.4.0",
     "wit-node": "0.0.4",
     "sentiment": "0.1.0",
@@ -24,7 +25,6 @@
     "node-whois": "0.2.0"
   },
   "devDependencies": {
-    "mocha": "1.13.0",
-    "replay": "~1.6.0"
+    "mocha": "1.13.0"
   }
 }

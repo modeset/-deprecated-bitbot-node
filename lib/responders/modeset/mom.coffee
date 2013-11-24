@@ -8,4 +8,6 @@ class Responder extends Bitbot.RegexpResponder
     'http://www.mopo.ca/wp-content/uploads/2012/05/dear-nasa.jpg'
   ]
 
+
+
 module.exports = new Responder()

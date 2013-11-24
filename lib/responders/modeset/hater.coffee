@@ -12,4 +12,6 @@ class Responder extends Bitbot.RegexpResponder
     'http://s3.amazonaws.com/kym-assets/photos/images/newsfeed/000/055/267/PWHHGH.jpg'
   ]
 
+
+
 module.exports = new Responder()

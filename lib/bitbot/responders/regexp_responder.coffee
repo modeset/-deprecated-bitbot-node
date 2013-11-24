@@ -5,6 +5,7 @@ class RegexpResponder extends BaseResponder
   regexp: null
   responses: []
 
+
   respondsTo: (message) ->
     @regexp.test(message.body)
 
@@ -15,7 +16,7 @@ class RegexpResponder extends BaseResponder
 
 
   randomResponse: (callback) ->
-    speak: @responses[Math.floor(Math.random() * @responses.length)]
+    callback(speak: @responses[Math.floor(Math.random() * @responses.length)])
 
 
 

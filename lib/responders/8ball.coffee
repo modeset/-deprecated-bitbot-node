@@ -8,8 +8,11 @@ class Responder extends Bitbot.BaseResponder
   commands:
     '8ball':
       desc: "Ask the all mighty 8-ball for an answer to your question"
-      examples: ["8ball me", "magic is needed", "magic 8 ball says?"]
-      intent: 'magic8ball'
+      examples: ["8ball me.", "magic 8 ball says?"]
+      intent: "magic8ball"
+
+  templates:
+    result: "🎱 {{&initials}}, {{&response}}"
 
   responses: [
     "it is certain!",
@@ -34,7 +37,10 @@ class Responder extends Bitbot.BaseResponder
     "very doubtful."
   ]
 
+
   '8ball': ->
-    speak: "🎱 #{@message.user.initials}, #{@responses[Math.floor(Math.random() * @responses.length)]}"
+    speak: @t('result', response: @random())
+
+
 
 module.exports  = new Responder()

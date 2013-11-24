@@ -72,8 +72,6 @@ class Bitbot
 
 
   reload: ->
-    room.speak("BRB") for id, room of @rooms
-
     @load Bitbot.configPath, name: 'configuration', (err, content) =>
       return @log("Unable to load configuration: #{err}", 'error') if (err)
 
@@ -134,7 +132,7 @@ class Bitbot
   addResponderIntervals: (name) ->
     respond = (response) =>
       return unless _(response).isObject()
-      ids = if response.roomId then [response.roomId] else Object.keys(@rooms)
+      ids = response.rooms || Object.keys(@rooms)
       for id in ids
         room = @rooms[id]
         continue unless room && @isAllowedRoom(room.name, @responders[name].rooms)
@@ -300,9 +298,11 @@ class Bitbot
       continue unless @isAllowedRoom(room.name, responder.rooms)
       continue unless responder.handler.respondsTo?(message)
 
-      try respond(responder.handler.respond?(message, respond))
+      try
+        respond(responder.handler.respond?(message, respond))
       catch e
         @log(e, 'error')
+        console.log(e)
       finally
         message.responses += 1
 

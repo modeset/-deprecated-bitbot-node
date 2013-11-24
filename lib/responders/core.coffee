@@ -1,125 +1,135 @@
 class Responder extends Bitbot.BaseResponder
 
-  responderName: 'Core'
+  responderName: "Core"
 
   commands:
     help:
       desc: "You're looking at it (you can get help for a specific command too)"
-      examples: ["please help", "what commands do you have?", "help for reload!"]
+      examples: ["help please.", "what commands do you have?", "help silence.", "help for the silence command."]
       opts:
         command: {type: "string"}
 
     reload:
       desc: "I'll reload my configuration and reinitialize"
-      examples: ["please reload", "I would like you to reinitialize"]
+      examples: ["please reload.", "I would like you to reinitialize yourself."]
 
     silence:
       desc: "I'll be silent for a while, only responding to commands"
-      examples: ["be quite for 20 seconds", "shut your face"]
+      examples: ["be quiet for 20 minutes.", "shut your face!"]
       opts:
-        duration: {type: "integer", default: 300, note: "seconds"}
+        duration: {type: "integer", default: 300}
 
-    resume:
+    unslience:
       desc: "I'll resume my normal banter after having been silenced"
-      examples: ["ok, you can start talking again", "good to go"]
-      intent: "unsilence"
+      examples: ["ok, you want to join us again?", "you can resume now."]
 
     responders:
       desc: "List of all the responders"
-      examples: ["what responders do you have?", "list of responders"]
+      examples: ["what responders do you have?", "list of responders."]
 
-  help: (command, callback) ->
-    if command
-      for name, responder of @bot.responders
-        handler = responder.handler
-        if handler.commands
-          options = handler.commands[command.replace(handler.commandPrefix + ':', '')]
-          return callback(paste: @helpForCommand(command, options)) if options
-      speak: "Sorry #{@message.user.name}, I don't know about the #{command} command. :("
-      paste: @helpForAllCommands()
-    else
-      paste: @helpForAllCommands()
+  templates:
+    unknownCommand: "Sorry {{&name}}, I don't know about the \"{{&command}}\" command. :("
+    reloading: "Ok, {{&name}}, I'll be back shortly if everything goes well."
+    silence: "I'm sorry.. I'll be quiet for {{&duration}} unless you ask something specific of me."
+    unsilence: "Thanks!"
+    helpAll: """
+      ➡️ {{&botName}} Help
+
+      Hey {{&name}}. My name is {{&botName}}, but I also respond to {{&aliases}}.
+      Just prefix your commands with my name, or one of my aliases to let me know you want me to do something.
+
+      ☛ Available Commands\n{{#commands}}  ∙ {{&command}} {{&desc}}\n{{/commands}}
+      """
+    helpCommand: """
+      ➡️ Command Help: {{&command}}
+
+      {{&desc}}
+
+      Options:\n{{#options}}  [{{.}}]\n{{/options}}\n
+      Examples:\n{{#examples}} > {{&botName}}, {{&.}}\n{{/examples}}
+      """
+    responders: """
+      ➡️ {{&botName}} Responders
+
+      {{#responders}}{{&responder}} {{&desc}}\n{{/responders}}
+      """
 
 
-  reload: ->
+  help: (command) ->
+    unless command then return paste: @helpForAllCommands()
+
+    for name, responder of @bot.responders
+      continue unless options = responder.handler.optionsForCommand?(command)
+      return paste: @t('helpCommand', _(botName: @bot.user.name).extend(@commandDescription(command, options)))
+
+    speak: @t('unknownCommand', command: command)
+    paste: @helpForAllCommands()
+
+
+  reload: (callback) ->
+    callback(speak: @t('reloading'))
+    room.speak("Reloading.") for id, room of @bot.rooms
     @bot.reload()
 
 
-  silence: (time) ->
+  silence: (duration) ->
     redis.set("#{@message.room.id}-muted", true)
-    redis.expire("#{@message.room.id}-muted", time)
-    speak: "I'm sorry.. I'll be quiet for a while. (~#{parseInt(time / 60)} minutes)"
+    redis.expire("#{@message.room.id}-muted", duration)
+    speak: @t('silence', duration: @humanDuration(duration))
 
 
-  resume: ->
+  unslience: ->
     redis.del("#{@message.room.id}-muted", true)
-    speak: 'Thanks!'
+    speak: @t('unsilence')
 
 
   responders: ->
-    paste: """
-    ➡️ #{@bot.user.name} Responders
+    paste: @t('responders', botName: @bot.user.name, responders: @responderList())
 
-    Hey #{@message.user.name}. This is a list of my responders.
-    #{@responderList()}
-    """
+
+  # private
 
 
   helpForAllCommands: ->
-    """
-    ➡️ #{@bot.user.name} Help
-
-    Hey #{@message.user.name}. My name is #{@bot.user.name}, but I also respond to #{@bot.respondsTo.join(', or ')}.
-    Just prefix your commands with my name or one of my aliases to let me know you want me to do something.
-
-    If you need help on a specific command use: "#{@bot.user.name}, help [command]"
-    #{@commandList()}
-    """
+    @t('helpAll', botName: @bot.user.name, aliases: @bot.respondsTo.join(', or '), commands: @commandList())
 
 
-  helpForCommand: (command, options) ->
-    ret = "☛️ Command Help: #{command}\n\n"
-    ret += "#{options.desc}\n" if options.desc
-    if options.opts
-      ret += '\nOptions:\n'
-      for opt, opts of options.opts
-        ret += "  [#{opt.toUpperCase()} #{opts.type || 'string'}"
-        ret += " default:#{opts.default}" if opts.default
-        ret += " (#{opts.note})" if opts.note
-        ret += "]\n"
-    if options.examples
-      ret += '\nExamples:\n'
-      for example in options.examples
-        ret += " > #{@bot.user.name}: #{example}\n"
-    ret.replace(/\n+$/, '')
+  commandDescription: (command, options = {}) ->
+    optionsArray = for opt, opts of options.opts || {}
+      str = "#{opt.toUpperCase()} #{opts.type || 'string'}"
+      str += " default:#{opts.default}" if opts.default
+      str += " (#{opts.note})" if opts.note
+      str
+
+    command: command
+    desc: options.desc || 'No description provided'
+    examples: options.examples
+    options: optionsArray
 
 
   commandList: ->
-    coreCommands = []
-    commands = []
+    core = []
+    other = []
 
     for name, responder of @bot.responders
-      for command, options of responder.handler.commands || {}
+      handler = responder.handler
+      for command, options of handler.commands || {}
         continue unless options.desc
-        prefix = ''
-        prefix = "#{commandPrefix}:" if commandPrefix = responder.handler.commandPrefix
-        command = "#{prefix}#{command}"
-        command = "\n  ∙ #{command + Array(20 - command.length + 1).join(" ")} #{options.desc}"
-        if prefix
-          commands.push(command)
-        else
-          coreCommands.push(command)
+        registered =
+          command: @padRight([handler.commandPrefix, command].join(':').replace(/^:/, ''))
+          desc: options.desc
+        (if /:/.test(registered.command) then other else core).push(registered)
 
-    "\n☛ Available Commands#{coreCommands.join('')}#{commands.join('')}"
+    core.concat(other)
 
 
   responderList: ->
-    ret = ''
     for name, responder of @bot.responders
       handler = responder.handler
       continue unless handler.responderDesc
-      ret += "\n☛️ #{handler.responderName || name} - #{handler.responderDesc}"
-    ret
+      responder: @padRight(handler.responderName || name)
+      desc: handler.responderDesc
+
 
 
 module.exports = new Responder()

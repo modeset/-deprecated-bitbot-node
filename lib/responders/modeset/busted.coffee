@@ -7,4 +7,6 @@ class Responder extends Bitbot.RegexpResponder
     'http://www.doorsofperception.com/archives/image-donkey-in-air.jpg'
   ]
 
+
+
 module.exports = new Responder()

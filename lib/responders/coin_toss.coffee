@@ -3,17 +3,23 @@ class Responder extends Bitbot.BaseResponder
   responderName: "Coin Toss"
   responderDesc: "Provides a command to flip a coin."
 
-  commandPrefix: 'coin'
+  commandPrefix: "coin"
 
   commands:
     toss:
-      desc: "Flips a coin"
-      examples: ["heads or tails", "flip a coin", "coin toss"]
-      intent: 'cointoss'
+      desc: "Flips a coin and provides the result"
+      examples: ["heads or tails?", "flip a coin.", "coin toss."]
+      intent: "cointoss"
 
-  responses: ["Heads", "Tails"]
+  responses: [
+    "Heads."
+    "Tails."
+  ]
+
 
   toss: ->
-    speak: @responses[Math.floor(Math.random() * @responses.length)]
+    speak: @random()
+
+
 
 module.exports  = new Responder()

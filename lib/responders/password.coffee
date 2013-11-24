@@ -2,26 +2,29 @@ request = require('request')
 
 class Responder extends Bitbot.BaseResponder
 
+  url: "http://fishsticks.herokuapp.com/?wordlist=propernames"
+
   responderName: "Password"
   responderDesc: "Generates a readable password from a wordlist."
 
-  commandPrefix: 'password'
+  commandPrefix: "password"
 
   commands:
     generate:
       desc: "Generate a password"
-      examples: ["I need a password", "generate a password"]
+      examples: ["I need a password.", "generate a password for me."]
       intent: "passwordgenerate"
 
-  url: 'http://fishsticks.herokuapp.com/?wordlist=propernames'
+  templates:
+    error: "Sorry {{&initials}}, the password service isn't working. :("
+    generate: "🔒 {{&initials}}, here's a password: {{&password}}"
+
 
   generate: (callback) ->
     request @url, (err, response, body) =>
-      if err
-        @log(err, 'error')
-        callback(speak: "Sorry, #{@message.user.initials}, the password generating service isn't working. :(")
+      return callback(speak: @t('error')) if err
+      callback(speak: @t('generate', password: body))
 
-      callback(speak: "🔒 #{@message.user.initials}, here's a new password: #{body}")
 
 
 module.exports = new Responder()

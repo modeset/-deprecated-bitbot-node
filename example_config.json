@@ -3,7 +3,7 @@
     "token": ">TOKEN_BITBOT",
     "rooms": ["1782", "Bits"],
     "logRooms": ["1782"],
-    "respondsTo": ["bot", "bb", "bitbot", "baby"],
+    "respondsTo": ["bot", "bb", "bitbot"],
 
     "responders": {
       "core": { "core": true, "file": "core.coffee" },
@@ -36,9 +36,7 @@
       "rimshot": "modeset/sounds/rimshot.coffee",
       "the_best": "modeset/sounds/the_best.coffee",
       "whoops": "modeset/sounds/whoops.coffee",
-      "yeah": "modeset/sounds/yeah.coffee",
-
-      "converational": "modeset/conversational.coffee"
+      "yeah": "modeset/sounds/yeah.coffee"
     }
   },
   "Bit Bot (clean)": {

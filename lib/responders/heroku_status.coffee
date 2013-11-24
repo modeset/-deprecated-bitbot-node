@@ -2,40 +2,47 @@ request = require('request')
 
 class Responder extends Bitbot.BaseResponder
 
+  url: "https://status.heroku.com/api/v3/current-status"
+
   responderName: "Heroku Status"
   responderDesc: "Provides a command and interval (every 5 minutes) for checking Heroku status."
 
   intervals:
-    status: 5 * 60 * 1000
+    status: 10 * 1000
 
   commandPrefix: "heroku"
 
   commands:
     status:
       desc: "Check the status of Heroku"
-      examples: ["check Heroku status", "is Heroku having any issues?", "what's up with Heroku?"]
+      examples: ["check Heroku status.", "is Heroku having any issues?", "what's up with Heroku?"]
       intent: "herokustatus"
 
-  url: "https://status.heroku.com/api/v3/current-status"
+  templates:
+    good: "✅ Heroku isn't reporting any issues."
+    bad: "⚠️ Heroku is reporting issues. Check http://status.heroku.com/ for more details."
+
   notified: false
 
+
   status: (callback) ->
-    @checkHeroku (issues) =>
-      if issues
-        if !@notified || @message.command
-          callback(speak: "⚠️ Heroku is reporting issues. Check http://status.heroku.com/ for details")
-        @notified = true unless @message.command
-      else
-        if @message.command
-          callback(speak: "✅ Heroku seems ok right now.")
+    @checkHeroku (good) =>
+      if good
+        callback(speak: @t('good')) if @notified || @message.command
         @notified = false
+      else
+        callback(speak: @t('bad')) if !@notified || @message.command
+        @notified = true unless @message.command
 
 
-  checkHeroku: (callback) =>
-    request @url, (err, response, body) =>
-      try callback(JSON.parse(body).issues.length > 0)
+  checkHeroku: (callback) ->
+    request @url, (err, response, body) ->
+      try issues = !JSON.parse(body)['issues'].length
       catch e
-        @log(e.message, 'error')
+        return callback(false)
+
+      callback(issues)
+
 
 
 module.exports = new Responder()
