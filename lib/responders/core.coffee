@@ -38,6 +38,9 @@ class Responder extends Bitbot.BaseResponder
       Hey {{&name}}. My name is {{&botName}}, but I also respond to {{&aliases}}.
       Just prefix your commands with my name, or one of my aliases to let me know you want me to do something.
 
+      You can say `{{&botName}} help full` to get a full list of commands, their options, and examples of usage.
+      You can also ask for help for a command by saying `{{&botName}} help heroku:status` for instance.
+
       ☛ Available Commands\n{{#commands}}  ∙ {{&command}} {{&desc}}\n{{/commands}}
       """
     helpCommand: """
@@ -45,7 +48,7 @@ class Responder extends Bitbot.BaseResponder
 
       {{&desc}}
 
-      Options:\n{{#options}}  [{{.}}]\n{{/options}}\n
+      Options:\n{{#options}}  [{{&.}}]\n{{/options}}\n
       Examples:\n{{#examples}} > {{&botName}}, {{&.}}\n{{/examples}}
       """
     responders: """
@@ -53,14 +56,35 @@ class Responder extends Bitbot.BaseResponder
 
       {{#responders}}{{&responder}} {{&desc}}\n{{/responders}}
       """
+    fullHelp: """
+      ➡️ {{&botName}} Full Help
+
+      I respond to {{&aliases}}. Just prefix your commands with my name, or one of my aliases to let me know you want me to do something.
+
+      {{#commands}}
+      {{&command}} {{&desc}}
+                                {{#options}}
+                                [{{&.}}]
+                                {{/options}}
+
+                                Examples:
+                                {{#examples}}
+                                 > {{&botName}}, {{&.}}
+                                {{/examples}}
+
+      {{/commands}}
+      """
 
 
   help: (command) ->
     unless command then return paste: @helpForAllCommands()
 
-    for name, responder of @bot.responders
-      continue unless options = responder.handler.optionsForCommand?(command)
-      return paste: @t('helpCommand', _(botName: @bot.user.name).extend(@commandDescription(command, options)))
+    if command == 'full'
+      return paste: @fullHelpForAllCommands()
+    else
+      for name, responder of @bot.responders
+        continue unless options = responder.handler.optionsForCommand?(command)
+        return paste: @t('helpCommand', _(botName: @bot.user.name).extend(@commandDescription(command, options)))
 
     speak: @t('unknownCommand', command: command)
     paste: @helpForAllCommands()
@@ -92,6 +116,25 @@ class Responder extends Bitbot.BaseResponder
 
   helpForAllCommands: ->
     @t('helpAll', botName: @bot.user.name, aliases: @bot.respondsTo.join(', or '), commands: @commandList())
+
+
+  fullHelpForAllCommands: ->
+    core = []
+    other = []
+
+    for name, responder of @bot.responders
+      handler = responder.handler
+      for command, options of handler.commands || {}
+        continue unless options.desc
+        desc = @commandDescription(command, options)
+        registered =
+          command: @padRight([handler.commandPrefix, command].join(':').replace(/^:/, ''))
+          desc: options.desc
+          options: desc.options
+          examples: desc.examples
+        (if /:/.test(registered.command) then other else core).push(registered)
+
+    @t('fullHelp', botName: @bot.user.name, aliases: @bot.respondsTo.join(', or '), commands: core.concat(other))
 
 
   commandDescription: (command, options = {}) ->

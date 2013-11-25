@@ -21,7 +21,7 @@ class Responder extends Bitbot.BaseResponder
       intent: "herokuapp:configure"
       opts:
         name: {type: "string", entity: "client"}
-        value: {type: "string", note: "(parsed to determine the type of value)"}
+        value: {type: "string", note: "parsed to determine the type of value"}
 
     list:
       desc: "List heroku applications"
