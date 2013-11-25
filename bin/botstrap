@@ -17,6 +17,7 @@ Sentiment = require('sentiment');
 Moment = require('moment');
 Mustache = require('mustache');
 ChildProcess = require('child_process');
+request = require('request');
 _ = require('underscore');
 
 // Create basic globals

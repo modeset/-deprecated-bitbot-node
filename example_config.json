@@ -12,6 +12,7 @@
       "coin_toss": "coin_toss.coffee",
       "heroku_deploy": "heroku_deploy.coffee",
       "heroku_status": "heroku_status.coffee",
+      "news": "news.coffee",
       "fortune": "fortune.coffee",
       "password": "password.coffee",
       "reminder": "reminder.coffee",
@@ -21,6 +22,7 @@
 
       "snowfall": "modeset/snow_report.coffee",
       "sandwich": "modeset/sandwich.coffee",
+
       "beer": "modeset/beer.coffee",
       "boobs": "modeset/boobs.coffee",
       "bummer": "modeset/bummer.coffee",
@@ -51,6 +53,7 @@
       "coin_toss": "coin_toss.coffee",
       "heroku_deploy": "heroku_deploy.coffee",
       "heroku_status": "heroku_status.coffee",
+      "news": "news.coffee",
       "fortune": "fortune.coffee",
       "password": "password.coffee",
       "reminder": "reminder.coffee",
@@ -59,7 +62,6 @@
       "whois": "whois.coffee",
 
       "snowfall": "modeset/snow_report.coffee",
-      "sandwich": "modeset/sandwich.coffee",
 
       "inception": "modeset/sounds/inception.coffee",
       "rimshot": "modeset/sounds/rimshot.coffee",

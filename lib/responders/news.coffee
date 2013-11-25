@@ -84,7 +84,7 @@ class Responder extends Bitbot.BaseResponder
     if foundTopic
       found = true
     else
-      foundTopic = sources['default']
+      foundTopic = feedSources['default']
       found = false
 
     found: found

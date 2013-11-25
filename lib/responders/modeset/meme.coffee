@@ -1,5 +1,3 @@
-request = require('request')
-
 class Responder extends Bitbot.RegexpResponder
 
   url: "http://api.automeme.net/text.json?lines=1"

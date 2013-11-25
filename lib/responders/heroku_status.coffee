@@ -1,5 +1,3 @@
-request = require('request')
-
 class Responder extends Bitbot.BaseResponder
 
   url: "https://status.heroku.com/api/v3/current-status"

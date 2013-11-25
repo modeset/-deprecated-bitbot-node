@@ -1,5 +1,3 @@
-request = require('request')
-
 class Responder extends Bitbot.BaseResponder
 
   url: "http://fishsticks.herokuapp.com/?wordlist=propernames"
