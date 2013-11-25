@@ -18,6 +18,7 @@
       "password": "password.coffee",
       "reminder": "reminder.coffee",
       "timer": "timer.coffee",
+      "users": "users.coffee",
       "weather": "weather.coffee",
       "whois": "whois.coffee",
 
@@ -60,6 +61,7 @@
       "password": "password.coffee",
       "reminder": "reminder.coffee",
       "timer": "timer.coffee",
+      "users": "users.coffee",
       "weather": "weather.coffee",
       "whois": "whois.coffee",
 
