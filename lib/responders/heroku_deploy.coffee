@@ -100,7 +100,7 @@ class Responder extends Bitbot.BaseResponder
       applications = []
       for record in records || []
         applications.push
-          token: @padRight(record._token, 20)
+          token: @padRight(record._token || 'unknown', 20)
           app: record.app
           repo: record.repo
       callback(paste: @t('list', message: message, applications: applications))
