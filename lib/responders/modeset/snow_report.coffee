@@ -20,7 +20,7 @@ class Responder extends Bitbot.BaseResponder
     missingResort: "Sorry {{&initials}}, you need to provide a resort for this command."
     error: "Sorry {{&name}}, something went wrong in the responder. :L"
     resortNotFound: "Sorry {{&name}}, I couldn't find a resort named \"{{&resort}}\" in {{&state}}."
-    report: "Snow report for \"{{&resort}}\" (as of {{&datetime}}):\n⛄️ {{report}}"
+    report: "Snow report for \"{{&resort}}\" (as of {{&datetime}}):\n⛄️ {{&report}}"
 
 
   report: (resort, callback) ->
