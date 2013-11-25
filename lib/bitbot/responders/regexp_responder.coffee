@@ -10,7 +10,7 @@ class RegexpResponder extends BaseResponder
     @regexp.test(message.body)
 
 
-  respond: (@message, callback) ->
+  respond: (@message, @users, callback) ->
     return unless @regexp.test(@message.body)
     @randomResponse(callback)
 

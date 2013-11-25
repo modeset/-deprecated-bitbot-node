@@ -55,11 +55,12 @@ class Bitbot
 
   constructor: (@name, @client, @user, @config) ->
     @logPrefix = "#{@name}:"
+    @users = new UserRegistry("#{@name}-users", @client)
 
+    # todo: move this off into a nicer place
     @respondsTo = @config.respondsTo || []
     @respondsTo = [@respondsTo] unless _(@respondsTo).isArray()
     @respondsTo.push(@user.name)
-
     @config.allowedReferences ||= ['hey', 'yeah', 'yes', 'excuse me', 'please', 'yo', 'word']
     allowed = @config.allowedReferences.join('|')
     respond = @respondsTo.join('|')
@@ -157,24 +158,7 @@ class Bitbot
 
 
   getUser: (userId, callback) ->
-    @users ||= {}
-
-    return callback?(@users[userId]) if @users[userId]
-
-    @client.user userId, (err, user) =>
-      name = (user ||= user: {name: "Unknown"}).user.name
-      names = name.split(' ')
-      initials = ''
-      initials += n[0] for n in names
-
-      @users[userId] =
-        name: names[0]
-        fullName: name
-        initials: initials
-        lastMessage: ''
-        id: userId
-
-      callback?(@users[userId])
+    @users.findById(userId, callback)
 
 
   isAllowedRoom: (name, rooms) ->
@@ -231,7 +215,10 @@ class Bitbot
         if @isAllowedRoom(room.name, @config.logRooms)
           @log("#{info}\033[37m: \033[90m#{JSON.stringify(message)}")
         @respondToMessage(room, user, message)
-        user.lastMessage = message.body
+        user.lastMessage =
+          body: message.body
+          sentAt: new Date()
+          roomName: message.room.name
 
 
   processMessage: (room, original, callback) ->
@@ -317,7 +304,7 @@ class Bitbot
       continue unless responder.handler.respondsTo?(message)
 
       try
-        respond(responder.handler.respond?(message, respond))
+        respond(responder.handler.respond?(message, @users, respond))
       catch e
         @log(e, 'error')
         console.log(e)
@@ -334,6 +321,54 @@ class Bitbot
       return room.confirms[user.id] = response.confirm
     if _(response.prompt).isFunction()
       return room.prompts[user.id] = response.prompt
+
+
+
+class UserRegistry
+
+  constructor: (@key, @client) ->
+    @users = {}
+
+    redis.hgetall @key, (err, records) =>
+      return unless records
+
+      for token, key of records
+        do(token, key) =>
+          redis.hgetall key, (err, record) =>
+            return unless record || record.value
+            record = JSON.parse(record.value)
+            @users[token] = record
+
+
+  findById: (userId, callback) ->
+    return callback?(@users[userId]) if @users[userId]
+
+    @client.user userId, (err, user) =>
+      name = (user ||= user: {name: "Unknown"}).user.name
+      names = name.split(' ')
+      initials = ''
+      initials += n[0] for n in names
+
+      @users[userId] =
+        id: userId
+        initials: initials
+        name: names[0]
+        lastName: names[1]
+        fullName: name
+
+      key = "#{@key}-#{userId}"
+      redis.hset @key, userId, key, =>
+        redis.hmset(key, value: JSON.stringify(@users[userId]))
+
+      @users[userId].lastMessage = {}
+      callback?(@users[userId])
+
+
+  find: (ref) ->
+    return unless ref
+    _(@users).find (user) ->
+      user.if == ref || user.initials == ref || user.name == ref || user.lastName == ref || user.fullName == ref
+
 
 
 module.exports = Bitbot

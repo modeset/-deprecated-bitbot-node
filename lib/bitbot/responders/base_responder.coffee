@@ -35,7 +35,7 @@ class BaseResponder
     false
 
 
-  respond: (@message, callback) ->
+  respond: (@message, @users, callback) ->
     @respondToCommand(callback) if @message.command
 
 
