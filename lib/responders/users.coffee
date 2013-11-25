@@ -14,7 +14,7 @@ class Responder extends Bitbot.BaseResponder
         user: {type: "string"}
 
   templates:
-    missingUser: "Sorry {{&name}}, I couldn't find anyone with no name."
+    missingUser: "Sorry {{&name}}, I couldn't find anyone with that name."
     unknownUser: "Sorry {{&initials}}, I don't think I've ever met {{&userName}}."
     seenSaying: "Yeah {{&name}}, I saw {{&other.initials}} saying \"{{&message}}\" {{&timeAgo}} ago."
     seenIn: "Yeah {{&initials}}, I saw them in {{&roomName}} {{&timeAgo}} ago.."

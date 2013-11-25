@@ -307,7 +307,7 @@ class Bitbot
         respond(responder.handler.respond?(message, @users, respond))
       catch e
         @log(e, 'error')
-        console.log(e)
+        console.log(e.stack)
       finally
         message.responses += 1
 
@@ -365,9 +365,14 @@ class UserRegistry
 
 
   find: (ref) ->
+    # todo: this should return something else if there's more than one match.
     return unless ref
+    ref = ref.toLowerCase()
     _(@users).find (user) ->
-      user.if == ref || user.initials == ref || user.name == ref || user.lastName == ref || user.fullName == ref
+      user.id == ref ||
+      user.initials.toLowerCase() == ref ||
+      user.name.toLowerCase() == ref ||
+      user.fullName.toLowerCase() == ref
 
 
 

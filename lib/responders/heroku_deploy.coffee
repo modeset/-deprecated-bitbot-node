@@ -66,19 +66,20 @@ class Responder extends Bitbot.BaseResponder
       {{#message}}{{&.}}{{/message}}{{#applications}}{{&token}} heroku: {{&app}} / repo: {{&repo}}\n{{/applications}}
       """
 
-  add: (token, app, repo, callback) ->
+
+  add: (token, app, repo) ->
     if repo
       new Registry(@message.room.id).upsert(token, {app: app, repo: repo})
       speak: @t('create', token: token)
     else if app
       speak: @t('createRepo', token: token)
-      prompt: (message) => @add(token, app, message.body, callback)
+      prompt: (message) => @add(token, app, message.body)
     else if token
       speak: @t('createApp', token: token)
-      prompt: (message) => @add(token, message.body, null, callback)
+      prompt: (message) => @add(token, message.body, null)
     else
       speak: @t('createToken')
-      prompt: (message) => @add(message.body, null, null, callback)
+      prompt: (message) => @add(message.body, null, null)
 
 
   update: (token, value, callback) ->

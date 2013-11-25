@@ -1,5 +1,3 @@
-# todo: use a patern similar to the heroku_deploy responder with the Registry
-
 class Responder extends Bitbot.BaseResponder
 
   responderName: "Reminders"
@@ -31,8 +29,8 @@ class Responder extends Bitbot.BaseResponder
       intent: "reminderclear"
 
   templates:
-    missingReminder: "Sorry {{&name}}, you should to provide something to remind you about."
-    missingDatetime: "Sorry {{&initials}}, I got that want a reminder to \"{{&reminder}}\", but you didn't provide a time."
+    missingReminder: "Sorry {{&name}}, you should provide something to remind you about."
+    missingDatetime: "Sorry {{&initials}}, I got that you want to remember \"{{&reminder}}\", but you didn't provide a time to remind you."
     remind: "⏰ {{&name}}, {{&reminder}}{{#location}} (location: {{&.}}){{/location}}"
     createConfirm: "Okay {{&name}}, I'll remind you to \"{{&reminder}}\"{{#location}} (location: {{&.}}){{/location}}, on {{&datetime}}.\n❓ Do you want me to create it?"
     notCreated: "Okay {{&name}}, I didn't create it."
