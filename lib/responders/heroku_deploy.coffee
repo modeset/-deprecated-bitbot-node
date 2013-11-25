@@ -99,8 +99,9 @@ class Responder extends Bitbot.BaseResponder
       message = "Looks like there aren't any applications configured!" unless records
       applications = []
       for record in records || []
+        continue unless record && record._token
         applications.push
-          token: @padRight(record._token || 'unknown', 20)
+          token: @padRight(record._token, 20)
           app: record.app
           repo: record.repo
       callback(paste: @t('list', message: message, applications: applications))
