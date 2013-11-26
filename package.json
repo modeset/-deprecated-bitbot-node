@@ -25,7 +25,8 @@
     "wit-node": "0.0.4",
     "sentiment": "0.1.0",
 
-    "node-whois": "0.2.0"
+    "node-whois": "0.2.0",
+    "node-hue-api": "0.2.2"
   },
   "devDependencies": {
     "mocha": "1.13.0",
