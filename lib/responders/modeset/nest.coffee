@@ -68,10 +68,10 @@ class Responder extends Bitbot.BaseResponder
       callback speak: @t('configureUsername'), prompt: (message) =>
         @setSettings(username: @settings.username = message.body)
         @configure(callback, @settings.username)
-    else if !username
+    else if !password
       callback speak: @t('configurePassword'), prompt: (message) =>
         @setSettings(password: @settings.password = message.body)
-        @configure(callback, @settings.password)
+        @configure(callback, username, @settings.password)
     else
       callback(speak: @t('configureSuccess'))
       @initialize()

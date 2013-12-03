@@ -1,5 +1,9 @@
 class Responder extends Bitbot.BaseResponder
 
+  settings:
+    token: process.env['WUNDERGROUND_TOKEN']
+    location: "Denver, CO"
+
   responderName: "Weather"
   responderDesc: "Provides weather information for a given location."
 
