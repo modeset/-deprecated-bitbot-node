@@ -26,7 +26,7 @@ class Responder extends Bitbot.BaseResponder
 
   templates:
     notConfigured: "Looks like the Hue isn't configured. Use hue:configure to get it setup."
-    configureHostname: "Hi {{&initials}}, to get your Philips Hue setup I need the hostname (or IP) if your Hue Bridge. You should be able to get this at: http://www.meethue.com/api/nupnp\n❓ What hostname do you want to use?"
+    configureHostname: "Hi {{&initials}}, to get your Philips Hue setup I need the hostname (or IP) of your Hue Bridge. You should be able to get this at: http://www.meethue.com/api/nupnp\n❓ What hostname do you want to use?"
     configureUsername: "Okay {{&initials}}, I need access to the Bridge. To do this, you'll need to press and release the button on the Hue Bridge (you have 30 seconds)."
     configureSuccess: "Okay {{&name}}, all setup and ready to go."
     configureFailure: "Sorry {{&initials}}, I wasn't able to connect with the Hue Bridge."
