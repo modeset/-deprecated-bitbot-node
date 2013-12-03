@@ -26,7 +26,8 @@
     "sentiment": "0.1.0",
 
     "node-whois": "0.2.0",
-    "node-hue-api": "0.2.2"
+    "node-hue-api": "0.2.2",
+    "unofficial-nest-api": "0.1.4"
   },
   "devDependencies": {
     "mocha": "1.13.0",

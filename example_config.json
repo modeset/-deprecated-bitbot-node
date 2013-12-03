@@ -31,6 +31,7 @@
       "hue": "modeset/hue.coffee",
       "meme": "modeset/meme.coffee",
       "mom": "modeset/mom.coffee",
+      "nest": "modeset/nest.coffee",
       "password": "modeset/password.coffee",
       "sandwich": "modeset/sandwich.coffee",
       "snowfall": "modeset/snow_report.coffee",
