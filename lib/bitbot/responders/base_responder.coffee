@@ -1,7 +1,5 @@
 class BaseResponder
 
-  responderName: 'BaseResponder'
-
   log: require('../logger.coffee')
 
   intervals: {}
@@ -64,6 +62,28 @@ class BaseResponder
 
 
   # helpers
+
+  getSettings: (callback) ->
+    unless @responderName
+      @log("can't use settings unless a @responderName is set", 'error')
+      return
+
+    redis.get "#{@responderName.toLowerCase()}-settings", (err, settings) ->
+      return callback(err, null) if err
+      return callback(new Error('unable to find settings'), null) unless settings
+      callback(null, JSON.parse(settings))
+
+
+  setSettings: (options = {}, callback) ->
+    unless @responderName
+      @log("can't use settings unless a @responderName is set", 'error')
+      return
+
+    key = "#{@responderName.toLowerCase()}-settings"
+    redis.get key, (err, settings = '{}') ->
+      settings = JSON.parse(settings)
+      redis.set key, JSON.stringify(_(settings).extend(options)), ->
+        callback?()
 
 
   delay: (time, callback) ->

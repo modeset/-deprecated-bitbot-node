@@ -19,7 +19,6 @@ class Responder extends Bitbot.BaseResponder
       examples: ["show me my notes.", "do I have any notes?", "read my notes."]
       intent: "noteread"
 
-
   templates:
     missingUser: "Sorry {{&name}}, I couldn't find anyone with that name."
     missingNote: "Sorry {{&name}}, you need to provide a note too."
@@ -34,12 +33,12 @@ class Responder extends Bitbot.BaseResponder
       """
 
 
-  respondToEvent: (event, user) ->
+  respondToEvent: (event, user, callback) ->
     return unless event == 'enter'
     registry = new Registry(user.id)
     registry.all false, (record) =>
       return unless record
-      message = @t('read', message: {user: user}, from: record.from, body: record.body)
+      message = @t('read', originalMessage: {user: user}, from: record.from, body: record.body)
       callback(speak: message, rooms: [record.room])
 
 

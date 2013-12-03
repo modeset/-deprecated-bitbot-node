@@ -196,6 +196,10 @@ class Bitbot
   delegateResponse: (room, user, message) ->
     info = "\033[32m#{room.name}\033[37m/\033[35m#{user.fullName}"
 
+#    if message.body == "-enter-"
+#      @log("#{info}\033[37m: \033[90mEntered the room")
+#      @respondToEnter(room, user)
+#
     if message.type == 'EnterMessage'
       @log("#{info}\033[37m: \033[90mEntered the room")
       @respondToEnter(room, user)
