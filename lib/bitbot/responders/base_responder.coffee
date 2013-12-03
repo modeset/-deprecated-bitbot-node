@@ -177,7 +177,6 @@ class BaseResponder.Registry
 
   remove: (token, callback) ->
     key = "#{@key}-#{token}"
-    console.log(@key, key, token)
     redis.hdel @key, token, ->
       redis.del(key, -> callback?())
 
