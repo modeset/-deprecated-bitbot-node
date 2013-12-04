@@ -33,13 +33,14 @@ class Responder extends Bitbot.BaseResponder
       """
 
 
-  respondToEvent: (event, user, callback) ->
+  respondToEvent: (event, room, user, callback) ->
     return unless event == 'enter'
     registry = new Registry(user.id)
     registry.all false, (record) =>
-      return unless record
+      return if !record || record.room == room.id
       message = @t('read', originalMessage: {user: user}, from: record.from, body: record.body)
       callback(speak: message, rooms: [record.room])
+      registry.remove(record._token)
 
 
   create: (user, note) ->

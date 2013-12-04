@@ -14,7 +14,7 @@ class BaseResponder
     #     command: type: 'string'
 
   templates: {}
-    # hello: "hello {{name}}."
+    # hello: "hello {{&name}}."
 
 
   constructor: ->

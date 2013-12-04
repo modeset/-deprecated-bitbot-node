@@ -23,9 +23,10 @@ class Responder extends Bitbot.BaseResponder
     seenNever: "No {{&initials}}, I haven't seen them since I started paying attention (restarted)."
 
 
-  respondToEvent: (event, user) ->
+  respondToEvent: (event, room, user) ->
     user.joinedAt = new Date() if event == 'enter'
     user.leftAt = new Date() if event == 'leave'
+    delete(user.lastMessage)
 
 
   seen: (user) ->

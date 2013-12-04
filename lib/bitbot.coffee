@@ -196,10 +196,9 @@ class Bitbot
   delegateResponse: (room, user, message) ->
     info = "\033[32m#{room.name}\033[37m/\033[35m#{user.fullName}"
 
-#    if message.body == "-enter-"
-#      @log("#{info}\033[37m: \033[90mEntered the room")
-#      @respondToEnter(room, user)
-#
+    message.type = 'EnterMessage' if message.body == "-enter-"
+    message.type = 'KickMessage' if message.body == "-leave-"
+
     if message.type == 'EnterMessage'
       @log("#{info}\033[37m: \033[90mEntered the room")
       @respondToEnter(room, user)
@@ -274,7 +273,7 @@ class Bitbot
 
     for name, responder of @responders
       continue unless @isAllowedRoom(room.name, responder.rooms)
-      try respond(responder.handler.respondToEvent?('enter', user, respond))
+      try respond(responder.handler.respondToEvent?('enter', room, user, respond))
       catch e
         @log(e, 'error')
 
@@ -284,7 +283,7 @@ class Bitbot
 
     for name, responder of @responders
       continue unless @isAllowedRoom(room.name, responder.rooms)
-      try respond(responder.handler.respondToEvent?('leave', user, respond))
+      try respond(responder.handler.respondToEvent?('leave', room, user, respond))
       catch e
         @log(e, 'error')
 
@@ -325,7 +324,6 @@ class Bitbot
       return room.confirms[user.id] = response.confirm
     if _(response.prompt).isFunction()
       return room.prompts[user.id] = response.prompt
-
 
 
 class UserRegistry
