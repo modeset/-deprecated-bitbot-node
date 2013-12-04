@@ -6,7 +6,6 @@ class Responder
 
 
   respond: (message) ->
-    console.log('!!!!!!!!!!!!!!')
     match = message.body.match(/^\[([\w|\s|\*]+)\] (.*)/)
     [room, msg] =[match[1], match[2]]
 
@@ -14,8 +13,6 @@ class Responder
       rooms = _(@bot.rooms).values()
     else
       rooms = _(@bot.rooms).where(name: room)
-
-    console.log(rooms, msg)
 
     room.speak(msg) for room in rooms
 
