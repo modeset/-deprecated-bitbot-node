@@ -52,7 +52,6 @@
     "respondsTo": ["bot", "bb", "bitbot"],
     "responders": {
       "core": { "core": true, "file": "core.coffee" },
-      "speak": { "core": true, "file": "modeset/speak.coffee" },
 
       "8ball": "8ball.coffee",
       "coin_toss": "coin_toss.coffee",
