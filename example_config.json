@@ -1,7 +1,7 @@
 {
   "Bit Bot (full)": {
     "token": ">TOKEN_BITBOT",
-    "rooms": ["1782", "Bits"],
+    "rooms": ["1782", "Bits", "Bitbot Test Room"],
     "logRooms": ["1782"],
     "respondsTo": ["bot", "bb", "bitbot"],
 
