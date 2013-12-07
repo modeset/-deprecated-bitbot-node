@@ -27,11 +27,27 @@ class Responder extends Bitbot.BaseResponder
       desc: "List of all the responders"
       examples: ["what responders do you have?", "list of responders."]
 
+    ignore:
+      desc: "Tell me to ignore you, or someone else (like silence, but only for an individual)"
+      examples: ["ignore me.", "ignore SomeBot.", "please ignore Jeremy."]
+      opts:
+        user: {type: "string", entity: "contact"}
+
+    unignore:
+      desc: "I will unignore you or someone else"
+      examples: ["unignore me.", "unignore SomeBot.", "please unignore Jeremy."]
+      opts:
+        user: {type: "string", entity: "contact"}
+
   templates:
     unknownCommand: "Sorry {{&name}}, I don't know about the \"{{&command}}\" command. :("
-    reloading: "Ok, {{&name}}, I'll be back shortly if everything goes well."
+    reloading: "Okay, {{&name}}, I'll be back shortly if everything goes well."
     silence: "I'm sorry.. I'll be quiet for {{&duration}} unless you ask something specific of me."
     unsilence: "Thanks!"
+    missingUser: "Sorry {{&name}}, I couldn't find anyone with that name."
+    unknownUser: "Sorry {{&initials}}, I don't think I've ever met {{&userName}}."
+    ignored: "Okay, I'll ignore all messages from {{&username}} in this room from now on, unless something specific is asked of me."
+    unignored: "Okay, I've stopped ignoring {{&username}} in this room."
     helpAll: """
       ➡️ {{&botName}} Help
 
@@ -111,7 +127,33 @@ class Responder extends Bitbot.BaseResponder
     paste: @t('responders', botName: @bot.user.name, responders: @responderList())
 
 
+  ignore: (user) ->
+    @toggleIgnored(user, true)
+
+
+  unignore: (user) ->
+    @toggleIgnored(user, false)
+
+
   # private
+
+  toggleIgnored: (user, ignored) ->
+    unless user then return speak: @t('missingUser')
+
+    if user.toLowerCase() == 'me'
+      record = @users.find(@message.user.fullName)
+      username = "you"
+    else
+      record = @users.find(user)
+
+    unless record then return speak: @t('unknownUser', userName: user)
+    username ||= record.name
+
+    merge = {}
+    merge[@message.room.id] = ignored
+    @users.update(record.id, ignoredInRoom: _(record.ignoredInRoom || {}).extend(merge))
+
+    speak: @t((if ignored then 'ignored' else 'unignored'), username: username)
 
 
   helpForAllCommands: ->

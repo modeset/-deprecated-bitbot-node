@@ -11,7 +11,7 @@ class Responder extends Bitbot.BaseResponder
       examples: ["when was Jay on last?", "last time you saw Jeremy?"]
       intent: "userseen"
       opts:
-        user: {type: "string"}
+        user: {type: "string", entity: "contact"}
 
   templates:
     missingUser: "Sorry {{&name}}, I couldn't find anyone with that name."

@@ -213,6 +213,7 @@ class Bitbot
         message.command = true
 
       return if room.silenced && !message.command
+      return if user.ignoredInRoom?[room.id] && !message.command
 
       @processMessage room, message, (message) =>
         if @isAllowedRoom(room.name, @config.logRooms)
@@ -375,6 +376,14 @@ class UserRegistry
       user.initials.toLowerCase() == ref ||
       user.name.toLowerCase() == ref ||
       user.fullName.toLowerCase() == ref
+
+
+  update: (userId, options = {}, callback) ->
+    @users[userId] = _(@users[userId]).extend(options)
+
+    key = "#{@key}-#{userId}"
+    redis.hset @key, userId, key, =>
+      redis.hmset(key, value: JSON.stringify(@users[userId]))
 
 
 
