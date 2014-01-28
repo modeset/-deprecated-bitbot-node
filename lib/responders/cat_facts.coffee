@@ -124,6 +124,7 @@ class Responder extends Bitbot.BaseResponder
     "#1106: The cat appears to be the only domestic companion animal not mentioned in the Bible. *"
     "#1107: The cat does not exist in the Chinese Zodiac, but it does in the Vietnamese version, instead of rabbit. See Folklore, Superstitions, and Proverbs."
     "#666: Cats are dumb."
+    "#420: 20% of cats can't get high off of catnip."
   ]
 
   images: [
