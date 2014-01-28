@@ -98,7 +98,7 @@ class Responder extends Bitbot.BaseResponder
     "#1079: Declawing a cat is the same as cutting a human's fingers off at the knuckle. There are several alternatives to a complete declawing, including trimming or a less radical (though more involved) surgery to remove the claws. Instead, train your cat to use a scratching post."
     "#1080: The average lifespan of an outdoor-only (feral and non-feral) is about 3 years; an indoor-only cat can live 16 years and longer. Some cats have been documented to have a longevity of 34 years."
     "#1081: Cats with long, lean bodies are more likely to be outgoing, and more protective and vocal than those with a stocky build."
-    "#1082: A steady diet of dog food may cause blindness in your cat - it lacks taurine.  Related page:  Cat Munchies"
+    "#1082: A steady diet of dog food may cause blindness in your cat - it lacks taurine."
     "#1083: An estimated 50% of today's cat owners never take their cats to a veterinarian for health care. Too, because cats tend to keep their problems to themselves, many owners think their cat is perfectly healthy when actually they may be suffering from a life-threatening disease. Therefore, cats, on an average, are much sicker than dogs by the time they are brought to your veterinarian for treatment."
     "#1084: Never give your cat aspirin unless specifically prescribed by your veterinarian; it can be fatal. Never ever give Tylenol to a cat.  And be sure to keep anti-freeze away from all animals - it's sweet and enticing, but deadly poison.  Related pages:  Substances that are Toxic to Cats; Plants that are Toxic to Cats; First Aid Kit for your Cat; First Aid for Plant Poisoning"
     "#1085: Most cats adore sardines."
@@ -115,7 +115,6 @@ class Responder extends Bitbot.BaseResponder
     "#1096: Cat bites are more likely to become infected than dog bites."
     "#1097: In just 7 years, one un-spayed female cat and one un-neutered male cat and their offspring can result in 420,000 kittens."
     "#1098: Some notable people who disliked cats:  Napoleon Bonaparte, Dwight D. Eisenhower, Hitler."
-    "#1099: Related page:  A Few Famous Cat Lovers"
     "#1100: Six-toed kittens are so common in Boston and surrounding areas of Massachusetts that experts consider it an established mutation."
     "#1101: The silks created by weavers in Baghdad were inspired by the beautiful and varied colors and markings of cat coats. These fabrics were called \"tabby\" by European traders."
     "#1102: Cat families usually play best in even numbers. Cats and kittens should be acquired in pairs whenever possible."
@@ -124,6 +123,7 @@ class Responder extends Bitbot.BaseResponder
     "#1105: Cat litter was \"invented\" in 1947 when Edward Lowe asked his neighbor to try a dried, granulated clay used to sop up grease spills in factories. (In 1990, Mr. Lowe sold his business for $200 million.)  Related page:  Other Things You Can Do with Kitty Litter"
     "#1106: The cat appears to be the only domestic companion animal not mentioned in the Bible. *"
     "#1107: The cat does not exist in the Chinese Zodiac, but it does in the Vietnamese version, instead of rabbit. See Folklore, Superstitions, and Proverbs."
+    "#666: Cats are dumb."
   ]
 
   images: [
