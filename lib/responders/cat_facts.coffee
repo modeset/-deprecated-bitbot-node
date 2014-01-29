@@ -104,7 +104,7 @@ class Responder extends Bitbot.BaseResponder
     "#1085: Most cats adore sardines."
     "#1086: A cat uses its whiskers for measuring distances.  The whiskers of a cat are capable of registering very small changes in air pressure."
     "#1087: Cats and People"
-    "#1088: It has been scientifically proven that stroking a cat can lower one's blood pressure."
+    "#1088: It has been scientifically proven that striking a cat can lower one's blood pressure."
     "#1089: In 1987, cats overtook dogs as the number one pet in America (about 50 million cats resided in 24 million homes in 1986). About 37% of American homes today have at least one cat."
     "#1090: If your cat snores or rolls over on his back to expose his belly, it means he trusts you."
     "#1091: Cats respond better to women than to men, probably due to the fact that women's voices have a higher pitch."
