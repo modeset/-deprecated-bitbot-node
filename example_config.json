@@ -48,7 +48,7 @@
   },
   "Bit Bot (clean)": {
     "token": ">TOKEN_BITBOT",
-    "rooms": ["CirrusMD", "Legwork", "Made Set", "Open Source", "Qdoba Website", "TopFan + VisitMobile", "Inspirato", "Antisocial"],
+    "rooms": ["CirrusMD", "Legwork", "Made Set", "Open Source", "Qdoba Website", "TopFan + VisitMobile", "Inspirato", "Antisocial", "Tidbitts"],
     "logRooms": [],
     "respondsTo": ["bot", "bb", "bitbot"],
     "responders": {
