@@ -22,7 +22,7 @@
     "eval": "0.1.0",
     "mustache": "0.7.3",
     "moment": "2.4.0",
-    "wit-node": "0.0.4",
+    "wit-node": "0.0.5",
     "sentiment": "0.1.0",
 
     "node-whois": "0.2.0",
